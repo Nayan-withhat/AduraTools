@@ -7,18 +7,18 @@ interface Props {
 const { variant = 'lime', className = '' } = Astro.props;
 
 const bgClassMap = {
-  lime: 'bg-[var(--color-block-lime)] text-[var(--color-block-text-lime)]',
-  lilac: 'bg-[var(--color-block-lilac)] text-[var(--color-block-text-lilac)]',
-  cream: 'bg-[var(--color-block-cream)] text-[var(--color-block-text-cream)]',
-  pink: 'bg-[var(--color-block-pink)] text-[var(--color-block-text-pink)]',
-  mint: 'bg-[var(--color-block-mint)] text-[var(--color-block-text-mint)]',
-  coral: 'bg-[var(--color-block-coral)] text-[var(--color-block-text-coral)]',
-  navy: 'bg-[var(--color-block-navy)] text-[var(--color-block-text-navy)]',
+  lime: 'bg-[var(--color-block-lime)] text-[var(--color-block-text-lime)] border-[var(--color-block-lime-border)]',
+  lilac: 'bg-[var(--color-block-lilac)] text-[var(--color-block-text-lilac)] border-[var(--color-block-lilac-border)]',
+  cream: 'bg-[var(--color-block-cream)] text-[var(--color-block-text-cream)] border-[var(--color-block-cream-border)]',
+  pink: 'bg-[var(--color-block-pink)] text-[var(--color-block-text-pink)] border-[var(--color-block-pink-border)]',
+  mint: 'bg-[var(--color-block-mint)] text-[var(--color-block-text-mint)] border-[var(--color-block-mint-border)]',
+  coral: 'bg-[var(--color-block-coral)] text-[var(--color-block-text-coral)] border-[var(--color-block-coral-border)]',
+  navy: 'bg-[var(--color-block-navy)] text-[var(--color-block-text-navy)] border-[var(--color-block-navy-border)]',
 };
 ---
 
 <section class="max-w-[1280px] mx-auto py-8 px-4 sm:px-6 lg:px-8">
-  <div class={`color-block ${bgClassMap[variant]} ${className} border border-black/10 dark:border-white/10 shadow-sm`}>
+  <div class={`color-block ${bgClassMap[variant]} ${className} border transition-colors shadow-sm`}>
     <slot />
   </div>
 </section>

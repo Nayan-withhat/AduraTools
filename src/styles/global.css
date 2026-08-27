@@ -1,9 +1,12 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-primary: var(--color-primary);
   --color-on-primary: var(--color-on-primary);
   --color-ink: var(--color-ink);
+  --color-ink-muted: var(--color-ink-muted);
   --color-canvas: var(--color-canvas);
   --color-inverse-canvas: var(--color-inverse-canvas);
   --color-inverse-ink: var(--color-inverse-ink);
@@ -12,12 +15,19 @@
   --color-surface-soft: var(--color-surface-soft);
   --color-surface-card: var(--color-surface-card);
   --color-block-lime: var(--color-block-lime);
+  --color-block-lime-border: var(--color-block-lime-border);
   --color-block-lilac: var(--color-block-lilac);
+  --color-block-lilac-border: var(--color-block-lilac-border);
   --color-block-cream: var(--color-block-cream);
+  --color-block-cream-border: var(--color-block-cream-border);
   --color-block-pink: var(--color-block-pink);
+  --color-block-pink-border: var(--color-block-pink-border);
   --color-block-mint: var(--color-block-mint);
+  --color-block-mint-border: var(--color-block-mint-border);
   --color-block-coral: var(--color-block-coral);
+  --color-block-coral-border: var(--color-block-coral-border);
   --color-block-navy: var(--color-block-navy);
+  --color-block-navy-border: var(--color-block-navy-border);
   --color-accent-magenta: #ff3d8b;
   --color-semantic-success: #1ea64a;
   
@@ -36,6 +46,7 @@
   --color-primary: #000000;
   --color-on-primary: #ffffff;
   --color-ink: #000000;
+  --color-ink-muted: #666666;
   --color-canvas: #ffffff;
   --color-surface-card: #ffffff;
   --color-inverse-canvas: #000000;
@@ -43,13 +54,22 @@
   --color-hairline: #e6e6e6;
   --color-hairline-soft: #f1f1f1;
   --color-surface-soft: #f7f7f5;
+  
   --color-block-lime: #dceeb1;
+  --color-block-lime-border: rgba(0, 0, 0, 0.08);
   --color-block-lilac: #c5b0f4;
+  --color-block-lilac-border: rgba(0, 0, 0, 0.08);
   --color-block-cream: #f4ecd6;
+  --color-block-cream-border: rgba(0, 0, 0, 0.08);
   --color-block-pink: #efd4d4;
+  --color-block-pink-border: rgba(0, 0, 0, 0.08);
   --color-block-mint: #c8e6cd;
+  --color-block-mint-border: rgba(0, 0, 0, 0.08);
   --color-block-coral: #f3c9b6;
+  --color-block-coral-border: rgba(0, 0, 0, 0.08);
   --color-block-navy: #1f1d3d;
+  --color-block-navy-border: rgba(255, 255, 255, 0.12);
+
   --color-block-text-lime: #000000;
   --color-block-text-lilac: #000000;
   --color-block-text-cream: #000000;
@@ -57,34 +77,46 @@
   --color-block-text-mint: #000000;
   --color-block-text-coral: #000000;
   --color-block-text-navy: #ffffff;
+
   color-scheme: light;
 }
 
 .dark {
   --color-primary: #ffffff;
   --color-on-primary: #000000;
-  --color-ink: #f4f4f5;
-  --color-canvas: #09090b;
-  --color-surface-card: #121216;
-  --color-inverse-canvas: #18181b;
-  --color-inverse-ink: #f4f4f5;
-  --color-hairline: #272730;
-  --color-hairline-soft: #1f1f26;
-  --color-surface-soft: #141418;
-  --color-block-lime: #162410;
-  --color-block-lilac: #201533;
-  --color-block-cream: #221d12;
-  --color-block-pink: #2a1418;
-  --color-block-mint: #102417;
-  --color-block-coral: #281610;
-  --color-block-navy: #0e0d1f;
+  --color-ink: #f7f7f8;
+  --color-ink-muted: #9999a3;
+  --color-canvas: #090a0f;
+  --color-surface-card: #12141a;
+  --color-inverse-canvas: #f7f7f8;
+  --color-inverse-ink: #090a0f;
+  --color-hairline: #262933;
+  --color-hairline-soft: #1d2028;
+  --color-surface-soft: #181b22;
+
+  --color-block-lime: #142211;
+  --color-block-lime-border: #284420;
+  --color-block-lilac: #1e1430;
+  --color-block-lilac-border: #3c2460;
+  --color-block-cream: #221c10;
+  --color-block-cream-border: #44371e;
+  --color-block-pink: #261217;
+  --color-block-pink-border: #4c1f2b;
+  --color-block-mint: #0f2216;
+  --color-block-mint-border: #1d442a;
+  --color-block-coral: #27140e;
+  --color-block-coral-border: #4e2518;
+  --color-block-navy: #100f24;
+  --color-block-navy-border: #232050;
+
   --color-block-text-lime: #dceeb1;
-  --color-block-text-lilac: #c5b0f4;
+  --color-block-text-lilac: #d8c8fa;
   --color-block-text-cream: #f4ecd6;
-  --color-block-text-pink: #efd4d4;
+  --color-block-text-pink: #f4d4db;
   --color-block-text-mint: #c8e6cd;
   --color-block-text-coral: #f3c9b6;
   --color-block-text-navy: #ffffff;
+
   color-scheme: dark;
 }
 

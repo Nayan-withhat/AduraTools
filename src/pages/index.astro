@@ -25,11 +25,11 @@ const popularTools = getPopularTools().slice(0, 8);
     <!-- Editorial Hero Title with Tight Negative Tracking -->
     <h1 class="font-display-xl text-[var(--color-ink)] max-w-4xl mx-auto">
       Every tool you need.<br class="hidden sm:inline" />
-      <span class="font-normal text-neutral-500">Fast, free, and private.</span>
+      <span class="font-normal text-[var(--color-ink-muted)]">Fast, free, and private.</span>
     </h1>
 
     <!-- Lead Subtitle -->
-    <p class="font-body-lg text-neutral-500 max-w-2xl mx-auto leading-relaxed">
+    <p class="font-body-lg text-[var(--color-ink-muted)] max-w-2xl mx-auto leading-relaxed">
       A modern suite of utilities for text, developers, calculators, converters, and images. All processing happens in your browser — zero tracking, zero uploads, forever free.
     </p>
 
@@ -38,23 +38,23 @@ const popularTools = getPopularTools().slice(0, 8);
       <button 
         type="button" 
         id="hero-search-trigger"
-        class="w-full flex items-center justify-between p-3.5 sm:p-4 rounded-[50px] bg-[var(--color-surface-card)] border-2 border-[var(--color-hairline)] hover:border-[var(--color-ink)] shadow-lg shadow-black/5 transition-all text-left group cursor-pointer"
+        class="w-full flex items-center justify-between p-3.5 sm:p-4 rounded-[50px] bg-[var(--color-surface-card)] border border-[var(--color-hairline)] hover:border-[var(--color-ink)] shadow-md shadow-black/5 transition-all text-left group cursor-pointer"
       >
-        <span class="flex items-center gap-3 text-neutral-400 group-hover:text-[var(--color-ink)]">
-          <Icon name="search" class="w-5 h-5 text-neutral-400 group-hover:text-[var(--color-ink)] transition-colors" />
+        <span class="flex items-center gap-3 text-[var(--color-ink-muted)] group-hover:text-[var(--color-ink)]">
+          <Icon name="search" class="w-5 h-5 text-[var(--color-ink-muted)] group-hover:text-[var(--color-ink)] transition-colors" />
           <span class="font-sans text-base font-medium">Search 34+ free tools (try 'json', 'diff', 'password')...</span>
         </span>
-        <kbd class="hidden sm:inline-block font-mono text-xs px-2 py-1 rounded bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] text-neutral-400 font-semibold shadow-2xs">⌘K</kbd>
+        <kbd class="hidden sm:inline-block font-mono text-xs px-2 py-1 rounded bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] text-[var(--color-ink-muted)] font-semibold shadow-2xs">⌘K</kbd>
       </button>
 
       <!-- Quick Pill Shortcuts -->
       <div class="flex flex-wrap items-center justify-center gap-2 pt-2">
-        <span class="font-mono text-xs text-neutral-400">Popular:</span>
-        <a href="/tools/json-formatter" class="font-sans text-xs px-3 py-1 rounded-full bg-[var(--color-surface-soft)] hover:bg-[var(--color-hairline)] border border-[var(--color-hairline)] text-[var(--color-ink)] text-decoration-none">JSON Formatter</a>
-        <a href="/tools/word-counter" class="font-sans text-xs px-3 py-1 rounded-full bg-[var(--color-surface-soft)] hover:bg-[var(--color-hairline)] border border-[var(--color-hairline)] text-[var(--color-ink)] text-decoration-none">Word Counter</a>
-        <a href="/tools/password-generator" class="font-sans text-xs px-3 py-1 rounded-full bg-[var(--color-surface-soft)] hover:bg-[var(--color-hairline)] border border-[var(--color-hairline)] text-[var(--color-ink)] text-decoration-none">Password Gen</a>
-        <a href="/tools/image-compressor" class="font-sans text-xs px-3 py-1 rounded-full bg-[var(--color-surface-soft)] hover:bg-[var(--color-hairline)] border border-[var(--color-hairline)] text-[var(--color-ink)] text-decoration-none">Image Compressor</a>
-        <a href="/tools/qr-code-generator" class="font-sans text-xs px-3 py-1 rounded-full bg-[var(--color-surface-soft)] hover:bg-[var(--color-hairline)] border border-[var(--color-hairline)] text-[var(--color-ink)] text-decoration-none">QR Codes</a>
+        <span class="font-mono text-xs text-[var(--color-ink-muted)]">Popular:</span>
+        <a href="/tools/json-formatter" class="font-sans text-xs px-3 py-1 rounded-full bg-[var(--color-surface-soft)] hover:bg-[var(--color-surface-card)] border border-[var(--color-hairline)] text-[var(--color-ink)] text-decoration-none transition-colors">JSON Formatter</a>
+        <a href="/tools/word-counter" class="font-sans text-xs px-3 py-1 rounded-full bg-[var(--color-surface-soft)] hover:bg-[var(--color-surface-card)] border border-[var(--color-hairline)] text-[var(--color-ink)] text-decoration-none transition-colors">Word Counter</a>
+        <a href="/tools/password-generator" class="font-sans text-xs px-3 py-1 rounded-full bg-[var(--color-surface-soft)] hover:bg-[var(--color-surface-card)] border border-[var(--color-hairline)] text-[var(--color-ink)] text-decoration-none transition-colors">Password Gen</a>
+        <a href="/tools/image-compressor" class="font-sans text-xs px-3 py-1 rounded-full bg-[var(--color-surface-soft)] hover:bg-[var(--color-surface-card)] border border-[var(--color-hairline)] text-[var(--color-ink)] text-decoration-none transition-colors">Image Compressor</a>
+        <a href="/tools/qr-code-generator" class="font-sans text-xs px-3 py-1 rounded-full bg-[var(--color-surface-soft)] hover:bg-[var(--color-surface-card)] border border-[var(--color-hairline)] text-[var(--color-ink)] text-decoration-none transition-colors">QR Codes</a>
       </div>
     </div>
   </section>
@@ -66,7 +66,7 @@ const popularTools = getPopularTools().slice(0, 8);
   <section class="max-w-[1280px] mx-auto py-16 px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
       <div>
-        <div class="font-eyebrow text-neutral-400 mb-1">Curated Utilities</div>
+        <div class="font-eyebrow text-[var(--color-ink-muted)] mb-1">Curated Utilities</div>
         <h2 class="font-display-lg text-[var(--color-ink)]">Most Popular Tools</h2>
       </div>
       <a href="/all-tools" class="btn-secondary text-sm py-2 px-5 self-start sm:self-auto">
@@ -117,13 +117,13 @@ const popularTools = getPopularTools().slice(0, 8);
         </div>
       </div>
 
-      <div class="lg:col-span-5 bg-white/90 dark:bg-black/60 backdrop-blur-xs p-6 rounded-[var(--radius-lg)] border border-black/10 dark:border-white/10 shadow-lg space-y-3 text-[var(--color-ink)]">
-        <div class="font-mono text-xs font-bold uppercase text-neutral-400">Live Client Architecture</div>
-        <div class="font-mono text-xs space-y-2 text-neutral-700 dark:text-neutral-300 bg-[var(--color-surface-soft)] p-3.5 rounded-lg border border-[var(--color-hairline)]">
-          <div><span class="text-green-600 font-bold">&gt;</span> Memory Sandbox: Active</div>
-          <div><span class="text-green-600 font-bold">&gt;</span> Network Payloads: 0 KB Transmitted</div>
-          <div><span class="text-green-600 font-bold">&gt;</span> Cryptographic Entropy: 100% Native</div>
-          <div><span class="text-green-600 font-bold">&gt;</span> Telemetry: Disabled</div>
+      <div class="lg:col-span-5 bg-white/95 dark:bg-[#12141a]/90 backdrop-blur-xs p-6 rounded-[var(--radius-lg)] border border-black/10 dark:border-white/10 shadow-lg space-y-3 text-[var(--color-ink)]">
+        <div class="font-mono text-xs font-bold uppercase text-[var(--color-ink-muted)]">Live Client Architecture</div>
+        <div class="font-mono text-xs space-y-2 bg-[var(--color-surface-soft)] text-[var(--color-ink)] p-3.5 rounded-lg border border-[var(--color-hairline)]">
+          <div><span class="text-green-600 dark:text-green-400 font-bold">&gt;</span> Memory Sandbox: Active</div>
+          <div><span class="text-green-600 dark:text-green-400 font-bold">&gt;</span> Network Payloads: 0 KB Transmitted</div>
+          <div><span class="text-green-600 dark:text-green-400 font-bold">&gt;</span> Cryptographic Entropy: 100% Native</div>
+          <div><span class="text-green-600 dark:text-green-400 font-bold">&gt;</span> Telemetry: Disabled</div>
         </div>
         <a href="/privacy" class="btn-primary w-full text-center text-xs py-2">
           Read Privacy Manifesto →
@@ -135,9 +135,9 @@ const popularTools = getPopularTools().slice(0, 8);
   <!-- CATEGORIES BROWSE GRID -->
   <section class="max-w-[1280px] mx-auto py-16 px-4 sm:px-6 lg:px-8">
     <div class="text-center max-w-2xl mx-auto mb-12 space-y-2">
-      <div class="font-eyebrow text-neutral-400">Full Taxonomy</div>
+      <div class="font-eyebrow text-[var(--color-ink-muted)]">Full Taxonomy</div>
       <h2 class="font-display-lg text-[var(--color-ink)]">Explore by Category</h2>
-      <p class="font-body text-neutral-500">
+      <p class="font-body text-[var(--color-ink-muted)]">
         Find the exact tool for your task across our organized categories.
       </p>
     </div>
@@ -151,12 +151,14 @@ const popularTools = getPopularTools().slice(0, 8);
           <div class="space-y-3">
             <div class="flex items-center justify-between">
               <div 
-                class="w-12 h-12 rounded-xl flex items-center justify-center text-xl font-bold border border-black/10 dark:border-white/10 group-hover:scale-105 transition-transform"
-                style={`background-color: ${cat.badgeBg}; color: #000000;`}
+                class="w-12 h-12 rounded-xl flex items-center justify-center text-xl font-bold border border-[var(--color-hairline)] group-hover:scale-105 transition-transform overflow-hidden"
+                style={`--cat-l-bg: ${cat.badgeBg}; --cat-l-tx: ${cat.badgeText}; --cat-d-bg: ${cat.badgeDarkBg}; --cat-d-tx: ${cat.badgeDarkText};`}
               >
-                <Icon name={cat.icon} class="w-6 h-6" />
+                <div class="w-full h-full flex items-center justify-center bg-[var(--cat-l-bg)] text-[var(--cat-l-tx)] dark:bg-[var(--cat-d-bg)] dark:text-[var(--cat-d-tx)]">
+                  <Icon name={cat.icon} class="w-6 h-6" />
+                </div>
               </div>
-              <span class="font-mono text-xs px-2.5 py-1 rounded-full bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] font-semibold text-neutral-500">
+              <span class="font-mono text-xs px-2.5 py-1 rounded-full bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] font-semibold text-[var(--color-ink-muted)]">
                 {cat.toolCount} Tools
               </span>
             </div>
@@ -164,7 +166,7 @@ const popularTools = getPopularTools().slice(0, 8);
             <h3 class="font-card-title text-xl text-[var(--color-ink)]">
               {cat.name}
             </h3>
-            <p class="font-body-sm text-sm text-neutral-500 leading-relaxed line-clamp-2">
+            <p class="font-body-sm text-sm text-[var(--color-ink-muted)] leading-relaxed line-clamp-2">
               {cat.description}
             </p>
           </div>
@@ -223,23 +225,23 @@ const popularTools = getPopularTools().slice(0, 8);
       </div>
 
       <div class="space-y-4 pt-4 text-[var(--color-ink)]">
-        <div class="p-5 bg-white/90 dark:bg-black/60 rounded-[var(--radius-md)] border border-black/10 dark:border-white/10 space-y-2">
-          <h3 class="font-sans font-bold text-base">Is AduraTools really 100% free forever?</h3>
-          <p class="font-body-sm text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
+        <div class="p-5 bg-white/95 dark:bg-[#12141a]/90 rounded-[var(--radius-md)] border border-black/10 dark:border-white/10 space-y-2 shadow-xs">
+          <h3 class="font-sans font-bold text-base text-[var(--color-ink)]">Is AduraTools really 100% free forever?</h3>
+          <p class="font-body-sm text-sm text-[var(--color-ink-muted)] leading-relaxed">
             Yes. Every tool on AduraTools is completely free to use without daily limits, subscription tiers, watermarks, or account registration walls.
           </p>
         </div>
 
-        <div class="p-5 bg-white/90 dark:bg-black/60 rounded-[var(--radius-md)] border border-black/10 dark:border-white/10 space-y-2">
-          <h3 class="font-sans font-bold text-base">Are my files, JSON payloads, or text uploaded to a server?</h3>
-          <p class="font-body-sm text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
+        <div class="p-5 bg-white/95 dark:bg-[#12141a]/90 rounded-[var(--radius-md)] border border-black/10 dark:border-white/10 space-y-2 shadow-xs">
+          <h3 class="font-sans font-bold text-base text-[var(--color-ink)]">Are my files, JSON payloads, or text uploaded to a server?</h3>
+          <p class="font-body-sm text-sm text-[var(--color-ink-muted)] leading-relaxed">
             No! All transformations, text formatting, cryptographic hashing, and image compressions run entirely on your device using client-side JavaScript APIs (Web Crypto, Canvas, Web Workers).
           </p>
         </div>
 
-        <div class="p-5 bg-white/90 dark:bg-black/60 rounded-[var(--radius-md)] border border-black/10 dark:border-white/10 space-y-2">
-          <h3 class="font-sans font-bold text-base">Do tools work when I lose internet connection?</h3>
-          <p class="font-body-sm text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
+        <div class="p-5 bg-white/95 dark:bg-[#12141a]/90 rounded-[var(--radius-md)] border border-black/10 dark:border-white/10 space-y-2 shadow-xs">
+          <h3 class="font-sans font-bold text-base text-[var(--color-ink)]">Do tools work when I lose internet connection?</h3>
+          <p class="font-body-sm text-sm text-[var(--color-ink-muted)] leading-relaxed">
             Yes! Once a tool page is loaded in your browser, all processing happens locally, meaning it continues to function seamlessly even offline.
           </p>
         </div>

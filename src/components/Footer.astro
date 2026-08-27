@@ -17,7 +17,7 @@ import Icon from './Icon.astro';
             Adura<span class="font-normal text-neutral-400">Tools</span>
           </span>
         </a>
-        <p class="font-body-sm text-neutral-500 text-sm max-w-sm leading-relaxed">
+        <p class="font-body-sm text-[var(--color-ink-muted)] text-sm max-w-sm leading-relaxed">
           The privacy-first developer and digital toolkit. Every calculation, format, and conversion runs locally in your browser with zero latency and zero data retention.
         </p>
 
@@ -27,7 +27,7 @@ import Icon from './Icon.astro';
             100% In-Browser
           </span>
           <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[var(--color-surface-card)] border border-[var(--color-hairline)] text-xs font-mono font-medium text-[var(--color-ink)]">
-            <Icon name="shield-check" class="w-3.5 h-3.5 text-neutral-400" />
+            <Icon name="shield-check" class="w-3.5 h-3.5 text-[var(--color-ink-muted)]" />
             Zero Telemetry
           </span>
         </div>
@@ -35,11 +35,11 @@ import Icon from './Icon.astro';
 
       <!-- Categories Links (Col 3 & 4) -->
       <div class="space-y-3">
-        <div class="font-eyebrow text-neutral-400 text-xs">Categories</div>
+        <div class="font-eyebrow text-[var(--color-ink-muted)] text-xs">Categories</div>
         <ul class="space-y-2 text-xs">
           {CATEGORIES.slice(0, 4).map(cat => (
             <li>
-              <a href={`/categories/${cat.slug}`} class="text-neutral-500 hover:text-[var(--color-ink)] text-decoration-none transition-colors">
+              <a href={`/categories/${cat.slug}`} class="text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] text-decoration-none transition-colors">
                 {cat.name}
               </a>
             </li>
@@ -48,11 +48,11 @@ import Icon from './Icon.astro';
       </div>
 
       <div class="space-y-3">
-        <div class="font-eyebrow text-neutral-400 text-xs">More Categories</div>
+        <div class="font-eyebrow text-[var(--color-ink-muted)] text-xs">More Categories</div>
         <ul class="space-y-2 text-xs">
           {CATEGORIES.slice(4).map(cat => (
             <li>
-              <a href={`/categories/${cat.slug}`} class="text-neutral-500 hover:text-[var(--color-ink)] text-decoration-none transition-colors">
+              <a href={`/categories/${cat.slug}`} class="text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] text-decoration-none transition-colors">
                 {cat.name}
               </a>
             </li>
@@ -67,17 +67,17 @@ import Icon from './Icon.astro';
 
       <!-- Platform / Legal Column -->
       <div class="space-y-3">
-        <div class="font-eyebrow text-neutral-400 text-xs">Platform</div>
+        <div class="font-eyebrow text-[var(--color-ink-muted)] text-xs">Platform</div>
         <ul class="space-y-2 text-xs">
-          <li><a href="/about" class="text-neutral-500 hover:text-[var(--color-ink)] text-decoration-none transition-colors">About & Architecture</a></li>
-          <li><a href="/privacy" class="text-neutral-500 hover:text-[var(--color-ink)] text-decoration-none transition-colors">Privacy Manifesto</a></li>
-          <li><a href="https://github.com" target="_blank" rel="noopener noreferrer" class="text-neutral-500 hover:text-[var(--color-ink)] text-decoration-none transition-colors">Source Architecture</a></li>
+          <li><a href="/about" class="text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] text-decoration-none transition-colors">About & Architecture</a></li>
+          <li><a href="/privacy" class="text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] text-decoration-none transition-colors">Privacy Manifesto</a></li>
+          <li><a href="https://github.com" target="_blank" rel="noopener noreferrer" class="text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] text-decoration-none transition-colors">Source Architecture</a></li>
         </ul>
       </div>
     </div>
 
     <!-- Bottom Bar -->
-    <div class="pt-8 border-t border-[var(--color-hairline)] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-neutral-400">
+    <div class="pt-8 border-t border-[var(--color-hairline)] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[var(--color-ink-muted)]">
       <div>
         © {new Date().getFullYear()} AduraTools (aduratools.site). All rights reserved.
       </div>

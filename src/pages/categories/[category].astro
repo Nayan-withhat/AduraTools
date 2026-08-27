@@ -36,8 +36,7 @@ const categoryTools = getToolsByCategory(category.id);
 
     <!-- Category Header Banner -->
     <div 
-      class="p-8 sm:p-12 rounded-[var(--radius-xl)] border border-black/10 dark:border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
-      style={`background-color: ${category.badgeBg}; color: #000000;`}
+      class={`p-8 sm:p-12 rounded-[var(--radius-xl)] border border-[var(--color-${category.colorBlock}-border)] bg-[var(--color-${category.colorBlock})] text-[var(--color-${category.colorBlock}-text)] flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm transition-colors`}
     >
       <div class="space-y-3 max-w-2xl">
         <div class="inline-flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider opacity-80">
@@ -46,17 +45,17 @@ const categoryTools = getToolsByCategory(category.id);
           <span>•</span>
           <span>{categoryTools.length} Active Tools</span>
         </div>
-        <h1 class="font-display-lg text-4xl sm:text-5xl font-bold tracking-tight text-black">
+        <h1 class="font-display-lg text-4xl sm:text-5xl font-bold tracking-tight">
           {category.name}
         </h1>
-        <p class="font-body text-base sm:text-lg leading-relaxed text-black/80">
+        <p class="font-body text-base sm:text-lg leading-relaxed opacity-90">
           {category.longDescription}
         </p>
       </div>
 
-      <div class="p-4 bg-white/90 backdrop-blur-xs rounded-2xl border border-black/10 text-black text-center min-w-[140px] shrink-0 shadow-sm">
+      <div class="p-4 bg-white/95 dark:bg-black/60 backdrop-blur-xs rounded-2xl border border-black/10 dark:border-white/10 text-[var(--color-ink)] text-center min-w-[140px] shrink-0 shadow-sm">
         <div class="font-sans font-bold text-3xl">{categoryTools.length}</div>
-        <div class="font-mono text-[11px] uppercase text-neutral-600 font-semibold">Ready to Use</div>
+        <div class="font-mono text-[11px] uppercase text-[var(--color-ink-muted)] font-semibold">Ready to Use</div>
       </div>
     </div>
 
