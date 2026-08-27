@@ -1,0 +1,118 @@
+---
+import { CATEGORIES } from '../data/categories';
+import Icon from './Icon.astro';
+---
+
+<header class="sticky top-0 z-40 w-full h-14 bg-[var(--color-canvas)]/90 backdrop-blur-md border-b border-[var(--color-hairline)] transition-colors">
+  <div class="max-w-[1280px] h-full mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+    <!-- Brand Logo -->
+    <a href="/" class="flex items-center gap-2.5 text-decoration-none group">
+      <div class="w-8 h-8 rounded-lg bg-[var(--color-primary)] text-[var(--color-on-primary)] flex items-center justify-center font-mono font-bold text-sm tracking-tighter transition-transform group-hover:scale-105">
+        <Icon name="sparkles" class="w-4 h-4" />
+      </div>
+      <span class="font-sans font-bold text-lg tracking-tight text-[var(--color-ink)]">
+        Adura<span class="font-normal text-neutral-400">Tools</span>
+      </span>
+    </a>
+
+    <!-- Center Search Trigger (Cmd+K) -->
+    <div class="flex-1 max-w-md hidden md:block">
+      <button 
+        type="button" 
+        id="global-search-trigger"
+        class="w-full flex items-center justify-between px-3.5 py-1.5 rounded-full bg-[var(--color-surface-soft)] hover:bg-[var(--color-surface-card)] border border-[var(--color-hairline)] hover:border-[var(--color-ink)] transition-all text-xs font-sans text-neutral-500 cursor-pointer shadow-2xs group"
+        aria-label="Open command palette search"
+      >
+        <span class="flex items-center gap-2">
+          <Icon name="search" class="w-3.5 h-3.5 text-neutral-400 group-hover:text-[var(--color-ink)] transition-colors" />
+          <span>Search 34+ free tools...</span>
+        </span>
+        <kbd class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[var(--color-canvas)] border border-[var(--color-hairline)] text-neutral-500 font-semibold">⌘K</kbd>
+      </button>
+    </div>
+
+    <!-- Navigation & Theme Toggle Actions -->
+    <nav class="flex items-center gap-2 sm:gap-3">
+      <!-- Category Dropdown Menu -->
+      <div class="relative group">
+        <button 
+          type="button" 
+          class="flex items-center gap-1.5 font-sans text-xs font-medium px-3 py-1.5 rounded-full hover:bg-[var(--color-surface-soft)] text-[var(--color-ink)] transition-colors"
+          aria-expanded="false"
+        >
+          <span>Categories</span>
+          <Icon name="chevron-down" class="w-3 h-3 text-neutral-400 group-hover:rotate-180 transition-transform duration-200" />
+        </button>
+
+        <!-- Dropdown Box -->
+        <div class="absolute right-0 mt-2 w-64 p-2 bg-[var(--color-surface-card)] rounded-[var(--radius-lg)] border border-[var(--color-hairline)] shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50">
+          <div class="font-mono text-[10px] uppercase font-bold text-neutral-400 px-3 py-1.5">Tool Categories</div>
+          {CATEGORIES.map(cat => (
+            <a 
+              href={`/categories/${cat.slug}`}
+              class="flex items-center justify-between px-3 py-2 rounded-[var(--radius-md)] hover:bg-[var(--color-surface-soft)] text-xs text-[var(--color-ink)] text-decoration-none transition-colors"
+            >
+              <div class="flex items-center gap-2">
+                <Icon name={cat.icon} class="w-3.5 h-3.5 text-neutral-500" />
+                <span class="font-medium">{cat.shortName}</span>
+              </div>
+              <span class="font-mono text-[10px] text-neutral-400">{cat.toolCount}</span>
+            </a>
+          ))}
+          <div class="border-t border-[var(--color-hairline)] my-1"></div>
+          <a 
+            href="/all-tools" 
+            class="flex items-center justify-between px-3 py-2 rounded-[var(--radius-md)] font-medium text-xs text-[var(--color-ink)] hover:bg-[var(--color-surface-soft)] text-decoration-none"
+          >
+            <span>Browse All 34+ Tools</span>
+            <Icon name="arrow-right" class="w-3.5 h-3.5" />
+          </a>
+        </div>
+      </div>
+
+      <a href="/all-tools" class="hidden sm:inline-flex font-sans text-xs font-medium px-3 py-1.5 rounded-full hover:bg-[var(--color-surface-soft)] text-[var(--color-ink)] text-decoration-none transition-colors">
+        All Tools
+      </a>
+
+      <!-- Dark / Light Theme Toggle Button -->
+      <button 
+        type="button" 
+        id="theme-toggle-btn" 
+        class="w-8 h-8 rounded-full flex items-center justify-center bg-[var(--color-surface-soft)] hover:bg-[var(--color-surface-card)] border border-[var(--color-hairline)] hover:border-[var(--color-ink)] text-[var(--color-ink)] transition-all cursor-pointer"
+        aria-label="Toggle dark and light mode"
+        title="Toggle Theme"
+      >
+        <span class="dark:hidden flex items-center justify-center">
+          <Icon name="moon" class="w-4 h-4" />
+        </span>
+        <span class="hidden dark:flex items-center justify-center">
+          <Icon name="sun" class="w-4 h-4 text-amber-300" />
+        </span>
+      </button>
+
+      <!-- Primary Explore CTA -->
+      <a href="/all-tools" class="btn-primary text-xs py-1.5 px-4 hidden xs:inline-flex">
+        Explore Suite
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    const themeBtn = document.getElementById('theme-toggle-btn');
+    themeBtn?.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('aduratools-theme', isDark ? 'dark' : 'light');
+      window.showToast?.(isDark ? 'Dark mode enabled' : 'Light mode enabled');
+    });
+
+    const searchBtn = document.getElementById('global-search-trigger');
+    searchBtn?.addEventListener('click', () => {
+      window.openCommandPalette?.();
+    });
+  }
+
+  initHeader();
+  document.addEventListener('astro:page-load', initHeader);
+</script>

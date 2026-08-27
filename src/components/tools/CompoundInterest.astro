@@ -1,0 +1,134 @@
+---
+import type { ToolItem } from '../../data/tools';
+import Icon from '../Icon.astro';
+
+interface Props {
+  tool: ToolItem;
+}
+const { tool } = Astro.props;
+---
+
+<div class="space-y-8" id="compound-calc-root">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <!-- Input Form (6 Cols) -->
+    <div class="lg:col-span-6 p-6 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-4">
+      <div class="space-y-1">
+        <label class="font-sans font-semibold text-xs text-neutral-600 dark:text-neutral-300">Initial Principal ($)</label>
+        <input type="number" id="ci-principal" value="10000" class="input-base font-mono font-bold" />
+      </div>
+
+      <div class="space-y-1">
+        <label class="font-sans font-semibold text-xs text-neutral-600 dark:text-neutral-300">Monthly Contribution ($)</label>
+        <input type="number" id="ci-monthly" value="200" class="input-base font-mono font-bold" />
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div class="space-y-1">
+          <label class="font-sans font-semibold text-xs text-neutral-600 dark:text-neutral-300">Annual Interest Rate (%)</label>
+          <input type="number" step="0.1" id="ci-rate" value="8" class="input-base font-mono font-bold" />
+        </div>
+        <div class="space-y-1">
+          <label class="font-sans font-semibold text-xs text-neutral-600 dark:text-neutral-300">Investment Period (Years)</label>
+          <input type="number" id="ci-years" value="10" class="input-base font-mono font-bold" />
+        </div>
+      </div>
+
+      <div class="space-y-1">
+        <label class="font-sans font-semibold text-xs text-neutral-600 dark:text-neutral-300">Compounding Frequency</label>
+        <select id="ci-freq" class="input-base font-medium">
+          <option value="12" selected>Monthly (12x per year)</option>
+          <option value="1">Annually (1x per year)</option>
+          <option value="4">Quarterly (4x per year)</option>
+          <option value="365">Daily (365x per year)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Summary Box (6 Cols) -->
+    <div class="lg:col-span-6 flex flex-col justify-between p-6 bg-[var(--color-surface-card)] rounded-[var(--radius-lg)] border border-[var(--color-hairline)] space-y-6">
+      <div class="space-y-1">
+        <span class="font-mono text-xs uppercase font-bold text-neutral-400">Projected Future Value</span>
+        <div id="ci-future-val" class="font-sans font-extrabold text-4xl text-green-600 dark:text-green-400">$57,698.42</div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div class="p-3 bg-[var(--color-surface-soft)] rounded-[var(--radius-md)] border border-[var(--color-hairline)]">
+          <div class="font-mono text-[11px] uppercase text-neutral-400">Total Contributions</div>
+          <div id="ci-total-contrib" class="font-sans font-bold text-lg text-[var(--color-ink)]">$34,000.00</div>
+        </div>
+        <div class="p-3 bg-[var(--color-block-lime)] rounded-[var(--radius-md)] border border-black/10 text-black">
+          <div class="font-mono text-[11px] uppercase text-black/70 font-semibold">Total Interest Earned</div>
+          <div id="ci-total-interest" class="font-sans font-bold text-lg text-black">$23,698.42</div>
+        </div>
+      </div>
+
+      <!-- Ratio Visual Bar -->
+      <div class="space-y-1.5">
+        <div class="flex justify-between text-xs font-mono">
+          <span class="text-neutral-500">Principal / Contributions vs Interest Earned</span>
+        </div>
+        <div class="w-full h-3 bg-neutral-200 dark:bg-neutral-800 rounded-full overflow-hidden flex">
+          <div id="ci-bar-contrib" class="h-full bg-neutral-800 dark:bg-neutral-400" style="width: 59%;"></div>
+          <div id="ci-bar-interest" class="h-full bg-[var(--color-semantic-success)]" style="width: 41%;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initCompoundInterest() {
+    const pInput = document.getElementById('ci-principal') as HTMLInputElement | null;
+    const mInput = document.getElementById('ci-monthly') as HTMLInputElement | null;
+    const rInput = document.getElementById('ci-rate') as HTMLInputElement | null;
+    const yInput = document.getElementById('ci-years') as HTMLInputElement | null;
+    const fInput = document.getElementById('ci-freq') as HTMLSelectElement | null;
+
+    const futureVal = document.getElementById('ci-future-val');
+    const totalContrib = document.getElementById('ci-total-contrib');
+    const totalInterest = document.getElementById('ci-total-interest');
+    const barContrib = document.getElementById('ci-bar-contrib');
+    const barInterest = document.getElementById('ci-bar-interest');
+
+    function calculate() {
+      const p = parseFloat(pInput?.value || '0');
+      const pmt = parseFloat(mInput?.value || '0');
+      const annualRate = parseFloat(rInput?.value || '0') / 100;
+      const years = parseFloat(yInput?.value || '0');
+      const n = parseFloat(fInput?.value || '12');
+
+      if (years <= 0) return;
+
+      const fvPrincipal = p * Math.pow(1 + annualRate / n, n * years);
+
+      const rMonthly = annualRate / 12;
+      const totalMonths = years * 12;
+      const fvMonthly = pmt > 0 && rMonthly > 0
+        ? pmt * ((Math.pow(1 + rMonthly, totalMonths) - 1) / rMonthly)
+        : pmt * totalMonths;
+
+      const totalFv = fvPrincipal + fvMonthly;
+      const totalDeposited = p + (pmt * totalMonths);
+      const earnedInterest = totalFv - totalDeposited;
+
+      if (futureVal) futureVal.textContent = `$${totalFv.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      if (totalContrib) totalContrib.textContent = `$${totalDeposited.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      if (totalInterest) totalInterest.textContent = `$${earnedInterest.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+      const contribPct = Math.round((totalDeposited / totalFv) * 100) || 50;
+      const interestPct = 100 - contribPct;
+
+      if (barContrib) barContrib.style.width = `${contribPct}%`;
+      if (barInterest) barInterest.style.width = `${interestPct}%`;
+    }
+
+    [pInput, mInput, rInput, yInput, fInput].forEach(el => {
+      el?.addEventListener('input', calculate);
+    });
+
+    calculate();
+  }
+
+  initCompoundInterest();
+  document.addEventListener('astro:page-load', initCompoundInterest);
+</script>

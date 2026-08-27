@@ -1,0 +1,161 @@
+---
+import type { ToolItem } from '../../data/tools';
+import Icon from '../Icon.astro';
+
+interface Props {
+  tool: ToolItem;
+}
+const { tool } = Astro.props;
+---
+
+<div class="space-y-6" id="text-diff-root">
+  <!-- Controls Toolbar -->
+  <div class="flex flex-wrap items-center justify-between gap-3 p-3 bg-[var(--color-surface-soft)] rounded-[var(--radius-md)] border border-[var(--color-hairline)]">
+    <div class="flex items-center gap-2">
+      <button type="button" id="btn-compare-diff" class="btn-primary text-xs py-1.5 px-4 flex items-center gap-1.5">
+        <Icon name="diff" class="w-3.5 h-3.5" />
+        <span>Compare Differences</span>
+      </button>
+      <span id="diff-status-badge" class="font-mono text-xs px-2.5 py-0.5 rounded-full bg-[var(--color-surface-card)] border border-[var(--color-hairline)] text-neutral-400">
+        Ready
+      </span>
+    </div>
+    <div class="flex items-center gap-2">
+      <button type="button" id="btn-load-sample" class="btn-secondary text-xs py-1.5 px-3 flex items-center gap-1.5">
+        <Icon name="sparkles" class="w-3.5 h-3.5" />
+        <span>Load Sample</span>
+      </button>
+      <button type="button" id="btn-clear" class="btn-secondary text-xs py-1.5 px-3 text-red-500 hover:text-red-600 flex items-center gap-1.5">
+        <Icon name="trash" class="w-3.5 h-3.5" />
+        <span>Clear</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Dual Input Area -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Original Pane -->
+    <div class="flex flex-col space-y-2">
+      <span class="text-xs font-mono font-bold uppercase tracking-wider text-[var(--color-ink)]">Original Document</span>
+      <textarea 
+        id="diff-original" 
+        rows="10" 
+        placeholder="Paste original baseline text..." 
+        class="input-base textarea-code flex-1 font-mono text-sm leading-relaxed p-4 bg-[var(--color-surface-card)] text-[var(--color-ink)] border border-[var(--color-hairline)] rounded-[var(--radius-md)] resize-y outline-none"
+      >AduraTools Version 1.0
+Fast and simple utilities
+Free online tools platform
+Old feature set</textarea>
+    </div>
+
+    <!-- Modified Pane -->
+    <div class="flex flex-col space-y-2">
+      <span class="text-xs font-mono font-bold uppercase tracking-wider text-[var(--color-ink)]">Modified / Revised Document</span>
+      <textarea 
+        id="diff-modified" 
+        rows="10" 
+        placeholder="Paste updated text..." 
+        class="input-base textarea-code flex-1 font-mono text-sm leading-relaxed p-4 bg-[var(--color-surface-card)] text-[var(--color-ink)] border border-[var(--color-hairline)] rounded-[var(--radius-md)] resize-y outline-none"
+      >AduraTools Version 2.0
+Fast, private, and simple utilities
+Free online tools platform
+New client-side V8 feature set
+Zero data retention</textarea>
+    </div>
+  </div>
+
+  <!-- Visual Highlighted Diff Results -->
+  <div class="space-y-2">
+    <div class="flex items-center justify-between text-xs font-mono">
+      <span class="font-bold uppercase tracking-wider text-[var(--color-ink)]">Visual Diff Breakdown</span>
+      <div class="flex items-center gap-3">
+        <span class="flex items-center gap-1.5 text-green-600 dark:text-green-400 font-semibold"><span class="w-2 h-2 rounded-full bg-green-500"></span> Added</span>
+        <span class="flex items-center gap-1.5 text-red-600 dark:text-red-400 font-semibold"><span class="w-2 h-2 rounded-full bg-red-500"></span> Removed</span>
+      </div>
+    </div>
+
+    <div 
+      id="diff-results-box" 
+      class="p-4 bg-[var(--color-surface-card)] rounded-[var(--radius-lg)] border border-[var(--color-hairline)] font-mono text-xs leading-relaxed max-h-72 overflow-y-auto space-y-1"
+    ></div>
+  </div>
+</div>
+
+<script>
+  function initTextDiff() {
+    const origInput = document.getElementById('diff-original') as HTMLTextAreaElement | null;
+    const modInput = document.getElementById('diff-modified') as HTMLTextAreaElement | null;
+    const resultsBox = document.getElementById('diff-results-box');
+    const badge = document.getElementById('diff-status-badge');
+    const btnCompare = document.getElementById('btn-compare-diff');
+    const btnSample = document.getElementById('btn-load-sample');
+    const btnClear = document.getElementById('btn-clear');
+
+    if (!origInput || !modInput || !resultsBox) return;
+
+    function computeDiff() {
+      const origLines = origInput.value.split(/\r\n|\r|\n/);
+      const modLines = modInput.value.split(/\r\n|\r|\n/);
+
+      let html = '';
+      let added = 0;
+      let removed = 0;
+
+      const max = Math.max(origLines.length, modLines.length);
+
+      for (let i = 0; i < max; i++) {
+        const o = origLines[i];
+        const m = modLines[i];
+
+        if (o === undefined && m !== undefined) {
+          html += `<div class="p-1 rounded bg-green-50 dark:bg-green-950/40 text-green-800 dark:text-green-300 font-semibold flex items-center gap-2"><span class="text-green-500 font-bold">+</span> <span class="text-neutral-400 select-none">${i + 1}</span> ${escapeHtml(m)}</div>`;
+          added++;
+        } else if (m === undefined && o !== undefined) {
+          html += `<div class="p-1 rounded bg-red-50 dark:bg-red-950/40 text-red-800 dark:text-red-300 font-semibold flex items-center gap-2"><span class="text-red-500 font-bold">-</span> <span class="text-neutral-400 select-none">${i + 1}</span> ${escapeHtml(o)}</div>`;
+          removed++;
+        } else if (o !== m) {
+          html += `<div class="p-1 rounded bg-red-50 dark:bg-red-950/40 text-red-800 dark:text-red-300 font-semibold flex items-center gap-2"><span class="text-red-500 font-bold">-</span> <span class="text-neutral-400 select-none">${i + 1}</span> ${escapeHtml(o)}</div>`;
+          html += `<div class="p-1 rounded bg-green-50 dark:bg-green-950/40 text-green-800 dark:text-green-300 font-semibold flex items-center gap-2"><span class="text-green-500 font-bold">+</span> <span class="text-neutral-400 select-none">${i + 1}</span> ${escapeHtml(m)}</div>`;
+          added++;
+          removed++;
+        } else {
+          html += `<div class="p-1 text-neutral-500 flex items-center gap-2"><span class="text-transparent font-bold">.</span> <span class="text-neutral-400 select-none">${i + 1}</span> ${escapeHtml(o)}</div>`;
+        }
+      }
+
+      resultsBox.innerHTML = html || '<div class="text-neutral-400 text-center py-4">No content to compare</div>';
+
+      if (badge) {
+        badge.textContent = `+${added} / -${removed} lines`;
+        badge.className = 'font-mono text-xs px-2.5 py-0.5 rounded-full bg-[var(--color-surface-soft)] text-[var(--color-ink)] font-semibold';
+      }
+    }
+
+    function escapeHtml(str: string): string {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    origInput.addEventListener('input', computeDiff);
+    modInput.addEventListener('input', computeDiff);
+    btnCompare?.addEventListener('click', computeDiff);
+
+    btnSample?.addEventListener('click', () => {
+      origInput.value = 'AduraTools Version 1.0\nFast and simple utilities\nFree online tools platform\nOld feature set';
+      modInput.value = 'AduraTools Version 2.0\nFast, private, and simple utilities\nFree online tools platform\nNew client-side V8 feature set\nZero data retention';
+      computeDiff();
+      window.showToast?.('Sample loaded & compared');
+    });
+
+    btnClear?.addEventListener('click', () => {
+      origInput.value = '';
+      modInput.value = '';
+      computeDiff();
+      origInput.focus();
+    });
+
+    computeDiff();
+  }
+
+  initTextDiff();
+  document.addEventListener('astro:page-load', initTextDiff);
+</script>

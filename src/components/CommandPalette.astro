@@ -1,0 +1,137 @@
+---
+import { TOOLS } from '../data/tools';
+import { CATEGORIES } from '../data/categories';
+import Icon from './Icon.astro';
+---
+
+<div 
+  id="command-palette-backdrop" 
+  class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-start justify-center pt-20 px-4 opacity-0 pointer-events-none transition-opacity duration-150"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Command Palette"
+>
+  <div 
+    id="command-palette-modal"
+    class="w-full max-w-xl bg-[var(--color-surface-card)] rounded-[var(--radius-lg)] border border-[var(--color-hairline)] shadow-2xl overflow-hidden transform scale-95 transition-transform duration-150"
+  >
+    <!-- Search Input Bar -->
+    <div class="flex items-center px-4 py-3.5 border-b border-[var(--color-hairline)] gap-3 bg-[var(--color-surface-soft)]">
+      <Icon name="search" class="w-4 h-4 text-neutral-400 shrink-0" />
+      <input 
+        type="text" 
+        id="palette-input" 
+        placeholder="Type a tool name, category, or task..." 
+        class="w-full bg-transparent border-none outline-none font-sans text-sm text-[var(--color-ink)] placeholder:text-neutral-400"
+        autocomplete="off"
+      />
+      <kbd class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[var(--color-surface-card)] border border-[var(--color-hairline)] text-neutral-400 font-semibold">ESC</kbd>
+    </div>
+
+    <!-- Search Results List -->
+    <div id="palette-results" class="max-h-80 overflow-y-auto p-2 space-y-1">
+      {TOOLS.map((tool, idx) => (
+        <a 
+          href={`/tools/${tool.slug}`}
+          class="palette-item flex items-center justify-between px-3 py-2 rounded-[var(--radius-md)] hover:bg-[var(--color-surface-soft)] text-decoration-none group transition-colors"
+          data-title={tool.name.toLowerCase()}
+          data-tags={tool.tags.join(' ').toLowerCase()}
+          data-slug={tool.slug}
+          data-desc={tool.shortDescription.toLowerCase()}
+        >
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-md bg-[var(--color-surface-soft)] group-hover:bg-[var(--color-surface-card)] border border-[var(--color-hairline)] flex items-center justify-center text-[var(--color-ink)] text-xs">
+              <Icon name={tool.icon} class="w-3.5 h-3.5" />
+            </span>
+            <div>
+              <div class="font-sans font-medium text-xs text-[var(--color-ink)] group-hover:text-[var(--color-ink)]">
+                {tool.name}
+              </div>
+              <div class="font-mono text-[10px] text-neutral-400 line-clamp-1">
+                {tool.shortDescription}
+              </div>
+            </div>
+          </div>
+          <Icon name="arrow-right" class="w-3 h-3 text-neutral-400 group-hover:translate-x-0.5 transition-transform" />
+        </a>
+      ))}
+    </div>
+
+    <!-- Footer Shortcuts -->
+    <div class="px-4 py-2 bg-[var(--color-surface-soft)] border-t border-[var(--color-hairline)] flex items-center justify-between text-[11px] font-mono text-neutral-400">
+      <div class="flex items-center gap-2">
+        <span>Navigate <kbd class="px-1 py-0.2 bg-[var(--color-surface-card)] rounded border text-[10px]">↑</kbd> <kbd class="px-1 py-0.2 bg-[var(--color-surface-card)] rounded border text-[10px]">↓</kbd></span>
+        <span>Select <kbd class="px-1 py-0.2 bg-[var(--color-surface-card)] rounded border text-[10px]">↵</kbd></span>
+      </div>
+      <span>AduraTools Quick Switcher</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  function setupCommandPalette() {
+    const backdrop = document.getElementById('command-palette-backdrop');
+    const modal = document.getElementById('command-palette-modal');
+    const input = document.getElementById('palette-input') as HTMLInputElement | null;
+    const items = document.querySelectorAll('.palette-item') as NodeListOf<HTMLAnchorElement>;
+
+    let isOpen = false;
+
+    function open() {
+      if (!backdrop || !modal) return;
+      isOpen = true;
+      backdrop.classList.remove('opacity-0', 'pointer-events-none');
+      modal.classList.remove('scale-95');
+      modal.classList.add('scale-100');
+      input?.focus();
+      if (input) input.value = '';
+      filter('');
+    }
+
+    function close() {
+      if (!backdrop || !modal) return;
+      isOpen = false;
+      backdrop.classList.add('opacity-0', 'pointer-events-none');
+      modal.classList.remove('scale-100');
+      modal.classList.add('scale-95');
+    }
+
+    function filter(query: string) {
+      const q = query.trim().toLowerCase();
+      items.forEach(item => {
+        const title = item.getAttribute('data-title') || '';
+        const tags = item.getAttribute('data-tags') || '';
+        const desc = item.getAttribute('data-desc') || '';
+        if (!q || title.includes(q) || tags.includes(q) || desc.includes(q)) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+    }
+
+    input?.addEventListener('input', (e) => {
+      filter((e.target as HTMLInputElement).value);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        if (isOpen) close();
+        else open();
+      } else if (e.key === 'Escape' && isOpen) {
+        close();
+      }
+    });
+
+    backdrop?.addEventListener('click', (e) => {
+      if (e.target === backdrop) close();
+    });
+
+    (window as any).openCommandPalette = open;
+    (window as any).closeCommandPalette = close;
+  }
+
+  setupCommandPalette();
+  document.addEventListener('astro:page-load', setupCommandPalette);
+</script>

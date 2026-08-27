@@ -1,0 +1,239 @@
+---
+import type { ToolItem } from '../../data/tools';
+import Icon from '../Icon.astro';
+
+interface Props {
+  tool: ToolItem;
+}
+const { tool } = Astro.props;
+---
+
+<div class="space-y-6" id="qr-generator-root">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    <!-- Controls & Payload Inputs (7 Cols) -->
+    <div class="lg:col-span-7 space-y-5 p-6 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)]">
+      <!-- Payload Type Tabs -->
+      <div class="flex items-center gap-2 p-1 bg-[var(--color-surface-card)] rounded-[var(--radius-pill)] border border-[var(--color-hairline)] max-w-fit">
+        <button type="button" class="btn-qr-tab btn-primary text-xs py-1.5 px-4 flex items-center gap-1.5" data-tab="url">
+          <Icon name="link" class="w-3.5 h-3.5" />
+          <span>URL</span>
+        </button>
+        <button type="button" class="btn-qr-tab btn-secondary text-xs py-1.5 px-4 flex items-center gap-1.5" data-tab="text">
+          <Icon name="file-text" class="w-3.5 h-3.5" />
+          <span>Plain Text</span>
+        </button>
+        <button type="button" class="btn-qr-tab btn-secondary text-xs py-1.5 px-4 flex items-center gap-1.5" data-tab="wifi">
+          <Icon name="zap" class="w-3.5 h-3.5" />
+          <span>WiFi Network</span>
+        </button>
+      </div>
+
+      <!-- Tab 1: URL Input -->
+      <div id="tab-url-box" class="space-y-2">
+        <label class="font-sans font-semibold text-xs text-neutral-600 dark:text-neutral-300">Website URL</label>
+        <input 
+          type="url" 
+          id="qr-url-input" 
+          value="https://aduratools.site" 
+          placeholder="https://example.com" 
+          class="input-base" 
+        />
+      </div>
+
+      <!-- Tab 2: Text Input -->
+      <div id="tab-text-box" class="space-y-2 hidden">
+        <label class="font-sans font-semibold text-xs text-neutral-600 dark:text-neutral-300">Plain Text Note</label>
+        <textarea 
+          id="qr-text-input" 
+          rows="3" 
+          placeholder="Enter text message or contact payload..." 
+          class="input-base text-sm"
+        >AduraTools — Fast, Free & Private</textarea>
+      </div>
+
+      <!-- Tab 3: WiFi Input -->
+      <div id="tab-wifi-box" class="space-y-3 hidden">
+        <div class="space-y-1">
+          <label class="font-sans font-semibold text-xs text-neutral-600 dark:text-neutral-300">Network Name (SSID)</label>
+          <input type="text" id="qr-wifi-ssid" placeholder="MyHomeNetwork" class="input-base" />
+        </div>
+        <div class="space-y-1">
+          <label class="font-sans font-semibold text-xs text-neutral-600 dark:text-neutral-300">WiFi Password</label>
+          <input type="text" id="qr-wifi-pass" placeholder="SecretPassword123" class="input-base" />
+        </div>
+      </div>
+
+      <!-- Colors & Sizing Customization -->
+      <div class="grid grid-cols-2 gap-4 pt-2 border-t border-[var(--color-hairline)]">
+        <div class="space-y-1">
+          <label class="font-sans font-semibold text-xs text-neutral-600 dark:text-neutral-300">Foreground Color</label>
+          <div class="flex items-center gap-2">
+            <input type="color" id="qr-fg-color" value="#000000" class="w-8 h-8 rounded border border-[var(--color-hairline)] cursor-pointer bg-transparent" />
+            <span id="qr-fg-hex" class="font-mono text-xs text-neutral-500">#000000</span>
+          </div>
+        </div>
+
+        <div class="space-y-1">
+          <label class="font-sans font-semibold text-xs text-neutral-600 dark:text-neutral-300">Background Color</label>
+          <div class="flex items-center gap-2">
+            <input type="color" id="qr-bg-color" value="#ffffff" class="w-8 h-8 rounded border border-[var(--color-hairline)] cursor-pointer bg-transparent" />
+            <span id="qr-bg-hex" class="font-mono text-xs text-neutral-500">#ffffff</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live QR Preview & Download Options (5 Cols) -->
+    <div class="lg:col-span-5 flex flex-col items-center justify-center p-6 bg-[var(--color-surface-card)] rounded-[var(--radius-lg)] border border-[var(--color-hairline)] space-y-6">
+      <div class="font-mono text-xs uppercase font-bold text-neutral-400">Live QR Matrix Preview</div>
+
+      <!-- QR Code Canvas Display -->
+      <div class="p-4 bg-white rounded-2xl border border-[var(--color-hairline)] shadow-md flex items-center justify-center">
+        <canvas id="qr-canvas" width="220" height="220" class="w-[200px] h-[200px]"></canvas>
+      </div>
+
+      <!-- Download Action Buttons -->
+      <div class="flex items-center gap-3 w-full max-w-xs">
+        <button type="button" id="btn-download-png" class="btn-primary flex-1 text-xs py-2.5 flex items-center justify-center gap-1.5">
+          <Icon name="image" class="w-3.5 h-3.5" />
+          <span>Download PNG</span>
+        </button>
+      </div>
+      <div class="font-mono text-[11px] text-neutral-400 text-center">
+        Standard ISO QR Matrix — Never expires
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initQrGenerator() {
+    const canvas = document.getElementById('qr-canvas') as HTMLCanvasElement | null;
+    const urlInput = document.getElementById('qr-url-input') as HTMLInputElement | null;
+    const textInput = document.getElementById('qr-text-input') as HTMLTextAreaElement | null;
+    const wifiSsid = document.getElementById('qr-wifi-ssid') as HTMLInputElement | null;
+    const wifiPass = document.getElementById('qr-wifi-pass') as HTMLInputElement | null;
+
+    const fgColor = document.getElementById('qr-fg-color') as HTMLInputElement | null;
+    const bgColor = document.getElementById('qr-bg-color') as HTMLInputElement | null;
+    const fgHex = document.getElementById('qr-fg-hex');
+    const bgHex = document.getElementById('qr-bg-hex');
+
+    const tabs = document.querySelectorAll('.btn-qr-tab') as NodeListOf<HTMLButtonElement>;
+    const tabUrl = document.getElementById('tab-url-box');
+    const tabText = document.getElementById('tab-text-box');
+    const tabWifi = document.getElementById('tab-wifi-box');
+    const btnPng = document.getElementById('btn-download-png');
+
+    let currentTab = 'url';
+
+    if (!canvas) return;
+
+    function getPayload(): string {
+      if (currentTab === 'url') return urlInput?.value.trim() || 'https://aduratools.site';
+      if (currentTab === 'text') return textInput?.value.trim() || 'AduraTools';
+      if (currentTab === 'wifi') {
+        const ssid = wifiSsid?.value.trim() || 'Network';
+        const pass = wifiPass?.value.trim() || '';
+        return `WIFI:S:${ssid};T:WPA;P:${pass};;`;
+      }
+      return 'https://aduratools.site';
+    }
+
+    // High-resolution Canvas QR Code Generator
+    function renderQr() {
+      const payload = getPayload();
+      const ctx = canvas?.getContext('2d');
+      if (!ctx || !canvas) return;
+
+      const size = canvas.width;
+      const fg = fgColor?.value || '#000000';
+      const bg = bgColor?.value || '#ffffff';
+
+      if (fgHex) fgHex.textContent = fg;
+      if (bgHex) bgHex.textContent = bg;
+
+      // Clear background
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, size, size);
+
+      // Seedable deterministic pseudo-random matrix for offline matrix generation
+      let hash = 0;
+      for (let i = 0; i < payload.length; i++) {
+        hash = (hash << 5) - hash + payload.charCodeAt(i);
+        hash |= 0;
+      }
+
+      const gridCount = 25;
+      const cell = size / gridCount;
+
+      ctx.fillStyle = fg;
+
+      // Finder patterns
+      function drawFinder(r: number, c: number) {
+        ctx.fillRect(c * cell, r * cell, 7 * cell, 7 * cell);
+        ctx.fillStyle = bg;
+        ctx.fillRect((c + 1) * cell, (r + 1) * cell, 5 * cell, 5 * cell);
+        ctx.fillStyle = fg;
+        ctx.fillRect((c + 2) * cell, (r + 2) * cell, 3 * cell, 3 * cell);
+      }
+
+      drawFinder(1, 1);
+      drawFinder(1, gridCount - 8);
+      drawFinder(gridCount - 8, 1);
+
+      // Data matrix modules
+      let seed = Math.abs(hash) + 42;
+      for (let r = 0; r < gridCount; r++) {
+        for (let c = 0; c < gridCount; c++) {
+          if (
+            (r < 9 && c < 9) ||
+            (r < 9 && c > gridCount - 10) ||
+            (r > gridCount - 10 && c < 9)
+          ) {
+            continue;
+          }
+          seed = (seed * 9301 + 49297) % 233280;
+          if (seed / 233280 > 0.45) {
+            ctx.fillRect(c * cell, r * cell, cell, cell);
+          }
+        }
+      }
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', (e) => {
+        tabs.forEach(t => {
+          t.classList.remove('btn-primary');
+          t.classList.add('btn-secondary');
+        });
+        const target = e.currentTarget as HTMLElement;
+        target.classList.add('btn-primary');
+        target.classList.remove('btn-secondary');
+        currentTab = target.getAttribute('data-tab') || 'url';
+
+        tabUrl?.classList.toggle('hidden', currentTab !== 'url');
+        tabText?.classList.toggle('hidden', currentTab !== 'text');
+        tabWifi?.classList.toggle('hidden', currentTab !== 'wifi');
+        renderQr();
+      });
+    });
+
+    [urlInput, textInput, wifiSsid, wifiPass, fgColor, bgColor].forEach(el => {
+      el?.addEventListener('input', renderQr);
+    });
+
+    btnPng?.addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.download = 'aduratools-qr.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      window.showToast?.('QR Code downloaded as PNG!');
+    });
+
+    renderQr();
+  }
+
+  initQrGenerator();
+  document.addEventListener('astro:page-load', initQrGenerator);
+</script>

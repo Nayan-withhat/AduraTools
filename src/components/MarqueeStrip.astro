@@ -1,0 +1,26 @@
+---
+import Icon from './Icon.astro';
+
+const items = [
+  { icon: 'shield-check', text: '100% Client-Side Runtime' },
+  { icon: 'lock', text: 'Zero Server Uploads' },
+  { icon: 'zap', text: 'Sub-Millisecond Execution' },
+  { icon: 'globe', text: 'Works Fully Offline' },
+  { icon: 'sparkles', text: '34+ Free Online Utilities' },
+  { icon: 'check', text: 'No Account Required' },
+  { icon: 'shield', text: 'Native Web Cryptography' },
+  { icon: 'cpu', text: 'Zero Telemetry & Tracking' },
+];
+---
+
+<div class="w-full overflow-hidden bg-[var(--color-inverse-canvas)] text-[var(--color-inverse-ink)] py-3 border-y border-[var(--color-hairline)] select-none">
+  <div class="animate-marquee flex items-center gap-8 whitespace-nowrap">
+    {items.concat(items).map((item) => (
+      <div class="flex items-center gap-2.5 font-mono text-xs uppercase tracking-wider font-semibold opacity-90 hover:opacity-100 transition-opacity">
+        <Icon name={item.icon} class="w-3.5 h-3.5 text-lime-400" />
+        <span>{item.text}</span>
+        <span class="text-neutral-500 font-normal ml-4">•</span>
+      </div>
+    ))}
+  </div>
+</div>

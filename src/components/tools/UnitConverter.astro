@@ -1,0 +1,219 @@
+---
+import type { ToolItem } from '../../data/tools';
+import Icon from '../Icon.astro';
+
+interface Props {
+  tool: ToolItem;
+}
+const { tool } = Astro.props;
+
+const categories = [
+  { id: 'length', label: 'Length', icon: 'ruler' },
+  { id: 'mass', label: 'Mass / Weight', icon: 'calculator' },
+  { id: 'temperature', label: 'Temperature', icon: 'zap' },
+  { id: 'storage', label: 'Digital Storage', icon: 'cpu' },
+  { id: 'area', label: 'Area', icon: 'layers' },
+  { id: 'speed', label: 'Speed', icon: 'sparkles' },
+];
+---
+
+<div class="space-y-6" id="unit-converter-root">
+  <!-- Unit Category Tabs -->
+  <div class="flex flex-wrap items-center gap-2 p-1.5 bg-[var(--color-surface-soft)] rounded-[var(--radius-lg)] border border-[var(--color-hairline)]">
+    {categories.map((cat, idx) => (
+      <button 
+        type="button" 
+        class={`btn-unit-cat text-xs py-2 px-4 rounded-full font-medium transition-all flex items-center gap-1.5 ${idx === 0 ? 'btn-primary' : 'btn-secondary'}`}
+        data-cat={cat.id}
+      >
+        <Icon name={cat.icon} class="w-3.5 h-3.5" />
+        <span>{cat.label}</span>
+      </button>
+    ))}
+  </div>
+
+  <!-- Interactive Conversion Workbench -->
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center p-6 bg-[var(--color-surface-card)] rounded-[var(--radius-lg)] border border-[var(--color-hairline)]">
+    <!-- From Pane (5 Cols) -->
+    <div class="md:col-span-5 space-y-3">
+      <label class="font-sans font-semibold text-xs text-neutral-600 dark:text-neutral-300">From</label>
+      <input type="number" id="unit-from-val" value="100" class="input-base font-mono text-xl font-bold p-3.5" />
+      <select id="unit-from-select" class="input-base font-medium text-sm"></select>
+    </div>
+
+    <!-- Swap Button (2 Cols) -->
+    <div class="md:col-span-2 flex justify-center py-2">
+      <button 
+        type="button" 
+        id="btn-swap-units" 
+        class="w-12 h-12 rounded-full bg-[var(--color-surface-soft)] hover:bg-[var(--color-surface-card)] border border-[var(--color-hairline)] hover:border-[var(--color-ink)] flex items-center justify-center transition-transform hover:rotate-180 duration-200 cursor-pointer shadow-xs text-[var(--color-ink)]"
+        title="Swap Units"
+      >
+        <Icon name="refresh" class="w-4 h-4" />
+      </button>
+    </div>
+
+    <!-- To Pane (5 Cols) -->
+    <div class="md:col-span-5 space-y-3">
+      <div class="flex items-center justify-between">
+        <label class="font-sans font-semibold text-xs text-neutral-600 dark:text-neutral-300">To (Result)</label>
+        <button type="button" id="btn-copy-result" class="btn-primary text-xs py-0.5 px-2.5 flex items-center gap-1">
+          <Icon name="copy" class="w-3 h-3" />
+          <span>Copy</span>
+        </button>
+      </div>
+      <input type="text" id="unit-to-val" readonly value="" class="input-base font-mono text-xl font-bold p-3.5 bg-[var(--color-surface-soft)]" />
+      <select id="unit-to-select" class="input-base font-medium text-sm"></select>
+    </div>
+  </div>
+
+  <!-- Formula Summary Note -->
+  <div class="p-4 bg-[var(--color-surface-soft)] rounded-[var(--radius-md)] border border-[var(--color-hairline)] flex items-center justify-between text-xs font-mono">
+    <span class="text-neutral-400">Conversion Formula:</span>
+    <span id="unit-formula-text" class="font-bold text-[var(--color-ink)]">100 Kilometers = 62.1371 Miles</span>
+  </div>
+</div>
+
+<script>
+  const UNIT_CONFIG: Record<string, { units: { id: string; name: string; toBase: (v: number) => number; fromBase: (v: number) => number }[] }> = {
+    length: {
+      units: [
+        { id: 'km', name: 'Kilometers (km)', toBase: v => v * 1000, fromBase: v => v / 1000 },
+        { id: 'm', name: 'Meters (m)', toBase: v => v, fromBase: v => v },
+        { id: 'cm', name: 'Centimeters (cm)', toBase: v => v / 100, fromBase: v => v * 100 },
+        { id: 'mm', name: 'Millimeters (mm)', toBase: v => v / 1000, fromBase: v => v * 1000 },
+        { id: 'mi', name: 'Miles (mi)', toBase: v => v * 1609.344, fromBase: v => v / 1609.344 },
+        { id: 'yd', name: 'Yards (yd)', toBase: v => v * 0.9144, fromBase: v => v / 0.9144 },
+        { id: 'ft', name: 'Feet (ft)', toBase: v => v * 0.3048, fromBase: v => v / 0.3048 },
+        { id: 'in', name: 'Inches (in)', toBase: v => v * 0.0254, fromBase: v => v / 0.0254 },
+      ]
+    },
+    mass: {
+      units: [
+        { id: 'kg', name: 'Kilograms (kg)', toBase: v => v, fromBase: v => v },
+        { id: 'g', name: 'Grams (g)', toBase: v => v / 1000, fromBase: v => v * 1000 },
+        { id: 'mg', name: 'Milligrams (mg)', toBase: v => v / 1e6, fromBase: v => v * 1e6 },
+        { id: 'lb', name: 'Pounds (lbs)', toBase: v => v * 0.45359237, fromBase: v => v / 0.45359237 },
+        { id: 'oz', name: 'Ounces (oz)', toBase: v => v * 0.028349523, fromBase: v => v / 0.028349523 },
+      ]
+    },
+    temperature: {
+      units: [
+        { id: 'c', name: 'Celsius (°C)', toBase: v => v, fromBase: v => v },
+        { id: 'f', name: 'Fahrenheit (°F)', toBase: v => (v - 32) * (5 / 9), fromBase: v => (v * 9 / 5) + 32 },
+        { id: 'k', name: 'Kelvin (K)', toBase: v => v - 273.15, fromBase: v => v + 273.15 },
+      ]
+    },
+    storage: {
+      units: [
+        { id: 'b', name: 'Bytes (B)', toBase: v => v, fromBase: v => v },
+        { id: 'kb', name: 'Kilobytes (KB)', toBase: v => v * 1024, fromBase: v => v / 1024 },
+        { id: 'mb', name: 'Megabytes (MB)', toBase: v => v * 1024 * 1024, fromBase: v => v / (1024 * 1024) },
+        { id: 'gb', name: 'Gigabytes (GB)', toBase: v => v * Math.pow(1024, 3), fromBase: v => v / Math.pow(1024, 3) },
+        { id: 'tb', name: 'Terabytes (TB)', toBase: v => v * Math.pow(1024, 4), fromBase: v => v / Math.pow(1024, 4) },
+      ]
+    },
+    area: {
+      units: [
+        { id: 'sqm', name: 'Square Meters (m²)', toBase: v => v, fromBase: v => v },
+        { id: 'sqkm', name: 'Square Kilometers (km²)', toBase: v => v * 1e6, fromBase: v => v / 1e6 },
+        { id: 'sqft', name: 'Square Feet (ft²)', toBase: v => v * 0.092903, fromBase: v => v / 0.092903 },
+        { id: 'acre', name: 'Acres', toBase: v => v * 4046.86, fromBase: v => v / 4046.86 },
+        { id: 'hectare', name: 'Hectares', toBase: v => v * 10000, fromBase: v => v / 10000 },
+      ]
+    },
+    speed: {
+      units: [
+        { id: 'kmh', name: 'Kilometers per Hour (km/h)', toBase: v => v / 3.6, fromBase: v => v * 3.6 },
+        { id: 'mph', name: 'Miles per Hour (mph)', toBase: v => v * 0.44704, fromBase: v => v / 0.44704 },
+        { id: 'ms', name: 'Meters per Second (m/s)', toBase: v => v, fromBase: v => v },
+        { id: 'knot', name: 'Knots (kn)', toBase: v => v * 0.514444, fromBase: v => v / 0.514444 },
+      ]
+    }
+  };
+
+  function initUnitConverter() {
+    const catButtons = document.querySelectorAll('.btn-unit-cat') as NodeListOf<HTMLButtonElement>;
+    const fromVal = document.getElementById('unit-from-val') as HTMLInputElement | null;
+    const toVal = document.getElementById('unit-to-val') as HTMLInputElement | null;
+    const fromSelect = document.getElementById('unit-from-select') as HTMLSelectElement | null;
+    const toSelect = document.getElementById('unit-to-select') as HTMLSelectElement | null;
+    const btnSwap = document.getElementById('btn-swap-units');
+    const formulaText = document.getElementById('unit-formula-text');
+    const btnCopy = document.getElementById('btn-copy-result');
+
+    let currentCat = 'length';
+
+    if (!fromVal || !toVal || !fromSelect || !toSelect) return;
+
+    function populateSelects(catKey: string) {
+      const cat = UNIT_CONFIG[catKey];
+      if (!cat) return;
+
+      fromSelect.innerHTML = cat.units.map(u => `<option value="${u.id}">${u.name}</option>`).join('');
+      toSelect.innerHTML = cat.units.map(u => `<option value="${u.id}">${u.name}</option>`).join('');
+
+      if (cat.units.length > 1) {
+        toSelect.selectedIndex = 1;
+      }
+      calculate();
+    }
+
+    function calculate() {
+      const val = parseFloat(fromVal?.value || '0');
+      const cat = UNIT_CONFIG[currentCat];
+      if (!cat) return;
+
+      const fromUnit = cat.units.find(u => u.id === fromSelect?.value);
+      const toUnit = cat.units.find(u => u.id === toSelect?.value);
+
+      if (!fromUnit || !toUnit) return;
+
+      const baseVal = fromUnit.toBase(val);
+      const finalVal = toUnit.fromBase(baseVal);
+
+      const formatted = Number.isInteger(finalVal) ? finalVal.toString() : parseFloat(finalVal.toFixed(6)).toString();
+      toVal.value = formatted;
+
+      if (formulaText) {
+        formulaText.textContent = `${val} ${fromUnit.name} = ${formatted} ${toUnit.name}`;
+      }
+    }
+
+    catButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        catButtons.forEach(b => {
+          b.classList.remove('btn-primary');
+          b.classList.add('btn-secondary');
+        });
+        const target = e.currentTarget as HTMLElement;
+        target.classList.add('btn-primary');
+        target.classList.remove('btn-secondary');
+        currentCat = target.getAttribute('data-cat') || 'length';
+        populateSelects(currentCat);
+      });
+    });
+
+    fromVal.addEventListener('input', calculate);
+    fromSelect.addEventListener('change', calculate);
+    toSelect.addEventListener('change', calculate);
+
+    btnSwap?.addEventListener('click', () => {
+      const temp = fromSelect.value;
+      fromSelect.value = toSelect.value;
+      toSelect.value = temp;
+      calculate();
+    });
+
+    btnCopy?.addEventListener('click', () => {
+      if (!toVal.value) return;
+      navigator.clipboard.writeText(toVal.value);
+      window.showToast?.('Result copied to clipboard!');
+    });
+
+    populateSelects('length');
+  }
+
+  initUnitConverter();
+  document.addEventListener('astro:page-load', initUnitConverter);
+</script>

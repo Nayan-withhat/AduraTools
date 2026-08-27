@@ -1,0 +1,103 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ToolCard from '../../components/ToolCard.astro';
+import Icon from '../../components/Icon.astro';
+import { CATEGORIES, type Category } from '../../data/categories';
+import { getToolsByCategory } from '../../data/tools';
+
+export function getStaticPaths() {
+  return CATEGORIES.map(cat => ({
+    params: { category: cat.slug },
+    props: { category: cat }
+  }));
+}
+
+interface Props {
+  category: Category;
+}
+
+const { category } = Astro.props;
+const categoryTools = getToolsByCategory(category.id);
+---
+
+<Layout 
+  title={`${category.name} — Free Online Tools | AduraTools`}
+  description={category.description}
+>
+  <div class="max-w-[1280px] mx-auto py-10 px-4 sm:px-6 lg:px-8 space-y-12">
+    <!-- Breadcrumbs -->
+    <nav class="flex items-center gap-2 font-mono text-xs text-neutral-400" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-[var(--color-ink)] text-decoration-none transition-colors">Home</a>
+      <span>/</span>
+      <a href="/all-tools" class="hover:text-[var(--color-ink)] text-decoration-none transition-colors">Categories</a>
+      <span>/</span>
+      <span class="text-[var(--color-ink)] font-semibold">{category.name}</span>
+    </nav>
+
+    <!-- Category Header Banner -->
+    <div 
+      class="p-8 sm:p-12 rounded-[var(--radius-xl)] border border-black/10 dark:border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
+      style={`background-color: ${category.badgeBg}; color: #000000;`}
+    >
+      <div class="space-y-3 max-w-2xl">
+        <div class="inline-flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider opacity-80">
+          <Icon name={category.icon} class="w-4 h-4" />
+          <span>Category Hub</span>
+          <span>•</span>
+          <span>{categoryTools.length} Active Tools</span>
+        </div>
+        <h1 class="font-display-lg text-4xl sm:text-5xl font-bold tracking-tight text-black">
+          {category.name}
+        </h1>
+        <p class="font-body text-base sm:text-lg leading-relaxed text-black/80">
+          {category.longDescription}
+        </p>
+      </div>
+
+      <div class="p-4 bg-white/90 backdrop-blur-xs rounded-2xl border border-black/10 text-black text-center min-w-[140px] shrink-0 shadow-sm">
+        <div class="font-sans font-bold text-3xl">{categoryTools.length}</div>
+        <div class="font-mono text-[11px] uppercase text-neutral-600 font-semibold">Ready to Use</div>
+      </div>
+    </div>
+
+    <!-- Category Tools Grid -->
+    <div class="space-y-6">
+      <div class="flex items-center justify-between border-b border-[var(--color-hairline)] pb-4">
+        <h2 class="font-card-title text-2xl text-[var(--color-ink)]">
+          All {category.name}
+        </h2>
+        <span class="font-mono text-xs text-neutral-400">
+          Showing {categoryTools.length} tools
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        {categoryTools.map(tool => (
+          <ToolCard tool={tool} />
+        ))}
+      </div>
+    </div>
+
+    <!-- Other Categories Cross-Navigation -->
+    <div class="p-8 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-6">
+      <div class="flex items-center justify-between">
+        <h3 class="font-card-title text-xl text-[var(--color-ink)]">Explore Other Disciplines</h3>
+        <a href="/all-tools" class="font-sans text-sm font-semibold text-[var(--color-ink)] hover:underline">View All →</a>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        {CATEGORIES.filter(c => c.id !== category.id).map(other => (
+          <a 
+            href={`/categories/${other.slug}`}
+            class="p-3 bg-[var(--color-surface-card)] rounded-[var(--radius-md)] border border-[var(--color-hairline)] hover:border-[var(--color-ink)] text-center text-decoration-none transition-all hover:-translate-y-0.5 space-y-1 block"
+          >
+            <div class="flex justify-center mb-1 text-[var(--color-ink)]">
+              <Icon name={other.icon} class="w-4 h-4 text-neutral-400" />
+            </div>
+            <div class="font-sans font-semibold text-xs text-[var(--color-ink)]">{other.shortName}</div>
+            <div class="font-mono text-[10px] text-neutral-400">{other.toolCount} tools</div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</Layout>

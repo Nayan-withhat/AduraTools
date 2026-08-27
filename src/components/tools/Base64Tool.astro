@@ -1,0 +1,191 @@
+---
+import type { ToolItem } from '../../data/tools';
+import Icon from '../Icon.astro';
+
+interface Props {
+  tool: ToolItem;
+}
+const { tool } = Astro.props;
+---
+
+<div class="space-y-6" id="base64-root">
+  <!-- Mode Selection Toolbar -->
+  <div class="flex flex-wrap items-center justify-between gap-3 p-3 bg-[var(--color-surface-soft)] rounded-[var(--radius-md)] border border-[var(--color-hairline)]">
+    <!-- Encode / Decode Switcher -->
+    <div class="flex items-center gap-2">
+      <button type="button" id="btn-mode-encode" class="btn-primary text-xs py-1.5 px-4 flex items-center gap-1.5">
+        <Icon name="lock" class="w-3.5 h-3.5" />
+        <span>Encode to Base64</span>
+      </button>
+      <button type="button" id="btn-mode-decode" class="btn-secondary text-xs py-1.5 px-4 flex items-center gap-1.5">
+        <Icon name="key" class="w-3.5 h-3.5" />
+        <span>Decode from Base64</span>
+      </button>
+    </div>
+
+    <!-- Options & Sample -->
+    <div class="flex items-center gap-3">
+      <label class="flex items-center gap-1.5 text-xs font-mono text-neutral-600 dark:text-neutral-300 cursor-pointer">
+        <input type="checkbox" id="opt-urlsafe" class="rounded border-neutral-300 accent-[var(--color-primary)] w-3.5 h-3.5" />
+        <span>URL-Safe Base64</span>
+      </label>
+      <button type="button" id="btn-load-sample" class="btn-secondary text-xs py-1.5 px-3 flex items-center gap-1.5">
+        <Icon name="sparkles" class="w-3.5 h-3.5" />
+        <span>Load Sample</span>
+      </button>
+      <button type="button" id="btn-clear" class="btn-secondary text-xs py-1.5 px-3 text-red-500 hover:text-red-600 flex items-center gap-1.5">
+        <Icon name="trash" class="w-3.5 h-3.5" />
+        <span>Clear</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Dual Input / Output Layout -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Input Editor -->
+    <div class="flex flex-col space-y-2">
+      <div class="flex items-center justify-between text-xs font-mono text-neutral-400">
+        <span id="input-label" class="font-bold uppercase tracking-wider text-[var(--color-ink)]">Plain Text Input</span>
+        <span id="input-chars">0 chars</span>
+      </div>
+      <textarea 
+        id="base64-input" 
+        rows="12" 
+        placeholder="Enter text to convert..." 
+        class="input-base textarea-code flex-1 font-mono text-sm leading-relaxed p-4 bg-[var(--color-surface-card)] text-[var(--color-ink)] border border-[var(--color-hairline)] rounded-[var(--radius-md)] resize-y outline-none"
+      >{tool.sampleInput || ''}</textarea>
+    </div>
+
+    <!-- Output Editor -->
+    <div class="flex flex-col space-y-2">
+      <div class="flex items-center justify-between text-xs font-mono text-neutral-400">
+        <span id="output-label" class="font-bold uppercase tracking-wider text-[var(--color-ink)]">Base64 Encoded Output</span>
+        <button type="button" id="btn-copy-output" class="btn-primary text-xs py-1 px-3 flex items-center gap-1.5">
+          <Icon name="copy" class="w-3 h-3" />
+          <span>Copy</span>
+        </button>
+      </div>
+      <textarea 
+        id="base64-output" 
+        rows="12" 
+        readonly 
+        placeholder="Converted output will appear here..." 
+        class="input-base textarea-code flex-1 font-mono text-sm leading-relaxed p-4 bg-[var(--color-surface-soft)] text-[var(--color-ink)] border border-[var(--color-hairline)] rounded-[var(--radius-md)] resize-y outline-none"
+      ></textarea>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initBase64Tool() {
+    const input = document.getElementById('base64-input') as HTMLTextAreaElement | null;
+    const output = document.getElementById('base64-output') as HTMLTextAreaElement | null;
+    const btnEncode = document.getElementById('btn-mode-encode');
+    const btnDecode = document.getElementById('btn-mode-decode');
+    const optUrlSafe = document.getElementById('opt-urlsafe') as HTMLInputElement | null;
+    const btnSample = document.getElementById('btn-load-sample');
+    const btnClear = document.getElementById('btn-clear');
+    const btnCopy = document.getElementById('btn-copy-output');
+    const inLabel = document.getElementById('input-label');
+    const outLabel = document.getElementById('output-label');
+    const inChars = document.getElementById('input-chars');
+
+    let mode: 'encode' | 'decode' = 'encode';
+
+    if (!input || !output) return;
+
+    // UTF-8 safe Base64 encoding
+    function utf8ToBase64(str: string, urlSafe: boolean): string {
+      const bytes = new TextEncoder().encode(str);
+      const binString = Array.from(bytes, (byte) => String.fromCharCode(byte)).join("");
+      let base64 = btoa(binString);
+      if (urlSafe) {
+        base64 = base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      }
+      return base64;
+    }
+
+    // UTF-8 safe Base64 decoding
+    function base64ToUtf8(str: string): string {
+      let clean = str.trim().replace(/-/g, '+').replace(/_/g, '/');
+      while (clean.length % 4) {
+        clean += '=';
+      }
+      const binString = atob(clean);
+      const bytes = Uint8Array.from(binString, (m) => m.charCodeAt(0));
+      return new TextDecoder().decode(bytes);
+    }
+
+    function process() {
+      const raw = input.value;
+      if (inChars) inChars.textContent = `${raw.length} chars`;
+
+      if (!raw.trim()) {
+        output.value = '';
+        return;
+      }
+
+      try {
+        if (mode === 'encode') {
+          output.value = utf8ToBase64(raw, optUrlSafe?.checked || false);
+        } else {
+          output.value = base64ToUtf8(raw);
+        }
+      } catch (err: any) {
+        output.value = `Decoding Error: Invalid Base64 character sequence (${err.message})`;
+      }
+    }
+
+    btnEncode?.addEventListener('click', () => {
+      mode = 'encode';
+      btnEncode.classList.add('btn-primary');
+      btnEncode.classList.remove('btn-secondary');
+      btnDecode?.classList.remove('btn-primary');
+      btnDecode?.classList.add('btn-secondary');
+      if (inLabel) inLabel.textContent = 'Plain Text Input';
+      if (outLabel) outLabel.textContent = 'Base64 Encoded Output';
+      process();
+    });
+
+    btnDecode?.addEventListener('click', () => {
+      mode = 'decode';
+      btnDecode.classList.add('btn-primary');
+      btnDecode.classList.remove('btn-secondary');
+      btnEncode?.classList.remove('btn-primary');
+      btnEncode?.classList.add('btn-secondary');
+      if (inLabel) inLabel.textContent = 'Base64 String Input';
+      if (outLabel) outLabel.textContent = 'Decoded Text Output';
+      process();
+    });
+
+    input.addEventListener('input', process);
+    optUrlSafe?.addEventListener('change', process);
+
+    btnSample?.addEventListener('click', () => {
+      if (mode === 'encode') {
+        input.value = 'AduraTools — Privacy-First Web Utilities';
+      } else {
+        input.value = 'QWR1cmFUb29scyDigJQgUHJpdmFjeS1GaXJzdCBXZWIgVXRpbGl0aWVz';
+      }
+      process();
+      window.showToast?.('Sample loaded');
+    });
+
+    btnClear?.addEventListener('click', () => {
+      input.value = '';
+      output.value = '';
+      input.focus();
+    });
+
+    btnCopy?.addEventListener('click', () => {
+      if (!output.value) return;
+      navigator.clipboard.writeText(output.value);
+      window.showToast?.('Output copied to clipboard!');
+    });
+
+    process();
+  }
+
+  initBase64Tool();
+  document.addEventListener('astro:page-load', initBase64Tool);
+</script>

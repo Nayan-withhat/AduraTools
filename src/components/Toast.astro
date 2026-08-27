@@ -1,0 +1,43 @@
+---
+---
+
+<div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none">
+</div>
+
+<script>
+  declare global {
+    interface Window {
+      showToast: (message: string, type?: 'success' | 'info' | 'error') => void;
+    }
+  }
+
+  window.showToast = (message: string, type: 'success' | 'info' | 'error' = 'success') => {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+
+    const toast = document.createElement('div');
+    toast.className = `px-4 py-2.5 rounded-full font-sans text-[14px] font-medium shadow-xl border flex items-center gap-2 transform translate-y-4 opacity-0 transition-all duration-200 pointer-events-auto ${
+      type === 'success' 
+        ? 'bg-black text-white border-neutral-800' 
+        : type === 'error'
+        ? 'bg-red-900 text-white border-red-700'
+        : 'bg-white text-black border-neutral-200'
+    }`;
+
+    const icon = type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ';
+    toast.innerHTML = `<span class="font-mono font-bold text-xs">${icon}</span><span>${message}</span>`;
+
+    container.appendChild(toast);
+
+    requestAnimationFrame(() => {
+      toast.classList.remove('translate-y-4', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+    });
+
+    setTimeout(() => {
+      toast.classList.remove('translate-y-0', 'opacity-100');
+      toast.classList.add('translate-y-4', 'opacity-0');
+      setTimeout(() => toast.remove(), 200);
+    }, 2500);
+  };
+</script>

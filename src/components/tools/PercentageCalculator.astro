@@ -1,0 +1,149 @@
+---
+import type { ToolItem } from '../../data/tools';
+import Icon from '../Icon.astro';
+
+interface Props {
+  tool: ToolItem;
+}
+const { tool } = Astro.props;
+---
+
+<div class="space-y-6" id="percentage-calc-root">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Mode 1: What is X% of Y? -->
+    <div class="p-5 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <div class="font-mono text-xs uppercase font-bold text-neutral-400">1. Basic Percentage</div>
+        <div class="font-sans font-bold text-sm text-[var(--color-ink)]">What is <span class="text-green-600 dark:text-green-400">X%</span> of <span class="text-green-600 dark:text-green-400">Y</span>?</div>
+        
+        <div class="space-y-2">
+          <div class="flex items-center gap-2">
+            <input type="number" id="pct1-x" value="25" class="input-base text-sm font-mono font-bold" placeholder="X" />
+            <span class="font-mono font-bold text-neutral-400 text-sm">% of</span>
+            <input type="number" id="pct1-y" value="480" class="input-base text-sm font-mono font-bold" placeholder="Y" />
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-[var(--color-hairline)] space-y-1">
+        <div class="font-mono text-[11px] text-neutral-400">Result:</div>
+        <div id="pct1-res" class="font-sans font-extrabold text-3xl text-[var(--color-ink)]">120</div>
+        <div id="pct1-formula" class="font-mono text-[11px] text-neutral-400">(25 / 100) * 480 = 120</div>
+      </div>
+    </div>
+
+    <!-- Mode 2: X is what % of Y? -->
+    <div class="p-5 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <div class="font-mono text-xs uppercase font-bold text-neutral-400">2. Proportion Ratio</div>
+        <div class="font-sans font-bold text-sm text-[var(--color-ink)]"><span class="text-blue-600 dark:text-blue-400">X</span> is what percentage of <span class="text-blue-600 dark:text-blue-400">Y</span>?</div>
+
+        <div class="space-y-2">
+          <div class="flex items-center gap-2">
+            <input type="number" id="pct2-x" value="45" class="input-base text-sm font-mono font-bold" placeholder="X" />
+            <span class="font-mono font-bold text-neutral-400 text-sm">is of</span>
+            <input type="number" id="pct2-y" value="180" class="input-base text-sm font-mono font-bold" placeholder="Y" />
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-[var(--color-hairline)] space-y-1">
+        <div class="font-mono text-[11px] text-neutral-400">Result:</div>
+        <div id="pct2-res" class="font-sans font-extrabold text-3xl text-[var(--color-ink)]">25%</div>
+        <div id="pct2-formula" class="font-mono text-[11px] text-neutral-400">(45 / 180) * 100 = 25%</div>
+      </div>
+    </div>
+
+    <!-- Mode 3: Percentage Increase / Decrease -->
+    <div class="p-5 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <div class="font-mono text-xs uppercase font-bold text-neutral-400">3. Difference / Growth</div>
+        <div class="font-sans font-bold text-sm text-[var(--color-ink)]">% change from <span class="text-purple-600 dark:text-purple-400">X</span> to <span class="text-purple-600 dark:text-purple-400">Y</span>?</div>
+
+        <div class="space-y-2">
+          <div class="flex items-center gap-2">
+            <input type="number" id="pct3-x" value="50" class="input-base text-sm font-mono font-bold" placeholder="From" />
+            <span class="font-mono font-bold text-neutral-400 text-sm">to</span>
+            <input type="number" id="pct3-y" value="75" class="input-base text-sm font-mono font-bold" placeholder="To" />
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-[var(--color-hairline)] space-y-1">
+        <div class="font-mono text-[11px] text-neutral-400">Result:</div>
+        <div id="pct3-res" class="font-sans font-extrabold text-3xl text-green-600 dark:text-green-400">+50%</div>
+        <div id="pct3-formula" class="font-mono text-[11px] text-neutral-400">((75 - 50) / 50) * 100 = +50%</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initPercentageCalc() {
+    const p1x = document.getElementById('pct1-x') as HTMLInputElement | null;
+    const p1y = document.getElementById('pct1-y') as HTMLInputElement | null;
+    const p1res = document.getElementById('pct1-res');
+    const p1form = document.getElementById('pct1-formula');
+
+    const p2x = document.getElementById('pct2-x') as HTMLInputElement | null;
+    const p2y = document.getElementById('pct2-y') as HTMLInputElement | null;
+    const p2res = document.getElementById('pct2-res');
+    const p2form = document.getElementById('pct2-formula');
+
+    const p3x = document.getElementById('pct3-x') as HTMLInputElement | null;
+    const p3y = document.getElementById('pct3-y') as HTMLInputElement | null;
+    const p3res = document.getElementById('pct3-res');
+    const p3form = document.getElementById('pct3-formula');
+
+    function calc1() {
+      const x = parseFloat(p1x?.value || '0');
+      const y = parseFloat(p1y?.value || '0');
+      const res = (x / 100) * y;
+      if (p1res) p1res.textContent = Number.isInteger(res) ? res.toString() : res.toFixed(2);
+      if (p1form) p1form.textContent = `(${x} / 100) * ${y} = ${res}`;
+    }
+
+    function calc2() {
+      const x = parseFloat(p2x?.value || '0');
+      const y = parseFloat(p2y?.value || '0');
+      if (y === 0) {
+        if (p2res) p2res.textContent = '0%';
+        return;
+      }
+      const res = (x / y) * 100;
+      if (p2res) p2res.textContent = `${Number.isInteger(res) ? res.toString() : res.toFixed(2)}%`;
+      if (p2form) p2form.textContent = `(${x} / ${y}) * 100 = ${res.toFixed(2)}%`;
+    }
+
+    function calc3() {
+      const x = parseFloat(p3x?.value || '0');
+      const y = parseFloat(p3y?.value || '0');
+      if (x === 0) {
+        if (p3res) p3res.textContent = '0%';
+        return;
+      }
+      const diff = y - x;
+      const res = (diff / Math.abs(x)) * 100;
+      const sign = res > 0 ? '+' : '';
+      if (p3res) {
+        p3res.textContent = `${sign}${Number.isInteger(res) ? res.toString() : res.toFixed(2)}%`;
+        p3res.className = res >= 0 ? 'font-sans font-extrabold text-3xl text-green-600 dark:text-green-400' : 'font-sans font-extrabold text-3xl text-red-600 dark:text-red-400';
+      }
+      if (p3form) p3form.textContent = `((${y} - ${x}) / ${x}) * 100 = ${sign}${res.toFixed(2)}%`;
+    }
+
+    p1x?.addEventListener('input', calc1);
+    p1y?.addEventListener('input', calc1);
+    p2x?.addEventListener('input', calc2);
+    p2y?.addEventListener('input', calc2);
+    p3x?.addEventListener('input', calc3);
+    p3y?.addEventListener('input', calc3);
+
+    calc1();
+    calc2();
+    calc3();
+  }
+
+  initPercentageCalc();
+  document.addEventListener('astro:page-load', initPercentageCalc);
+</script>

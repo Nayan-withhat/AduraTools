@@ -1,0 +1,139 @@
+---
+import {
+  Code,
+  CodeXml,
+  FileCode,
+  FileText,
+  Binary,
+  Key,
+  QrCode,
+  Percent,
+  Palette,
+  Ruler,
+  GitCompare,
+  Sparkles,
+  Calculator,
+  Shield,
+  ShieldCheck,
+  Clock,
+  Search,
+  Copy,
+  Trash2,
+  Play,
+  Check,
+  RotateCcw,
+  Lock,
+  Link,
+  Tag,
+  Globe,
+  Sliders,
+  ArrowRight,
+  ChevronDown,
+  Layers,
+  Cpu,
+  Image,
+  Sun,
+  Moon,
+  Sparkle,
+  Zap,
+  CheckCircle2,
+  Calendar,
+  Home,
+  RefreshCw,
+  Scissors,
+  Eraser,
+  Type,
+  TrendingUp,
+  FileSearch,
+  Scale,
+  DollarSign,
+  Maximize2,
+  Bot
+} from '@lucide/astro';
+
+interface Props {
+  name: string;
+  class?: string;
+  size?: number | string;
+}
+
+const { name, class: className = 'w-5 h-5', size = 20 } = Astro.props;
+
+const iconMap: Record<string, any> = {
+  // Developer
+  'code': Code,
+  'code-xml': CodeXml,
+  'file-code': FileCode,
+  'binary': Binary,
+  'jwt': Lock,
+  'regex': FileSearch,
+  'hash': Tag,
+  'uuid': Cpu,
+  'timestamp': Clock,
+  'minifier': Zap,
+  'terminal': Code,
+
+  // Text
+  'type': Type,
+  'file-text': FileText,
+  'case': Type,
+  'lorem': FileText,
+  'diff': GitCompare,
+  'slug': Link,
+  'duplicate': Scissors,
+  'reverser': RotateCcw,
+  'whitespace': Eraser,
+
+  // Calculators & Math
+  'calculator': Calculator,
+  'percent': Percent,
+  'compound': TrendingUp,
+  'bmi': Scale,
+  'age': Calendar,
+  'mortgage': Home,
+
+  // Converters
+  'ruler': Ruler,
+  'palette': Palette,
+  'refresh': RefreshCw,
+  'number-base': Binary,
+
+  // Image
+  'image': Image,
+  'compress': Maximize2,
+  'resize': Maximize2,
+
+  // SEO & Web
+  'search': Search,
+  'meta': Globe,
+  'serp': FileSearch,
+  'robots': Bot,
+
+  // Security
+  'shield': Shield,
+  'shield-check': ShieldCheck,
+  'key': Key,
+  'qr-code': QrCode,
+
+  // UI Icons
+  'sun': Sun,
+  'moon': Moon,
+  'copy': Copy,
+  'trash': Trash2,
+  'check': Check,
+  'check-circle': CheckCircle2,
+  'arrow-right': ArrowRight,
+  'chevron-down': ChevronDown,
+  'sparkles': Sparkles,
+  'sparkle': Sparkle,
+  'zap': Zap,
+  'layers': Layers,
+  'clock': Clock,
+  'lock': Lock,
+  'globe': Globe,
+};
+
+const IconComponent = iconMap[name.toLowerCase()] || Code;
+---
+
+<IconComponent class={className} size={size} />

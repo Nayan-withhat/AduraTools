@@ -1,0 +1,210 @@
+---
+import type { ToolItem } from '../../data/tools';
+import Icon from '../Icon.astro';
+
+interface Props {
+  tool: ToolItem;
+}
+const { tool } = Astro.props;
+---
+
+<div class="space-y-6" id="meta-tag-root">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <!-- Form Inputs (6 Cols) -->
+    <div class="lg:col-span-6 space-y-4">
+      <div class="space-y-1">
+        <div class="flex justify-between text-xs font-semibold">
+          <span class="text-[var(--color-ink)]">Site / Page Title</span>
+          <span id="title-counter" class="font-mono text-neutral-400">0/60 chars</span>
+        </div>
+        <input 
+          type="text" 
+          id="meta-title" 
+          value="AduraTools — Fast, Free & Private Online Tools Platform" 
+          class="input-base" 
+          placeholder="Catchy, SEO-optimized page title..." 
+        />
+      </div>
+
+      <div class="space-y-1">
+        <div class="flex justify-between text-xs font-semibold">
+          <span class="text-[var(--color-ink)]">Meta Description</span>
+          <span id="desc-counter" class="font-mono text-neutral-400">0/160 chars</span>
+        </div>
+        <textarea 
+          id="meta-desc" 
+          rows="3" 
+          class="input-base text-sm" 
+          placeholder="Compelling description summarizing page content..."
+        >30+ free, fast, and privacy-first online tools for developers, text manipulation, math calculators, unit converters, and SEO utilities. 100% in-browser.</textarea>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="space-y-1">
+          <label class="font-sans font-semibold text-xs text-neutral-600 dark:text-neutral-300">Canonical URL</label>
+          <input type="url" id="meta-url" value="https://aduratools.site" class="input-base" />
+        </div>
+        <div class="space-y-1">
+          <label class="font-sans font-semibold text-xs text-neutral-600 dark:text-neutral-300">Open Graph Image URL</label>
+          <input type="url" id="meta-image" value="https://aduratools.site/og-image.png" class="input-base" />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="space-y-1">
+          <label class="font-sans font-semibold text-xs text-neutral-600 dark:text-neutral-300">Author / Brand</label>
+          <input type="text" id="meta-author" value="AduraTools" class="input-base" />
+        </div>
+        <div class="space-y-1">
+          <label class="font-sans font-semibold text-xs text-neutral-600 dark:text-neutral-300">Twitter Handle</label>
+          <input type="text" id="meta-twitter" value="@aduratools" class="input-base" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Social Previews (6 Cols) -->
+    <div class="lg:col-span-6 space-y-4">
+      <div class="font-mono text-xs uppercase font-bold text-neutral-400">Live Search & Social Previews</div>
+
+      <!-- Google SERP Snippet Preview -->
+      <div class="p-4 bg-[var(--color-surface-card)] rounded-[var(--radius-lg)] border border-[var(--color-hairline)] space-y-1 shadow-xs">
+        <div class="flex items-center gap-2 text-xs text-neutral-500">
+          <span class="w-4 h-4 rounded-full bg-[var(--color-surface-soft)] flex items-center justify-center text-neutral-400">
+            <Icon name="globe" class="w-3 h-3" />
+          </span>
+          <span id="serp-preview-url" class="truncate font-mono text-[11px]">https://aduratools.site</span>
+        </div>
+        <div id="serp-preview-title" class="text-blue-600 dark:text-blue-400 font-sans font-medium text-base hover:underline cursor-pointer line-clamp-1">
+          AduraTools — Fast, Free & Private Online Tools Platform
+        </div>
+        <div id="serp-preview-desc" class="text-neutral-500 text-xs leading-relaxed line-clamp-2">
+          30+ free, fast, and privacy-first online tools for developers, text manipulation, math calculators, unit converters, and SEO utilities. 100% in-browser.
+        </div>
+      </div>
+
+      <!-- Twitter / Social Large Card Preview -->
+      <div class="bg-[var(--color-surface-card)] rounded-[var(--radius-lg)] border border-[var(--color-hairline)] overflow-hidden shadow-xs">
+        <div class="w-full h-28 bg-[var(--color-surface-soft)] flex items-center justify-center text-neutral-400 font-mono text-xs border-b border-[var(--color-hairline)]">
+          [ 1200 x 630 OpenGraph Image Preview ]
+        </div>
+        <div class="p-3.5 space-y-1">
+          <div id="social-preview-domain" class="font-mono text-[11px] text-neutral-400 uppercase">aduratools.site</div>
+          <div id="social-preview-title" class="font-sans font-bold text-sm text-[var(--color-ink)] line-clamp-1">
+            AduraTools — Fast, Free & Private Online Tools Platform
+          </div>
+          <div id="social-preview-desc" class="font-sans text-xs text-neutral-500 line-clamp-2">
+            30+ free, fast, and privacy-first online tools for developers, text manipulation, math calculators, unit converters, and SEO utilities.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Generated HTML Tags Output -->
+  <div class="p-5 bg-[var(--color-surface-soft)] rounded-[var(--radius-lg)] border border-[var(--color-hairline)] space-y-2">
+    <div class="flex items-center justify-between">
+      <span class="font-mono text-xs uppercase font-bold text-neutral-400">Generated HTML Meta Tags (Paste in &lt;head&gt;)</span>
+      <button type="button" id="btn-copy-meta-tags" class="btn-primary text-xs py-1 px-3.5 flex items-center gap-1.5">
+        <Icon name="copy" class="w-3 h-3" />
+        <span>Copy All Tags</span>
+      </button>
+    </div>
+    <textarea 
+      id="meta-tags-output" 
+      rows="7" 
+      readonly 
+      class="input-base textarea-code w-full p-3 bg-[var(--color-surface-card)] text-[var(--color-ink)] font-mono text-xs outline-none"
+    ></textarea>
+  </div>
+</div>
+
+<script>
+  function initMetaTagGen() {
+    const title = document.getElementById('meta-title') as HTMLInputElement | null;
+    const desc = document.getElementById('meta-desc') as HTMLTextAreaElement | null;
+    const url = document.getElementById('meta-url') as HTMLInputElement | null;
+    const image = document.getElementById('meta-image') as HTMLInputElement | null;
+    const author = document.getElementById('meta-author') as HTMLInputElement | null;
+    const twitter = document.getElementById('meta-twitter') as HTMLInputElement | null;
+
+    const serpTitle = document.getElementById('serp-preview-title');
+    const serpDesc = document.getElementById('serp-preview-desc');
+    const serpUrl = document.getElementById('serp-preview-url');
+
+    const socTitle = document.getElementById('social-preview-title');
+    const socDesc = document.getElementById('social-preview-desc');
+    const socDomain = document.getElementById('social-preview-domain');
+
+    const titleCount = document.getElementById('title-counter');
+    const descCount = document.getElementById('desc-counter');
+    const tagsOutput = document.getElementById('meta-tags-output') as HTMLTextAreaElement | null;
+    const btnCopy = document.getElementById('btn-copy-meta-tags');
+
+    if (!title || !desc || !tagsOutput) return;
+
+    function update() {
+      const t = title.value.trim() || 'Website Title';
+      const d = desc.value.trim() || 'Website description...';
+      const u = url?.value.trim() || 'https://example.com';
+      const img = image?.value.trim() || 'https://example.com/og-image.png';
+      const auth = author?.value.trim() || 'AduraTools';
+      const tw = twitter?.value.trim() || '@twitter';
+
+      if (titleCount) titleCount.textContent = `${t.length}/60 chars`;
+      if (descCount) descCount.textContent = `${d.length}/160 chars`;
+
+      if (serpTitle) serpTitle.textContent = t;
+      if (serpDesc) serpDesc.textContent = d;
+      if (serpUrl) serpUrl.textContent = u;
+
+      if (socTitle) socTitle.textContent = t;
+      if (socDesc) socDesc.textContent = d;
+      try {
+        if (socDomain) socDomain.textContent = new URL(u).hostname;
+      } catch {
+        if (socDomain) socDomain.textContent = 'aduratools.site';
+      }
+
+      const tags = `<!-- Primary Meta Tags -->
+<title>${t}</title>
+<meta name="title" content="${t}" />
+<meta name="description" content="${d}" />
+<meta name="author" content="${auth}" />
+<link rel="canonical" href="${u}" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="${u}" />
+<meta property="og:title" content="${t}" />
+<meta property="og:description" content="${d}" />
+<meta property="og:image" content="${img}" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content="${u}" />
+<meta property="twitter:title" content="${t}" />
+<meta property="twitter:description" content="${d}" />
+<meta property="twitter:image" content="${img}" />
+<meta property="twitter:creator" content="${tw}" />`;
+
+      tagsOutput.value = tags;
+    }
+
+    title.addEventListener('input', update);
+    desc.addEventListener('input', update);
+    url?.addEventListener('input', update);
+    image?.addEventListener('input', update);
+    author?.addEventListener('input', update);
+    twitter?.addEventListener('input', update);
+
+    btnCopy?.addEventListener('click', () => {
+      navigator.clipboard.writeText(tagsOutput.value);
+      window.showToast?.('Meta tags copied to clipboard!');
+    });
+
+    update();
+  }
+
+  initMetaTagGen();
+  document.addEventListener('astro:page-load', initMetaTagGen);
+</script>

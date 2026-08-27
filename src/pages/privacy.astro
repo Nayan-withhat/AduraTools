@@ -1,0 +1,87 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ColorBlockSection from '../components/ColorBlockSection.astro';
+import Icon from '../components/Icon.astro';
+---
+
+<Layout 
+  title="Privacy Manifesto & Zero-Data Policy — AduraTools"
+  description="Learn why AduraTools is 100% private, client-side, and zero-telemetry. We never store, transmit, or monetize your data."
+>
+  <div class="max-w-[1000px] mx-auto py-14 px-4 sm:px-6 lg:px-8 space-y-12">
+    <!-- Header -->
+    <div class="space-y-4">
+      <div class="inline-flex items-center gap-2 font-mono text-xs uppercase px-3 py-1 rounded-full bg-[var(--color-block-lime)] text-black font-semibold border border-black/10">
+        <Icon name="lock" class="w-3.5 h-3.5" />
+        <span>Zero Server Uploads</span>
+        <span>•</span>
+        <span>100% In-Browser</span>
+      </div>
+      <h1 class="font-display-lg text-4xl sm:text-5xl text-[var(--color-ink)]">
+        Our Privacy Manifesto
+      </h1>
+      <p class="font-body-lg text-neutral-500 leading-relaxed">
+        AduraTools was engineered around a simple premise: everyday digital utilities shouldn't require surrendering your personal data, private files, or intellectual property to remote servers.
+      </p>
+    </div>
+
+    <!-- Core 4 Pillars -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div class="p-6 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-2.5">
+        <div class="w-10 h-10 rounded-lg bg-[var(--color-surface-card)] border border-[var(--color-hairline)] flex items-center justify-center text-[var(--color-ink)]">
+          <Icon name="zap" class="w-5 h-5 text-amber-500" />
+        </div>
+        <h2 class="font-card-title text-lg text-[var(--color-ink)]">1. 100% Client-Side Runtime</h2>
+        <p class="font-body-sm text-sm text-neutral-500 leading-relaxed">
+          Every tool — from JSON validation and password generation to image compression — executes entirely within your browser's local memory sandbox using HTML5 Canvas, Web Crypto, and modern JavaScript APIs.
+        </p>
+      </div>
+
+      <div class="p-6 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-2.5">
+        <div class="w-10 h-10 rounded-lg bg-[var(--color-surface-card)] border border-[var(--color-hairline)] flex items-center justify-center text-[var(--color-ink)]">
+          <Icon name="shield-check" class="w-5 h-5 text-green-500" />
+        </div>
+        <h2 class="font-card-title text-lg text-[var(--color-ink)]">2. Zero Server Transmission</h2>
+        <p class="font-body-sm text-sm text-neutral-500 leading-relaxed">
+          Your pasted text, JWT credentials, source code snippets, and uploaded images are never sent over the network to any backend server or API.
+        </p>
+      </div>
+
+      <div class="p-6 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-2.5">
+        <div class="w-10 h-10 rounded-lg bg-[var(--color-surface-card)] border border-[var(--color-hairline)] flex items-center justify-center text-[var(--color-ink)]">
+          <Icon name="key" class="w-5 h-5 text-purple-500" />
+        </div>
+        <h2 class="font-card-title text-lg text-[var(--color-ink)]">3. Native Cryptography</h2>
+        <p class="font-body-sm text-sm text-neutral-500 leading-relaxed">
+          Hashes, UUIDs, and random passwords use native browser cryptographic entropy (`window.crypto.getRandomValues`), guaranteeing high-entropy security without third-party seed dependencies.
+        </p>
+      </div>
+
+      <div class="p-6 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-2.5">
+        <div class="w-10 h-10 rounded-lg bg-[var(--color-surface-card)] border border-[var(--color-hairline)] flex items-center justify-center text-[var(--color-ink)]">
+          <Icon name="sparkles" class="w-5 h-5 text-blue-500" />
+        </div>
+        <h2 class="font-card-title text-lg text-[var(--color-ink)]">4. No Accounts, No Tracking</h2>
+        <p class="font-body-sm text-sm text-neutral-500 leading-relaxed">
+          We do not require user accounts, email captures, passwords, or intrusive cross-site tracking cookies. You arrive, use your tool, and leave without leaving a footprint.
+        </p>
+      </div>
+    </div>
+
+    <!-- Lime Color Block Guarantee -->
+    <ColorBlockSection variant="lime">
+      <div class="space-y-4">
+        <div class="font-mono text-xs font-bold uppercase opacity-80">Technical Architecture Transparency</div>
+        <h2 class="font-sans font-bold text-2xl sm:text-3xl">
+          How to verify our privacy in Chrome DevTools:
+        </h2>
+        <ol class="space-y-2 text-sm font-sans list-decimal list-inside leading-relaxed opacity-90">
+          <li>Open Chrome DevTools or Firefox Web Inspector (<kbd class="font-mono bg-white/50 dark:bg-black/50 px-1.5 py-0.5 rounded text-xs border border-current">F12</kbd> or <kbd class="font-mono bg-white/50 dark:bg-black/50 px-1.5 py-0.5 rounded text-xs border border-current">Cmd+Option+I</kbd>).</li>
+          <li>Navigate to the <strong>Network</strong> tab and click on the "Fetch/XHR" filter.</li>
+          <li>Paste any private JSON data, generate a password, or compress an image.</li>
+          <li>Notice that exactly <strong>0 network requests</strong> are dispatched during computation.</li>
+        </ol>
+      </div>
+    </ColorBlockSection>
+  </div>
+</Layout>

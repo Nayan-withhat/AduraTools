@@ -1,0 +1,210 @@
+---
+import type { ToolItem } from '../../data/tools';
+import Icon from '../Icon.astro';
+
+interface Props {
+  tool: ToolItem;
+}
+const { tool } = Astro.props;
+---
+
+<div class="space-y-6" id="bmi-calc-root">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <!-- Input Form (6 Cols) -->
+    <div class="lg:col-span-6 p-6 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-5">
+      <!-- Units Toggle -->
+      <div class="flex items-center gap-2 p-1 bg-[var(--color-surface-card)] rounded-[var(--radius-pill)] border border-[var(--color-hairline)] max-w-fit">
+        <button type="button" id="btn-unit-metric" class="btn-primary text-xs py-1.5 px-3.5">Metric (kg, cm)</button>
+        <button type="button" id="btn-unit-imperial" class="btn-secondary text-xs py-1.5 px-3.5">Imperial (lbs, ft/in)</button>
+      </div>
+
+      <!-- Metric Fields -->
+      <div id="metric-inputs" class="space-y-4">
+        <div class="space-y-1">
+          <label class="font-sans font-semibold text-xs text-neutral-600 dark:text-neutral-300">Height (cm)</label>
+          <input type="number" id="bmi-height-cm" value="175" class="input-base font-mono font-bold" />
+        </div>
+        <div class="space-y-1">
+          <label class="font-sans font-semibold text-xs text-neutral-600 dark:text-neutral-300">Weight (kg)</label>
+          <input type="number" id="bmi-weight-kg" value="68" class="input-base font-mono font-bold" />
+        </div>
+      </div>
+
+      <!-- Imperial Fields -->
+      <div id="imperial-inputs" class="space-y-4 hidden">
+        <div class="grid grid-cols-2 gap-3">
+          <div class="space-y-1">
+            <label class="font-sans font-semibold text-xs text-neutral-600 dark:text-neutral-300">Height (Feet)</label>
+            <input type="number" id="bmi-height-ft" value="5" class="input-base font-mono font-bold" />
+          </div>
+          <div class="space-y-1">
+            <label class="font-sans font-semibold text-xs text-neutral-600 dark:text-neutral-300">Height (Inches)</label>
+            <input type="number" id="bmi-height-in" value="9" class="input-base font-mono font-bold" />
+          </div>
+        </div>
+        <div class="space-y-1">
+          <label class="font-sans font-semibold text-xs text-neutral-600 dark:text-neutral-300">Weight (lbs)</label>
+          <input type="number" id="bmi-weight-lbs" value="150" class="input-base font-mono font-bold" />
+        </div>
+      </div>
+
+      <button type="button" id="btn-calc-bmi" class="btn-primary w-full text-sm py-2.5 flex items-center justify-center gap-2">
+        <Icon name="calculator" class="w-4 h-4" />
+        <span>Calculate BMI Score</span>
+      </button>
+    </div>
+
+    <!-- Results Display (6 Cols) -->
+    <div class="lg:col-span-6 flex flex-col justify-between p-6 bg-[var(--color-surface-card)] rounded-[var(--radius-lg)] border border-[var(--color-hairline)] space-y-6">
+      <div class="space-y-2">
+        <span class="font-mono text-xs uppercase font-bold text-neutral-400">Your Calculated Score</span>
+        <div class="flex items-baseline gap-3">
+          <span id="bmi-score-val" class="font-sans font-extrabold text-5xl text-[var(--color-ink)]">22.2</span>
+          <span id="bmi-category-badge" class="px-3 py-1 rounded-full bg-green-100 dark:bg-green-950/50 text-green-800 dark:text-green-300 font-bold text-sm">
+            Normal Weight
+          </span>
+        </div>
+      </div>
+
+      <!-- Visual Color Spectrum Gauge -->
+      <div class="space-y-2">
+        <div class="w-full h-3 rounded-full bg-linear-to-r from-blue-400 via-green-400 to-red-500 overflow-hidden relative">
+          <div id="bmi-gauge-indicator" class="absolute top-0 bottom-0 w-2 bg-black dark:bg-white rounded shadow transition-all duration-300" style="left: 36%;"></div>
+        </div>
+        <div class="flex justify-between font-mono text-[11px] text-neutral-400">
+          <span>&lt; 18.5 (Under)</span>
+          <span>18.5 - 24.9 (Normal)</span>
+          <span>25 - 29.9 (Over)</span>
+          <span>&gt; 30 (Obese)</span>
+        </div>
+      </div>
+
+      <!-- Healthy Weight Range & Tips -->
+      <div class="p-4 bg-[var(--color-surface-soft)] rounded-[var(--radius-md)] border border-[var(--color-hairline)] space-y-1 text-xs">
+        <div class="font-bold text-[var(--color-ink)] text-sm">Healthy Weight Range for your Height:</div>
+        <div id="healthy-range-text" class="text-neutral-700 dark:text-neutral-300 font-mono text-sm font-semibold">56.7 kg — 76.3 kg</div>
+        <p class="text-neutral-400 pt-1 text-[11px]">Calculated based on standard WHO body mass index categories (18.5 – 24.9).</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initBmiCalculator() {
+    const btnMetric = document.getElementById('btn-unit-metric');
+    const btnImperial = document.getElementById('btn-unit-imperial');
+    const metricInputs = document.getElementById('metric-inputs');
+    const imperialInputs = document.getElementById('imperial-inputs');
+
+    const hCm = document.getElementById('bmi-height-cm') as HTMLInputElement | null;
+    const wKg = document.getElementById('bmi-weight-kg') as HTMLInputElement | null;
+    const hFt = document.getElementById('bmi-height-ft') as HTMLInputElement | null;
+    const hIn = document.getElementById('bmi-height-in') as HTMLInputElement | null;
+    const wLbs = document.getElementById('bmi-weight-lbs') as HTMLInputElement | null;
+
+    const scoreVal = document.getElementById('bmi-score-val');
+    const catBadge = document.getElementById('bmi-category-badge');
+    const gauge = document.getElementById('bmi-gauge-indicator');
+    const rangeText = document.getElementById('healthy-range-text');
+    const btnCalc = document.getElementById('btn-calc-bmi');
+
+    let unitMode: 'metric' | 'imperial' = 'metric';
+
+    if (!scoreVal || !catBadge) return;
+
+    function calculate() {
+      let weightKg = 0;
+      let heightM = 0;
+
+      if (unitMode === 'metric') {
+        const cm = parseFloat(hCm?.value || '170');
+        const kg = parseFloat(wKg?.value || '65');
+        heightM = cm / 100;
+        weightKg = kg;
+      } else {
+        const ft = parseFloat(hFt?.value || '5');
+        const inc = parseFloat(hIn?.value || '8');
+        const lbs = parseFloat(wLbs?.value || '145');
+        const totalInches = (ft * 12) + inc;
+        heightM = totalInches * 0.0254;
+        weightKg = lbs * 0.453592;
+      }
+
+      if (heightM <= 0 || weightKg <= 0) return;
+
+      const bmi = weightKg / (heightM * heightM);
+      const roundedBmi = Math.round(bmi * 10) / 10;
+      scoreVal.textContent = roundedBmi.toFixed(1);
+
+      let catName = 'Normal Weight';
+      let catClass = 'px-3 py-1 rounded-full bg-green-100 dark:bg-green-950/50 text-green-800 dark:text-green-300 font-bold text-sm';
+      let pct = 40;
+
+      if (bmi < 18.5) {
+        catName = 'Underweight';
+        catClass = 'px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-950/50 text-blue-800 dark:text-blue-300 font-bold text-sm';
+        pct = Math.max(5, (bmi / 18.5) * 25);
+      } else if (bmi < 25) {
+        catName = 'Normal Weight';
+        catClass = 'px-3 py-1 rounded-full bg-green-100 dark:bg-green-950/50 text-green-800 dark:text-green-300 font-bold text-sm';
+        pct = 25 + ((bmi - 18.5) / 6.5) * 35;
+      } else if (bmi < 30) {
+        catName = 'Overweight';
+        catClass = 'px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/50 text-amber-800 dark:text-amber-300 font-bold text-sm';
+        pct = 60 + ((bmi - 25) / 5) * 20;
+      } else {
+        catName = 'Obese';
+        catClass = 'px-3 py-1 rounded-full bg-red-100 dark:bg-red-950/50 text-red-800 dark:text-red-300 font-bold text-sm';
+        pct = Math.min(95, 80 + ((bmi - 30) / 10) * 15);
+      }
+
+      catBadge.textContent = catName;
+      catBadge.className = catClass;
+      if (gauge) gauge.style.left = `${pct}%`;
+
+      const minKg = 18.5 * (heightM * heightM);
+      const maxKg = 24.9 * (heightM * heightM);
+
+      if (rangeText) {
+        if (unitMode === 'metric') {
+          rangeText.textContent = `${minKg.toFixed(1)} kg — ${maxKg.toFixed(1)} kg`;
+        } else {
+          rangeText.textContent = `${(minKg * 2.20462).toFixed(1)} lbs — ${(maxKg * 2.20462).toFixed(1)} lbs`;
+        }
+      }
+    }
+
+    btnMetric?.addEventListener('click', () => {
+      unitMode = 'metric';
+      btnMetric.classList.add('btn-primary');
+      btnMetric.classList.remove('btn-secondary');
+      btnImperial?.classList.remove('btn-primary');
+      btnImperial?.classList.add('btn-secondary');
+      metricInputs?.classList.remove('hidden');
+      imperialInputs?.classList.add('hidden');
+      calculate();
+    });
+
+    btnImperial?.addEventListener('click', () => {
+      unitMode = 'imperial';
+      btnImperial.classList.add('btn-primary');
+      btnImperial.classList.remove('btn-secondary');
+      btnMetric?.classList.remove('btn-primary');
+      btnMetric?.classList.add('btn-secondary');
+      imperialInputs?.classList.remove('hidden');
+      metricInputs?.classList.add('hidden');
+      calculate();
+    });
+
+    [hCm, wKg, hFt, hIn, wLbs].forEach(input => {
+      input?.addEventListener('input', calculate);
+    });
+
+    btnCalc?.addEventListener('click', calculate);
+
+    calculate();
+  }
+
+  initBmiCalculator();
+  document.addEventListener('astro:page-load', initBmiCalculator);
+</script>

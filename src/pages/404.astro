@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="Page Not Found (404) — AduraTools"
+  description="The tool or page you requested could not be found."
+>
+  <div class="max-w-[800px] mx-auto py-24 px-4 sm:px-6 lg:px-8 text-center space-y-6">
+    <div class="font-mono text-xs uppercase px-3 py-1 rounded-full bg-[var(--color-block-pink)] text-black font-bold inline-block">
+      Error 404
+    </div>
+    <h1 class="font-display-xl text-5xl sm:text-6xl text-[var(--color-ink)]">
+      Tool Not Found
+    </h1>
+    <p class="font-body-lg text-neutral-600 max-w-md mx-auto">
+      The tool or page you're looking for might have been moved, renamed, or is currently under maintenance.
+    </p>
+    <div class="flex items-center justify-center gap-3 pt-4">
+      <a href="/" class="btn-primary text-sm py-2 px-6">
+        Return to Home
+      </a>
+      <a href="/all-tools" class="btn-secondary text-sm py-2 px-6">
+        Browse All Tools
+      </a>
+    </div>
+  </div>
+</Layout>
