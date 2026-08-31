@@ -1,6 +1,6 @@
 ---
-import type { ToolItem } from '../../data/tools';
-import Icon from '../Icon.astro';
+import type { ToolItem } from "../../data/tools";
+import Icon from "../Icon.astro";
 
 interface Props {
   tool: ToolItem;
@@ -11,39 +11,81 @@ const { tool } = Astro.props;
 <div class="space-y-6" id="word-counter-root">
   <!-- Key Metrics Row -->
   <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-    <div class="p-4 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-1">
+    <div
+      class="p-4 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-1"
+    >
       <div class="flex items-center justify-between">
-        <span class="font-mono text-xs uppercase font-bold text-neutral-400">Words</span>
+        <span class="font-mono text-xs uppercase font-bold text-neutral-400"
+          >Words</span
+        >
         <Icon name="file-text" class="w-3.5 h-3.5 text-neutral-400" />
       </div>
-      <div id="stat-words" class="font-sans font-extrabold text-3xl sm:text-4xl text-[var(--color-ink)]">0</div>
+      <div
+        id="stat-words"
+        class="font-sans font-extrabold text-3xl sm:text-4xl text-[var(--color-ink)]"
+      >
+        0
+      </div>
     </div>
 
-    <div class="p-4 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-1">
+    <div
+      class="p-4 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-1"
+    >
       <div class="flex items-center justify-between">
-        <span class="font-mono text-xs uppercase font-bold text-neutral-400">Characters</span>
+        <span class="font-mono text-xs uppercase font-bold text-neutral-400"
+          >Characters</span
+        >
         <Icon name="type" class="w-3.5 h-3.5 text-neutral-400" />
       </div>
-      <div id="stat-chars" class="font-sans font-extrabold text-3xl sm:text-4xl text-[var(--color-ink)]">0</div>
-      <div class="text-[11px] font-mono text-neutral-400"><span id="stat-chars-nospace">0</span> no spaces</div>
+      <div
+        id="stat-chars"
+        class="font-sans font-extrabold text-3xl sm:text-4xl text-[var(--color-ink)]"
+      >
+        0
+      </div>
+      <div class="text-[11px] font-mono text-neutral-400">
+        <span id="stat-chars-nospace">0</span> no spaces
+      </div>
     </div>
 
-    <div class="p-4 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-1">
+    <div
+      class="p-4 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-1"
+    >
       <div class="flex items-center justify-between">
-        <span class="font-mono text-xs uppercase font-bold text-neutral-400">Sentences</span>
+        <span class="font-mono text-xs uppercase font-bold text-neutral-400"
+          >Sentences</span
+        >
         <Icon name="file-code" class="w-3.5 h-3.5 text-neutral-400" />
       </div>
-      <div id="stat-sentences" class="font-sans font-extrabold text-3xl sm:text-4xl text-[var(--color-ink)]">0</div>
-      <div class="text-[11px] font-mono text-neutral-400"><span id="stat-paragraphs">0</span> paragraphs</div>
+      <div
+        id="stat-sentences"
+        class="font-sans font-extrabold text-3xl sm:text-4xl text-[var(--color-ink)]"
+      >
+        0
+      </div>
+      <div class="text-[11px] font-mono text-neutral-400">
+        <span id="stat-paragraphs">0</span> paragraphs
+      </div>
     </div>
 
-    <div class="p-4 rounded-[var(--radius-lg)] bg-[var(--color-block-lime)] text-black border border-black/10 space-y-1">
+    <div
+      class="p-4 rounded-[var(--radius-lg)] bg-[var(--color-block-lime)] dark:text-[var(--color-block-text-lime)] text-black border border-black/10 space-y-1"
+    >
       <div class="flex items-center justify-between">
-        <span class="font-mono text-xs uppercase font-bold text-black/60">Reading Time</span>
-        <Icon name="clock" class="w-3.5 h-3.5 text-black/60" />
+        <span class="font-mono text-xs uppercase font-bold dark:text-[var(--color-block-text-lime-60)] text-black/60"
+          >Reading Time</span
+        >
+        <Icon name="clock" class="w-3.5 h-3.5 dark:text-[var(--color-block-text-lime-60)] text-black/60" />
       </div>
-      <div id="stat-reading" class="font-sans font-extrabold text-3xl sm:text-4xl text-black">0s</div>
-      <div class="text-[11px] font-mono text-black/70">~<span id="stat-speaking">0s</span> speaking</div>
+      <div
+        id="stat-reading"
+        class="font-sans font-extrabold text-3xl sm:text-4xl dark:text-[var(--color-block-text-lime)] text-black"
+      >
+        0s
+      </div>
+      <div class="text-[11px] font-mono dark:text-[var(--color-block-text-lime-70)] text-black/70">
+        ~<span id="stat-speaking">0s</span> speaking
+      </div>
     </div>
   </div>
 
@@ -51,56 +93,77 @@ const { tool } = Astro.props;
   <div class="space-y-2">
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <button type="button" id="btn-load-sample" class="btn-secondary text-xs py-1 px-3 flex items-center gap-1.5">
+        <button
+          type="button"
+          id="btn-load-sample"
+          class="btn-secondary text-xs py-1 px-3 flex items-center gap-1.5"
+        >
           <Icon name="sparkles" class="w-3.5 h-3.5" />
           <span>Load Sample</span>
         </button>
-        <button type="button" id="btn-clear-text" class="btn-secondary text-xs py-1 px-3 text-red-500 hover:text-red-600 flex items-center gap-1.5">
+        <button
+          type="button"
+          id="btn-clear-text"
+          class="btn-secondary text-xs py-1 px-3 text-red-500 hover:text-red-600 flex items-center gap-1.5"
+        >
           <Icon name="trash" class="w-3.5 h-3.5" />
           <span>Clear</span>
         </button>
       </div>
-      <button type="button" id="btn-copy-text" class="btn-primary text-xs py-1 px-3 flex items-center gap-1.5">
+      <button
+        type="button"
+        id="btn-copy-text"
+        class="btn-primary text-xs py-1 px-3 flex items-center gap-1.5"
+      >
         <Icon name="copy" class="w-3 h-3" />
         <span>Copy Text</span>
       </button>
     </div>
 
-    <textarea 
-      id="word-counter-input" 
-      rows="12" 
-      placeholder="Start typing or paste your text here..." 
+    <textarea
+      id="word-counter-input"
+      rows="12"
+      placeholder="Start typing or paste your text here..."
       class="input-base w-full p-4 bg-[var(--color-surface-card)] text-[var(--color-ink)] border border-[var(--color-hairline)] rounded-[var(--radius-md)] leading-relaxed resize-y outline-none font-sans text-base"
-    >{tool.sampleInput || ''}</textarea>
+      >{tool.sampleInput || ""}</textarea
+    >
   </div>
 
   <!-- Word Frequency Analysis -->
-  <div class="p-4 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-3">
+  <div
+    class="p-4 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-3"
+  >
     <div class="flex items-center justify-between">
-      <span class="font-mono text-xs uppercase font-bold text-neutral-400">Top Keyword Density</span>
+      <span class="font-mono text-xs uppercase font-bold text-neutral-400"
+        >Top Keyword Density</span
+      >
       <span class="text-xs font-mono text-neutral-400">Frequency Analysis</span>
     </div>
     <div id="keyword-density-list" class="flex flex-wrap gap-2">
-      <span class="text-xs font-mono text-neutral-400">Type text above to view top keyword density...</span>
+      <span class="text-xs font-mono text-neutral-400"
+        >Type text above to view top keyword density...</span
+      >
     </div>
   </div>
 </div>
 
 <script>
   function initWordCounter() {
-    const input = document.getElementById('word-counter-input') as HTMLTextAreaElement | null;
-    const statWords = document.getElementById('stat-words');
-    const statChars = document.getElementById('stat-chars');
-    const statCharsNoSpace = document.getElementById('stat-chars-nospace');
-    const statSentences = document.getElementById('stat-sentences');
-    const statParagraphs = document.getElementById('stat-paragraphs');
-    const statReading = document.getElementById('stat-reading');
-    const statSpeaking = document.getElementById('stat-speaking');
-    const keywordContainer = document.getElementById('keyword-density-list');
+    const input = document.getElementById(
+      "word-counter-input",
+    ) as HTMLTextAreaElement | null;
+    const statWords = document.getElementById("stat-words");
+    const statChars = document.getElementById("stat-chars");
+    const statCharsNoSpace = document.getElementById("stat-chars-nospace");
+    const statSentences = document.getElementById("stat-sentences");
+    const statParagraphs = document.getElementById("stat-paragraphs");
+    const statReading = document.getElementById("stat-reading");
+    const statSpeaking = document.getElementById("stat-speaking");
+    const keywordContainer = document.getElementById("keyword-density-list");
 
-    const btnSample = document.getElementById('btn-load-sample');
-    const btnClear = document.getElementById('btn-clear-text');
-    const btnCopy = document.getElementById('btn-copy-text');
+    const btnSample = document.getElementById("btn-load-sample");
+    const btnClear = document.getElementById("btn-clear-text");
+    const btnCopy = document.getElementById("btn-copy-text");
 
     if (!input) return;
 
@@ -111,80 +174,209 @@ const { tool } = Astro.props;
       const words = trimmed ? trimmed.split(/\s+/).filter(Boolean) : [];
       const wordCount = words.length;
       const charCount = text.length;
-      const charNoSpace = text.replace(/\s+/g, '').length;
+      const charNoSpace = text.replace(/\s+/g, "").length;
 
       const sentenceMatches = text.match(/[^.!?]+[.!?]+(\s|$)/g);
-      const sentenceCount = sentenceMatches ? sentenceMatches.length : (trimmed ? 1 : 0);
+      const sentenceCount = sentenceMatches
+        ? sentenceMatches.length
+        : trimmed
+          ? 1
+          : 0;
 
-      const paragraphMatches = text.split(/\n+/).filter(p => p.trim().length > 0);
+      const paragraphMatches = text
+        .split(/\n+/)
+        .filter((p) => p.trim().length > 0);
       const paragraphCount = paragraphMatches.length;
 
       const readingSeconds = Math.round((wordCount / 200) * 60);
-      const readingText = readingSeconds < 60 ? `${readingSeconds}s` : `${Math.ceil(readingSeconds / 60)} min`;
+      const readingText =
+        readingSeconds < 60
+          ? `${readingSeconds}s`
+          : `${Math.ceil(readingSeconds / 60)} min`;
 
       const speakingSeconds = Math.round((wordCount / 130) * 60);
-      const speakingText = speakingSeconds < 60 ? `${speakingSeconds}s` : `${Math.ceil(speakingSeconds / 60)} min`;
+      const speakingText =
+        speakingSeconds < 60
+          ? `${speakingSeconds}s`
+          : `${Math.ceil(speakingSeconds / 60)} min`;
 
       if (statWords) statWords.textContent = wordCount.toLocaleString();
       if (statChars) statChars.textContent = charCount.toLocaleString();
-      if (statCharsNoSpace) statCharsNoSpace.textContent = charNoSpace.toLocaleString();
-      if (statSentences) statSentences.textContent = sentenceCount.toLocaleString();
-      if (statParagraphs) statParagraphs.textContent = paragraphCount.toLocaleString();
+      if (statCharsNoSpace)
+        statCharsNoSpace.textContent = charNoSpace.toLocaleString();
+      if (statSentences)
+        statSentences.textContent = sentenceCount.toLocaleString();
+      if (statParagraphs)
+        statParagraphs.textContent = paragraphCount.toLocaleString();
       if (statReading) statReading.textContent = readingText;
       if (statSpeaking) statSpeaking.textContent = speakingText;
 
       // Density analysis
       if (keywordContainer) {
         if (words.length === 0) {
-          keywordContainer.innerHTML = '<span class="text-xs font-mono text-neutral-400">Type text above to view top keyword density...</span>';
+          keywordContainer.innerHTML =
+            '<span class="text-xs font-mono text-neutral-400">Type text above to view top keyword density...</span>';
         } else {
           const freqMap: Record<string, number> = {};
-          const stopWords = new Set(['the','be','to','of','and','a','in','that','have','i','it','for','not','on','with','he','as','you','do','at','this','but','his','by','from','they','we','say','her','she','or','an','will','my','one','all','would','there','their','what','so','up','out','if','about','who','get','which','go','me','when','make','can','like','time','no','just','him','know','take','people','into','year','your','good','some','could','them','see','other','than','then','now','look','only','come','its','over','think','also','back','after','use','two','how','our','work','first','well','way','even','new','want','because','any','these','give','day','most','us','is','are','was','were']);
-          
-          words.forEach(w => {
-            const clean = w.toLowerCase().replace(/[^a-z0-9]/g, '');
+          const stopWords = new Set([
+            "the",
+            "be",
+            "to",
+            "of",
+            "and",
+            "a",
+            "in",
+            "that",
+            "have",
+            "i",
+            "it",
+            "for",
+            "not",
+            "on",
+            "with",
+            "he",
+            "as",
+            "you",
+            "do",
+            "at",
+            "this",
+            "but",
+            "his",
+            "by",
+            "from",
+            "they",
+            "we",
+            "say",
+            "her",
+            "she",
+            "or",
+            "an",
+            "will",
+            "my",
+            "one",
+            "all",
+            "would",
+            "there",
+            "their",
+            "what",
+            "so",
+            "up",
+            "out",
+            "if",
+            "about",
+            "who",
+            "get",
+            "which",
+            "go",
+            "me",
+            "when",
+            "make",
+            "can",
+            "like",
+            "time",
+            "no",
+            "just",
+            "him",
+            "know",
+            "take",
+            "people",
+            "into",
+            "year",
+            "your",
+            "good",
+            "some",
+            "could",
+            "them",
+            "see",
+            "other",
+            "than",
+            "then",
+            "now",
+            "look",
+            "only",
+            "come",
+            "its",
+            "over",
+            "think",
+            "also",
+            "back",
+            "after",
+            "use",
+            "two",
+            "how",
+            "our",
+            "work",
+            "first",
+            "well",
+            "way",
+            "even",
+            "new",
+            "want",
+            "because",
+            "any",
+            "these",
+            "give",
+            "day",
+            "most",
+            "us",
+            "is",
+            "are",
+            "was",
+            "were",
+          ]);
+
+          words.forEach((w) => {
+            const clean = w.toLowerCase().replace(/[^a-z0-9]/g, "");
             if (clean.length > 2 && !stopWords.has(clean)) {
               freqMap[clean] = (freqMap[clean] || 0) + 1;
             }
           });
 
-          const sorted = Object.entries(freqMap).sort((a, b) => b[1] - a[1]).slice(0, 8);
+          const sorted = Object.entries(freqMap)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 8);
           if (sorted.length === 0) {
-            keywordContainer.innerHTML = '<span class="text-xs font-mono text-neutral-400">No common multi-letter words found.</span>';
+            keywordContainer.innerHTML =
+              '<span class="text-xs font-mono text-neutral-400">No common multi-letter words found.</span>';
           } else {
-            keywordContainer.innerHTML = sorted.map(([k, count]) => `
+            keywordContainer.innerHTML = sorted
+              .map(
+                ([k, count]) => `
               <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[var(--color-surface-card)] border border-[var(--color-hairline)] font-mono text-xs">
                 <span class="font-semibold text-[var(--color-ink)]">${k}</span>
-                <span class="px-1.5 py-0.2 rounded-full bg-[var(--color-surface-soft)] text-neutral-400 font-bold text-[10px]">${count} (${Math.round((count/wordCount)*100)}%)</span>
+                <span class="px-1.5 py-0.2 rounded-full bg-[var(--color-surface-soft)] text-neutral-400 font-bold text-[10px]">${count} (${Math.round((count / wordCount) * 100)}%)</span>
               </span>
-            `).join('');
+            `,
+              )
+              .join("");
           }
         }
       }
     }
 
-    input.addEventListener('input', analyze);
-    btnSample?.addEventListener('click', () => {
-      input.value = 'AduraTools is a modern online tools platform that provides fast, free, and easy-to-use tools for text, developer utilities, calculators, converters, image processing, and SEO utilities.\n\nEvery tool is built with a focus on speed, privacy, and delightful user experience. No logins, no tracking, and 100% in-browser processing.';
+    input.addEventListener("input", analyze);
+    btnSample?.addEventListener("click", () => {
+      input.value =
+        "AduraTools is a modern online tools platform that provides fast, free, and easy-to-use tools for text, developer utilities, calculators, converters, image processing, and SEO utilities.\n\nEvery tool is built with a focus on speed, privacy, and delightful user experience. No logins, no tracking, and 100% in-browser processing.";
       analyze();
-      window.showToast?.('Sample text loaded');
+      window.showToast?.("Sample text loaded");
     });
 
-    btnClear?.addEventListener('click', () => {
-      input.value = '';
+    btnClear?.addEventListener("click", () => {
+      input.value = "";
       analyze();
       input.focus();
     });
 
-    btnCopy?.addEventListener('click', () => {
+    btnCopy?.addEventListener("click", () => {
       if (!input.value) return;
       navigator.clipboard.writeText(input.value);
-      window.showToast?.('Text copied to clipboard!');
+      window.showToast?.("Text copied to clipboard!");
     });
 
     analyze();
   }
 
   initWordCounter();
-  document.addEventListener('astro:page-load', initWordCounter);
+  document.addEventListener("astro:page-load", initWordCounter);
 </script>

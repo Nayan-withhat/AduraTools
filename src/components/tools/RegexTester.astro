@@ -75,7 +75,7 @@ const { tool } = Astro.props;
     <div class="space-y-2">
       <div class="flex items-center justify-between text-xs font-mono text-neutral-400">
         <span class="font-bold uppercase tracking-wider text-[var(--color-ink)]">Matches Highlighted</span>
-        <span id="match-count-badge" class="px-2 py-0.5 rounded-full bg-[var(--color-block-lime)] text-black font-semibold text-[11px]">2 Matches Found</span>
+        <span id="match-count-badge" class="px-2 py-0.5 rounded-full bg-[var(--color-block-lime)] dark:text-[var(--color-block-text-lime)] text-black font-semibold text-[11px]">2 Matches Found</span>
       </div>
       <div 
         id="regex-highlight-box" 
@@ -141,7 +141,7 @@ const { tool } = Astro.props;
         if (matchBadge) {
           matchBadge.textContent = `${matches.length} Match${matches.length === 1 ? '' : 'es'} Found`;
           matchBadge.className = matches.length > 0 
-            ? 'px-2.5 py-0.5 rounded-full bg-[var(--color-block-lime)] text-black font-semibold text-[11px]'
+            ? 'px-2.5 py-0.5 rounded-full bg-[var(--color-block-lime)] dark:text-[var(--color-block-text-lime)] text-black font-semibold text-[11px]'
             : 'px-2.5 py-0.5 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-500 text-[11px]';
         }
 
