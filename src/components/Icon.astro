@@ -48,7 +48,14 @@ import {
   Scale,
   DollarSign,
   Maximize2,
-  Bot
+  Bot,
+  Info,
+  Mail,
+  Users,
+  Wifi,
+  Database,
+  EyeOff,
+  AlertTriangle,
 } from '@lucide/astro';
 
 interface Props {
@@ -131,6 +138,14 @@ const iconMap: Record<string, any> = {
   'clock': Clock,
   'lock': Lock,
   'globe': Globe,
+  'info': Info,
+  'mail': Mail,
+  'users': Users,
+  'wifi': Wifi,
+  'database': Database,
+  'eye-off': EyeOff,
+  'alert-triangle': AlertTriangle,
+  'tag': Tag,
 };
 
 const IconComponent = iconMap[name.toLowerCase()] || Code;

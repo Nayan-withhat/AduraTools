@@ -260,6 +260,75 @@ const faqSchema = tool.faqs?.length
       </div>
     </div>
 
+    <!-- ABOUT THIS TOOL + PRIVACY FOR THIS TOOL -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-2">
+
+      <!-- About This Tool -->
+      <div class="p-6 sm:p-7 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-4">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-[var(--color-surface-card)] border border-[var(--color-hairline)] flex items-center justify-center shrink-0">
+            <Icon name="info" class="w-4 h-4 text-[var(--color-ink-muted)]" />
+          </div>
+          <div>
+            <div class="font-mono text-[10px] uppercase font-bold text-[var(--color-ink-muted)] tracking-wider">About This Tool</div>
+            <h2 class="font-sans font-bold text-base text-[var(--color-ink)]">{tool.name}</h2>
+          </div>
+        </div>
+        <p class="font-sans text-sm text-[var(--color-ink-muted)] leading-relaxed">
+          {tool.longDescription}
+        </p>
+        <div class="space-y-2">
+          <div class="flex items-start gap-2 text-xs font-sans text-[var(--color-ink-muted)]">
+            <Icon name="tag" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-[var(--color-ink-muted)]" />
+            <span><strong class="text-[var(--color-ink)]">Category:</strong> {category?.name}</span>
+          </div>
+          <div class="flex items-start gap-2 text-xs font-sans text-[var(--color-ink-muted)]">
+            <Icon name="users" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-[var(--color-ink-muted)]" />
+            <span><strong class="text-[var(--color-ink)]">Best for:</strong> Developers, designers, students, and content creators who need quick, accurate results without installing software.</span>
+          </div>
+          <div class="flex items-start gap-2 text-xs font-sans text-[var(--color-ink-muted)]">
+            <Icon name="alert-triangle" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-amber-500" />
+            <span><strong class="text-[var(--color-ink)]">Accuracy note:</strong> Always verify critical results (financial, medical, security) with an authoritative source or qualified professional.</span>
+          </div>
+        </div>
+        <a href="/about" class="inline-flex items-center gap-1.5 text-xs font-sans font-semibold text-[var(--color-ink)] hover:underline underline-offset-2">
+          About AduraTools →
+        </a>
+      </div>
+
+      <!-- Privacy for This Tool -->
+      <div class="p-6 sm:p-7 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-4">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-[var(--color-block-lime)] border border-[var(--color-hairline)] flex items-center justify-center shrink-0">
+            <Icon name="shield-check" class="w-4 h-4 text-green-800" />
+          </div>
+          <div>
+            <div class="font-mono text-[10px] uppercase font-bold text-[var(--color-ink-muted)] tracking-wider">Privacy Guarantee</div>
+            <h2 class="font-sans font-bold text-base text-[var(--color-ink)]">Your data stays with you</h2>
+          </div>
+        </div>
+        <p class="font-sans text-sm text-[var(--color-ink-muted)] leading-relaxed">
+          <strong class="text-[var(--color-ink)]">{tool.name}</strong> runs entirely inside your browser using JavaScript and native Web APIs. No text, file, or value you enter is ever transmitted to any server.
+        </p>
+        <ul class="space-y-2.5">
+          {[
+            { icon: 'zap', label: 'Processing', value: '100% in-browser — no server involved', color: 'text-amber-500' },
+            { icon: 'wifi', label: 'Network requests', value: '0 (zero) during tool execution', color: 'text-green-600' },
+            { icon: 'database', label: 'Data stored', value: 'Nothing — clears when you close the tab', color: 'text-blue-500' },
+            { icon: 'eye-off', label: 'Tracking', value: 'None — no analytics, no cookies', color: 'text-purple-500' },
+          ].map(row => (
+            <li class="flex items-center gap-2.5 text-xs font-sans">
+              <Icon name={row.icon} class={`w-3.5 h-3.5 shrink-0 ${row.color}`} />
+              <span class="text-[var(--color-ink-muted)]"><strong class="text-[var(--color-ink)]">{row.label}:</strong> {row.value}</span>
+            </li>
+          ))}
+        </ul>
+        <a href="/privacy" class="inline-flex items-center gap-1.5 text-xs font-sans font-semibold text-[var(--color-ink)] hover:underline underline-offset-2">
+          Read full Privacy Policy →
+        </a>
+      </div>
+    </div>
+
     <!-- FREQUENTLY ASKED QUESTIONS ACCORDION -->
     {
       tool.faqs?.length > 0 && (

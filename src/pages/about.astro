@@ -4,40 +4,60 @@ import ColorBlockSection from '../components/ColorBlockSection.astro';
 import Icon from '../components/Icon.astro';
 ---
 
-<Layout 
-  title="About AduraTools — Engineering & Mission"
-  description="Discover the story and technical architecture behind AduraTools: built for speed, privacy, and delightful web utility experiences."
+<Layout
+  title="About AduraTools — Mission, Values & Architecture"
+  description="Discover the story, mission, and technical architecture behind AduraTools. Built for speed, privacy, and delightful web utility experiences."
 >
-  <div class="max-w-[1000px] mx-auto py-14 px-4 sm:px-6 lg:px-8 space-y-12">
+  <div class="max-w-[1000px] mx-auto py-14 px-4 sm:px-6 lg:px-8 space-y-14">
+
     <!-- Header -->
-    <div class="space-y-4">
-      <div class="font-eyebrow text-[var(--color-ink-muted)]">Mission & Architecture</div>
-      <h1 class="font-display-lg text-4xl sm:text-5xl text-[var(--color-ink)]">
-        About AduraTools
+    <div class="space-y-5">
+      <div class="font-mono text-xs uppercase font-bold tracking-wider text-[var(--color-ink-muted)]">About & Mission</div>
+      <h1 class="font-sans font-bold text-4xl sm:text-5xl tracking-tight text-[var(--color-ink)] leading-tight">
+        Built for people who value<br class="hidden sm:block" /> their time and their privacy.
       </h1>
-      <p class="font-body-lg text-[var(--color-ink-muted)] leading-relaxed">
+      <p class="font-sans text-[var(--color-ink-muted)] text-base sm:text-lg leading-relaxed max-w-2xl">
         AduraTools is an open, fast, and meticulously crafted online tools platform designed to empower developers, designers, content creators, and students with zero-friction digital utilities.
       </p>
     </div>
 
-    <!-- Editorial Story Block (Lilac) -->
+    <!-- Story Block -->
     <ColorBlockSection variant="lilac">
       <div class="space-y-4">
         <div class="font-mono text-xs font-bold uppercase tracking-wider opacity-80">Our Core Philosophy</div>
-        <h2 class="font-sans font-bold text-2xl sm:text-3xl">
-          Why we built AduraTools
-        </h2>
-        <p class="font-body text-base sm:text-lg leading-relaxed opacity-90">
-          The modern web is filled with utility websites cluttered with slow trackers, aggressive popups, arbitrary paywalls, and privacy risks. We wanted a clean, beautiful, Figma-inspired editorial experience that opens instantly, respects human attention, and executes tasks with precision.
+        <h2 class="font-sans font-bold text-2xl sm:text-3xl">Why we built AduraTools</h2>
+        <p class="font-sans text-base sm:text-lg leading-relaxed opacity-90">
+          The modern web is filled with utility websites cluttered with slow trackers, aggressive popups, arbitrary paywalls, and privacy risks. We wanted a clean, beautiful, Figma-inspired editorial experience that opens instantly, respects human attention, and executes tasks with precision. No signups. No subscriptions. No data harvesting. Just tools that work.
         </p>
       </div>
     </ColorBlockSection>
 
-    <!-- Technical Stack Highlights -->
+    <!-- Values -->
     <div class="space-y-6">
-      <h2 class="font-card-title text-2xl text-[var(--color-ink)]">
-        Technology Stack
-      </h2>
+      <h2 class="font-sans font-bold text-2xl text-[var(--color-ink)]">Our Values</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {[
+          { icon: 'lock', color: 'text-purple-500', title: 'Privacy First', desc: 'Every architectural decision is made through the lens of privacy. If a feature would require sending your data to a server, we don\'t build it that way.' },
+          { icon: 'zap', color: 'text-amber-500', title: 'Speed as Respect', desc: 'Fast tools are respectful tools. We care deeply about page weight, first paint time, and interaction responsiveness.' },
+          { icon: 'sparkles', color: 'text-blue-500', title: 'Craft & Detail', desc: 'We sweat the small things: keyboard shortcuts, screen reader accessibility, consistent spacing, coherent color systems.' },
+          { icon: 'shield-check', color: 'text-green-500', title: 'Zero Paywalls', desc: 'All 34+ tools are free forever. We believe great utilities should be universally accessible — not gated behind a pricing tier.' },
+          { icon: 'cpu', color: 'text-rose-500', title: 'Technical Honesty', desc: 'We clearly label what each tool can and cannot do. We don\'t overstate accuracy or make promises we can\'t keep.' },
+          { icon: 'palette', color: 'text-indigo-500', title: 'Beautiful by Default', desc: 'Utility software can be beautiful. We invest real design effort because the experience of using a tool affects how well you use it.' },
+        ].map(v => (
+          <div class="p-5 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-2.5">
+            <div class="w-9 h-9 rounded-lg bg-[var(--color-surface-card)] border border-[var(--color-hairline)] flex items-center justify-center">
+              <Icon name={v.icon} class={`w-4.5 h-4.5 ${v.color}`} />
+            </div>
+            <h3 class="font-sans font-bold text-sm text-[var(--color-ink)]">{v.title}</h3>
+            <p class="font-sans text-xs text-[var(--color-ink-muted)] leading-relaxed">{v.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Technology Stack -->
+    <div class="space-y-6">
+      <h2 class="font-sans font-bold text-2xl text-[var(--color-ink)]">Technology Stack</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="p-6 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-2">
           <div class="flex items-center gap-2 text-[var(--color-ink-muted)]">
@@ -45,44 +65,88 @@ import Icon from '../components/Icon.astro';
             <span class="font-mono text-xs font-bold uppercase">Framework</span>
           </div>
           <div class="font-sans font-bold text-xl text-[var(--color-ink)]">Astro 5+</div>
-          <p class="font-body-sm text-xs text-[var(--color-ink-muted)] leading-relaxed">
+          <p class="font-sans text-xs text-[var(--color-ink-muted)] leading-relaxed">
             Zero-JavaScript static HTML islands deliver sub-millisecond page loads with minimal client footprint.
           </p>
         </div>
-
         <div class="p-6 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-2">
           <div class="flex items-center gap-2 text-[var(--color-ink-muted)]">
             <Icon name="palette" class="w-4 h-4" />
             <span class="font-mono text-xs font-bold uppercase">Styling</span>
           </div>
           <div class="font-sans font-bold text-xl text-[var(--color-ink)]">Tailwind CSS v4</div>
-          <p class="font-body-sm text-xs text-[var(--color-ink-muted)] leading-relaxed">
-            Next-gen CSS engine powered by `@import "tailwindcss"` and strict token adherence to DESIGN.md.
+          <p class="font-sans text-xs text-[var(--color-ink-muted)] leading-relaxed">
+            Next-gen CSS engine powered by <code class="font-mono text-[10px] bg-[var(--color-surface-card)] px-1 rounded">@import "tailwindcss"</code> and strict token adherence to a design system.
           </p>
         </div>
-
         <div class="p-6 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-2">
           <div class="flex items-center gap-2 text-[var(--color-ink-muted)]">
             <Icon name="cpu" class="w-4 h-4" />
             <span class="font-mono text-xs font-bold uppercase">Execution Engine</span>
           </div>
-          <div class="font-sans font-bold text-xl text-[var(--color-ink)]">Web APIs</div>
-          <p class="font-body-sm text-xs text-[var(--color-ink-muted)] leading-relaxed">
-            Native browser Web Crypto API, Canvas 2D, and TextDecoder execute 100% of calculations in memory.
+          <div class="font-sans font-bold text-xl text-[var(--color-ink)]">Native Web APIs</div>
+          <p class="font-sans text-xs text-[var(--color-ink-muted)] leading-relaxed">
+            Web Crypto API, Canvas 2D, TextDecoder, and the FileReader API execute 100% of calculations in local browser memory.
           </p>
         </div>
       </div>
     </div>
 
-    <!-- CTA -->
-    <div class="pt-6 border-t border-[var(--color-hairline)] flex flex-wrap items-center justify-between gap-4">
+    <!-- What makes us different -->
+    <ColorBlockSection variant="cream">
+      <div class="space-y-4">
+        <div class="font-mono text-xs font-bold uppercase opacity-80">AduraTools vs. the rest</div>
+        <h2 class="font-sans font-bold text-2xl sm:text-3xl">What makes us different</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm font-sans">
+          {[
+            ['No account required', 'Most competitors require email signup or OAuth to save settings.'],
+            ['No paywalls ever', 'Common tools like PDF converters or advanced formatters are paywalled elsewhere.'],
+            ['No ads, no trackers', 'Many free tools fund themselves through advertising networks that track users.'],
+            ['Offline capable', 'Once loaded, most tools work without an active internet connection.'],
+            ['Keyboard accessible', 'All core interactions are navigable via keyboard — Tab, Enter, Space, Arrows.'],
+            ['Open source', 'Our codebase is publicly available on GitHub for anyone to inspect or contribute to.'],
+          ].map(([title, desc]) => (
+            <div class="flex items-start gap-3 opacity-90">
+              <Icon name="check" class="w-4 h-4 mt-0.5 shrink-0 text-green-700" />
+              <div>
+                <span class="font-semibold">{title}</span>
+                <span class="opacity-80"> — {desc}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </ColorBlockSection>
+
+    <!-- Creator Note -->
+    <div class="p-7 rounded-[var(--radius-xl)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-4">
+      <div class="font-mono text-xs font-bold uppercase text-[var(--color-ink-muted)]">A Note from the Creator</div>
+      <blockquote class="font-sans text-base sm:text-lg text-[var(--color-ink)] leading-relaxed italic border-l-4 border-[var(--color-primary)] pl-5">
+        "I built AduraTools because I was frustrated. Every time I needed a quick JSON formatter or a hash generator, I'd land on a site that was slow, ugly, covered in ads, and worryingly uploading my data to some unknown server. I decided to build what I actually wanted to use."
+      </blockquote>
+      <div class="flex items-center gap-3 pt-1">
+        <div class="w-9 h-9 rounded-full bg-[var(--color-primary)] flex items-center justify-center text-[var(--color-on-primary)] font-mono font-bold text-sm">N</div>
+        <div>
+          <div class="font-sans font-bold text-sm text-[var(--color-ink)]">Nayan</div>
+          <div class="font-sans text-xs text-[var(--color-ink-muted)]">Founder, AduraTools</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Row -->
+    <div class="pt-2 border-t border-[var(--color-hairline)] flex flex-wrap items-center justify-between gap-4">
       <div>
         <h3 class="font-sans font-bold text-lg text-[var(--color-ink)]">Ready to explore?</h3>
-        <p class="font-body-sm text-sm text-[var(--color-ink-muted)]">Discover all utilities available on AduraTools today.</p>
+        <p class="font-sans text-sm text-[var(--color-ink-muted)]">Discover all 34+ utilities available on AduraTools — free, forever.</p>
       </div>
-      <a href="/all-tools" class="btn-primary text-sm py-2 px-6">
-        Browse All Tools →
-      </a>
+      <div class="flex items-center gap-3">
+        <a href="/contact" class="btn-secondary text-sm py-2 px-5">
+          Contact Us
+        </a>
+        <a href="/all-tools" class="btn-primary text-sm py-2 px-6">
+          Browse All Tools →
+        </a>
+      </div>
     </div>
   </div>
 </Layout>

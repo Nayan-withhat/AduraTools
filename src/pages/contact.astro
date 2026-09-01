@@ -1,0 +1,157 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ColorBlockSection from '../components/ColorBlockSection.astro';
+import Icon from '../components/Icon.astro';
+---
+
+<Layout
+  title="Contact Us — AduraTools"
+  description="Get in touch with the AduraTools team. Report a bug, suggest a new tool, or ask a general question. We read every message."
+>
+  <div class="max-w-[860px] mx-auto py-14 px-4 sm:px-6 lg:px-8 space-y-12">
+
+    <!-- Header -->
+    <div class="space-y-4 pb-6 border-b border-[var(--color-hairline)]">
+      <div class="flex items-center gap-2 font-mono text-xs text-[var(--color-ink-muted)]">
+        <Icon name="mail" class="w-3.5 h-3.5" />
+        <span>Support</span>
+        <span>/</span>
+        <span class="text-[var(--color-ink)] font-semibold">Contact Us</span>
+      </div>
+      <h1 class="font-sans font-bold text-4xl sm:text-5xl tracking-tight text-[var(--color-ink)]">
+        Get in Touch
+      </h1>
+      <p class="font-sans text-[var(--color-ink-muted)] text-base leading-relaxed max-w-2xl">
+        We are a small, independent team building privacy-first tools. We read every message personally and genuinely appreciate feedback, bug reports, and ideas.
+      </p>
+    </div>
+
+    <!-- Contact Channels Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+      <!-- Email -->
+      <div class="p-6 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-3 hover:border-[var(--color-ink)] transition-colors group">
+        <div class="w-10 h-10 rounded-lg bg-[var(--color-surface-card)] border border-[var(--color-hairline)] flex items-center justify-center group-hover:bg-[var(--color-primary)] group-hover:border-[var(--color-primary)] transition-colors">
+          <Icon name="mail" class="w-5 h-5 text-[var(--color-ink-muted)] group-hover:text-[var(--color-on-primary)] transition-colors" />
+        </div>
+        <div>
+          <h2 class="font-sans font-bold text-base text-[var(--color-ink)]">Email</h2>
+          <p class="font-sans text-xs text-[var(--color-ink-muted)] mt-1 leading-relaxed">
+            For bug reports, general questions, or legal enquiries. We aim to respond within 3–5 business days.
+          </p>
+        </div>
+        <a
+          href="mailto:contact@aduratools.site"
+          class="inline-flex items-center gap-2 font-mono text-sm font-semibold text-[var(--color-ink)] hover:underline underline-offset-2"
+        >
+          contact@aduratools.site
+          <Icon name="arrow-right" class="w-3.5 h-3.5" />
+        </a>
+      </div>
+
+      <!-- Feature Requests -->
+      <div class="p-6 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-3 hover:border-[var(--color-ink)] transition-colors group">
+        <div class="w-10 h-10 rounded-lg bg-[var(--color-surface-card)] border border-[var(--color-hairline)] flex items-center justify-center group-hover:bg-[var(--color-primary)] group-hover:border-[var(--color-primary)] transition-colors">
+          <Icon name="sparkles" class="w-5 h-5 text-[var(--color-ink-muted)] group-hover:text-[var(--color-on-primary)] transition-colors" />
+        </div>
+        <div>
+          <h2 class="font-sans font-bold text-base text-[var(--color-ink)]">Feature Requests</h2>
+          <p class="font-sans text-xs text-[var(--color-ink-muted)] mt-1 leading-relaxed">
+            Have an idea for a new tool or a workflow improvement? We love hearing it. Email us with "Feature Request:" in the subject line.
+          </p>
+        </div>
+        <a
+          href="mailto:contact@aduratools.site?subject=Feature%20Request%3A%20"
+          class="inline-flex items-center gap-2 font-mono text-sm font-semibold text-[var(--color-ink)] hover:underline underline-offset-2"
+        >
+          Suggest a tool →
+          <Icon name="arrow-right" class="w-3.5 h-3.5" />
+        </a>
+      </div>
+
+      <!-- Bug Reports -->
+      <div class="p-6 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-3 hover:border-[var(--color-ink)] transition-colors group">
+        <div class="w-10 h-10 rounded-lg bg-[var(--color-surface-card)] border border-[var(--color-hairline)] flex items-center justify-center group-hover:bg-[var(--color-primary)] group-hover:border-[var(--color-primary)] transition-colors">
+          <Icon name="alert-triangle" class="w-5 h-5 text-[var(--color-ink-muted)] group-hover:text-[var(--color-on-primary)] transition-colors" />
+        </div>
+        <div>
+          <h2 class="font-sans font-bold text-base text-[var(--color-ink)]">Report a Bug</h2>
+          <p class="font-sans text-xs text-[var(--color-ink-muted)] mt-1 leading-relaxed">
+            Found something broken? Please include the tool name, your browser and OS, and steps to reproduce. We fix bugs fast.
+          </p>
+        </div>
+        <a
+          href="mailto:contact@aduratools.site?subject=Bug%20Report%3A%20"
+          class="inline-flex items-center gap-2 font-mono text-sm font-semibold text-[var(--color-ink)] hover:underline underline-offset-2"
+        >
+          Report a bug →
+          <Icon name="arrow-right" class="w-3.5 h-3.5" />
+        </a>
+      </div>
+
+      <!-- GitHub -->
+      <div class="p-6 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-3 hover:border-[var(--color-ink)] transition-colors group">
+        <div class="w-10 h-10 rounded-lg bg-[var(--color-surface-card)] border border-[var(--color-hairline)] flex items-center justify-center group-hover:bg-[var(--color-primary)] group-hover:border-[var(--color-primary)] transition-colors">
+          <Icon name="code" class="w-5 h-5 text-[var(--color-ink-muted)] group-hover:text-[var(--color-on-primary)] transition-colors" />
+        </div>
+        <div>
+          <h2 class="font-sans font-bold text-base text-[var(--color-ink)]">GitHub</h2>
+          <p class="font-sans text-xs text-[var(--color-ink-muted)] mt-1 leading-relaxed">
+            Browse the source code, open an issue, or submit a pull request. Contributions are welcome — big or small.
+          </p>
+        </div>
+        <a
+          href="https://github.com/Nayan-withhat/AduraTools"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 font-mono text-sm font-semibold text-[var(--color-ink)] hover:underline underline-offset-2"
+        >
+          github.com/Nayan-withhat/AduraTools
+          <Icon name="arrow-right" class="w-3.5 h-3.5" />
+        </a>
+      </div>
+    </div>
+
+    <!-- No Account Notice -->
+    <ColorBlockSection variant="mint">
+      <div class="space-y-3">
+        <div class="font-mono text-xs font-bold uppercase opacity-80">No Account Needed</div>
+        <h2 class="font-sans font-bold text-xl sm:text-2xl">We don't have your account data</h2>
+        <p class="font-sans text-sm leading-relaxed opacity-90">
+          AduraTools requires no registration, login, or account of any kind. This means we have no account records to look up — if you encounter a tool issue, simply describe the problem and your browser details and we will investigate on our end.
+        </p>
+      </div>
+    </ColorBlockSection>
+
+    <!-- FAQ Quick Links -->
+    <div class="space-y-4">
+      <h2 class="font-sans font-bold text-xl text-[var(--color-ink)]">Common questions</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {[
+          { q: 'Is AduraTools really free?', a: 'Yes — all 34+ tools are completely free, forever. No plans, no credits, no paywalls.', icon: 'zap' },
+          { q: 'Do you store my data?', a: 'No. All processing happens in your browser. Nothing is ever sent to our servers.', icon: 'shield-check' },
+          { q: 'Can I use AduraTools offline?', a: 'Most tools work offline after the page has loaded — no internet required for execution.', icon: 'cpu' },
+          { q: 'How do I suggest a new tool?', a: 'Email us at contact@aduratools.site with "Feature Request:" in the subject.', icon: 'sparkles' },
+        ].map(item => (
+          <div class="p-4 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-2">
+            <div class="flex items-center gap-2">
+              <Icon name={item.icon} class="w-4 h-4 text-[var(--color-ink-muted)]" />
+              <span class="font-sans font-semibold text-sm text-[var(--color-ink)]">{item.q}</span>
+            </div>
+            <p class="font-sans text-xs text-[var(--color-ink-muted)] leading-relaxed pl-6">{item.a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Bottom Nav -->
+    <div class="pt-6 border-t border-[var(--color-hairline)] flex flex-wrap items-center justify-between gap-4">
+      <p class="font-sans text-sm text-[var(--color-ink-muted)]">
+        Also see: <a href="/privacy" class="text-[var(--color-ink)] font-semibold hover:underline">Privacy Policy</a> · <a href="/terms" class="text-[var(--color-ink)] font-semibold hover:underline">Terms & Conditions</a>
+      </p>
+      <a href="/all-tools" class="btn-primary text-sm py-2 px-6">
+        Browse Tools →
+      </a>
+    </div>
+  </div>
+</Layout>

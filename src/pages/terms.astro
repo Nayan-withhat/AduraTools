@@ -1,0 +1,195 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ColorBlockSection from '../components/ColorBlockSection.astro';
+import Icon from '../components/Icon.astro';
+
+const lastUpdated = 'September 1, 2026';
+---
+
+<Layout
+  title="Terms & Conditions — AduraTools"
+  description="Read the Terms & Conditions for using AduraTools. Free browser-based tools, zero accounts, zero liability for results. Use responsibly."
+>
+  <div class="max-w-[860px] mx-auto py-14 px-4 sm:px-6 lg:px-8 space-y-10">
+
+    <!-- Header -->
+    <div class="space-y-4 pb-6 border-b border-[var(--color-hairline)]">
+      <div class="flex items-center gap-2 font-mono text-xs text-[var(--color-ink-muted)]">
+        <Icon name="file-text" class="w-3.5 h-3.5" />
+        <span>Legal</span>
+        <span>/</span>
+        <span class="text-[var(--color-ink)] font-semibold">Terms & Conditions</span>
+      </div>
+      <h1 class="font-sans font-bold text-4xl sm:text-5xl tracking-tight text-[var(--color-ink)]">
+        Terms & Conditions
+      </h1>
+      <p class="font-sans text-[var(--color-ink-muted)] text-base leading-relaxed max-w-2xl">
+        By accessing or using AduraTools, you agree to these terms. Please read them carefully — they are intentionally short and written in plain language.
+      </p>
+      <p class="font-mono text-xs text-[var(--color-ink-muted)]">Last updated: {lastUpdated}</p>
+    </div>
+
+    <!-- Quick Summary Banner -->
+    <ColorBlockSection variant="lime">
+      <div class="space-y-3">
+        <div class="font-mono text-xs font-bold uppercase opacity-80">TL;DR Summary</div>
+        <h2 class="font-sans font-bold text-xl sm:text-2xl">The short version</h2>
+        <ul class="space-y-2 text-sm font-sans leading-relaxed opacity-90">
+          <li class="flex items-start gap-2"><span class="mt-1 shrink-0">✓</span><span>AduraTools is free to use for any personal or professional task.</span></li>
+          <li class="flex items-start gap-2"><span class="mt-1 shrink-0">✓</span><span>All tools run 100% in your browser — we never receive your data.</span></li>
+          <li class="flex items-start gap-2"><span class="mt-1 shrink-0">✓</span><span>We provide tools "as-is" — always verify critical results independently.</span></li>
+          <li class="flex items-start gap-2"><span class="mt-1 shrink-0">✗</span><span>Do not use AduraTools for illegal, harmful, or abusive purposes.</span></li>
+        </ul>
+      </div>
+    </ColorBlockSection>
+
+    <!-- Sections -->
+    <div class="space-y-10 text-[var(--color-ink)]">
+
+      <!-- 1 -->
+      <section class="space-y-3">
+        <h2 class="font-sans font-bold text-xl text-[var(--color-ink)] flex items-center gap-2">
+          <span class="font-mono text-sm text-[var(--color-ink-muted)] font-normal">01.</span>
+          Acceptance of Terms
+        </h2>
+        <p class="font-sans text-[var(--color-ink-muted)] text-sm leading-relaxed">
+          By visiting aduratools.site or any page under its domain, you confirm that you have read, understood, and agreed to be bound by these Terms & Conditions and our Privacy Policy. If you do not agree, please discontinue use of the site.
+        </p>
+      </section>
+
+      <div class="border-t border-[var(--color-hairline)]"></div>
+
+      <!-- 2 -->
+      <section class="space-y-3">
+        <h2 class="font-sans font-bold text-xl text-[var(--color-ink)] flex items-center gap-2">
+          <span class="font-mono text-sm text-[var(--color-ink-muted)] font-normal">02.</span>
+          Use of Services
+        </h2>
+        <p class="font-sans text-[var(--color-ink-muted)] text-sm leading-relaxed">
+          AduraTools grants you a non-exclusive, non-transferable, revocable license to access and use the platform for lawful personal and commercial purposes. You agree not to:
+        </p>
+        <ul class="space-y-2 ml-4 text-sm font-sans text-[var(--color-ink-muted)] leading-relaxed list-disc">
+          <li>Use the service for any unlawful, fraudulent, or harmful activity.</li>
+          <li>Attempt to reverse-engineer, scrape, or systematically download site content via automated bots.</li>
+          <li>Introduce malicious code, viruses, or disruptive scripts into the platform.</li>
+          <li>Misrepresent the origin of any content processed through our tools.</li>
+          <li>Resell or sublicense access to AduraTools under your own brand without written permission.</li>
+        </ul>
+      </section>
+
+      <div class="border-t border-[var(--color-hairline)]"></div>
+
+      <!-- 3 -->
+      <section class="space-y-3">
+        <h2 class="font-sans font-bold text-xl text-[var(--color-ink)] flex items-center gap-2">
+          <span class="font-mono text-sm text-[var(--color-ink-muted)] font-normal">03.</span>
+          Intellectual Property
+        </h2>
+        <p class="font-sans text-[var(--color-ink-muted)] text-sm leading-relaxed">
+          All source code, design assets, branding, logos, typography, and editorial content displayed on AduraTools are the intellectual property of AduraTools and its creators, protected under applicable copyright and trademark law.
+        </p>
+        <p class="font-sans text-[var(--color-ink-muted)] text-sm leading-relaxed">
+          Your input data — text you paste, files you upload, or values you enter — remains entirely yours. We do not claim ownership over any content you process through our tools.
+        </p>
+      </section>
+
+      <div class="border-t border-[var(--color-hairline)]"></div>
+
+      <!-- 4 -->
+      <section class="space-y-3">
+        <h2 class="font-sans font-bold text-xl text-[var(--color-ink)] flex items-center gap-2">
+          <span class="font-mono text-sm text-[var(--color-ink-muted)] font-normal">04.</span>
+          Disclaimer of Warranties
+        </h2>
+        <p class="font-sans text-[var(--color-ink-muted)] text-sm leading-relaxed">
+          AduraTools and all its tools are provided <strong class="text-[var(--color-ink)]">"as-is"</strong> and <strong class="text-[var(--color-ink)]">"as-available"</strong> without any warranty of any kind, express or implied. We do not warrant that:
+        </p>
+        <ul class="space-y-2 ml-4 text-sm font-sans text-[var(--color-ink-muted)] leading-relaxed list-disc">
+          <li>The service will be uninterrupted, error-free, or free from bugs or viruses.</li>
+          <li>Outputs from any tool (calculators, converters, formatters, generators) are perfectly accurate for every use case.</li>
+          <li>The service will be available at any particular time or location.</li>
+        </ul>
+        <p class="font-sans text-[var(--color-ink-muted)] text-sm leading-relaxed">
+          For critical applications — financial decisions, medical calculations, legal documents, or security-sensitive operations — always verify tool outputs with a qualified professional or authoritative source.
+        </p>
+      </section>
+
+      <div class="border-t border-[var(--color-hairline)]"></div>
+
+      <!-- 5 -->
+      <section class="space-y-3">
+        <h2 class="font-sans font-bold text-xl text-[var(--color-ink)] flex items-center gap-2">
+          <span class="font-mono text-sm text-[var(--color-ink-muted)] font-normal">05.</span>
+          Limitation of Liability
+        </h2>
+        <p class="font-sans text-[var(--color-ink-muted)] text-sm leading-relaxed">
+          To the fullest extent permitted by applicable law, AduraTools and its operators shall not be liable for any indirect, incidental, special, consequential, or punitive damages — including loss of profits, data, or goodwill — arising from your use of, or inability to use, the service or any tool output. Our total liability for any claim shall not exceed zero (€0), as the service is provided entirely free of charge.
+        </p>
+      </section>
+
+      <div class="border-t border-[var(--color-hairline)]"></div>
+
+      <!-- 6 -->
+      <section class="space-y-3">
+        <h2 class="font-sans font-bold text-xl text-[var(--color-ink)] flex items-center gap-2">
+          <span class="font-mono text-sm text-[var(--color-ink-muted)] font-normal">06.</span>
+          Third-Party Links & Content
+        </h2>
+        <p class="font-sans text-[var(--color-ink-muted)] text-sm leading-relaxed">
+          AduraTools may contain links to third-party websites or resources (e.g., GitHub, documentation). These links are provided for convenience only. We have no control over, and assume no responsibility for, the content, privacy policies, or practices of any third-party sites. We encourage you to review the terms and privacy policy of every site you visit.
+        </p>
+      </section>
+
+      <div class="border-t border-[var(--color-hairline)]"></div>
+
+      <!-- 7 -->
+      <section class="space-y-3">
+        <h2 class="font-sans font-bold text-xl text-[var(--color-ink)] flex items-center gap-2">
+          <span class="font-mono text-sm text-[var(--color-ink-muted)] font-normal">07.</span>
+          Changes to These Terms
+        </h2>
+        <p class="font-sans text-[var(--color-ink-muted)] text-sm leading-relaxed">
+          We reserve the right to modify these Terms & Conditions at any time. Changes will be effective immediately upon posting the updated terms with a revised "Last updated" date. Your continued use of AduraTools after any modification constitutes your acceptance of the new terms.
+        </p>
+      </section>
+
+      <div class="border-t border-[var(--color-hairline)]"></div>
+
+      <!-- 8 -->
+      <section class="space-y-3">
+        <h2 class="font-sans font-bold text-xl text-[var(--color-ink)] flex items-center gap-2">
+          <span class="font-mono text-sm text-[var(--color-ink-muted)] font-normal">08.</span>
+          Governing Law
+        </h2>
+        <p class="font-sans text-[var(--color-ink-muted)] text-sm leading-relaxed">
+          These Terms shall be governed by and construed in accordance with applicable laws, without regard to conflict of law provisions. Any disputes arising from these Terms shall be resolved through good-faith negotiation before pursuing any formal legal remedy.
+        </p>
+      </section>
+
+      <div class="border-t border-[var(--color-hairline)]"></div>
+
+      <!-- 9 -->
+      <section class="space-y-3">
+        <h2 class="font-sans font-bold text-xl text-[var(--color-ink)] flex items-center gap-2">
+          <span class="font-mono text-sm text-[var(--color-ink-muted)] font-normal">09.</span>
+          Contact
+        </h2>
+        <p class="font-sans text-[var(--color-ink-muted)] text-sm leading-relaxed">
+          If you have questions about these Terms, please reach out via our <a href="/contact" class="text-[var(--color-ink)] font-semibold underline underline-offset-2 hover:no-underline">Contact page</a>. We aim to respond within 3–5 business days.
+        </p>
+      </section>
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="pt-8 border-t border-[var(--color-hairline)] flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <p class="font-sans text-sm text-[var(--color-ink-muted)]">
+          Questions? <a href="/contact" class="text-[var(--color-ink)] font-semibold hover:underline">Contact us</a> or review our <a href="/privacy" class="text-[var(--color-ink)] font-semibold hover:underline">Privacy Policy</a>.
+        </p>
+      </div>
+      <a href="/all-tools" class="btn-primary text-sm py-2 px-6">
+        Back to Tools →
+      </a>
+    </div>
+  </div>
+</Layout>

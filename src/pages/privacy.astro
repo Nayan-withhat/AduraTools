@@ -2,86 +2,213 @@
 import Layout from '../layouts/Layout.astro';
 import ColorBlockSection from '../components/ColorBlockSection.astro';
 import Icon from '../components/Icon.astro';
+
+const lastUpdated = 'September 1, 2026';
 ---
 
-<Layout 
-  title="Privacy Manifesto & Zero-Data Policy — AduraTools"
-  description="Learn why AduraTools is 100% private, client-side, and zero-telemetry. We never store, transmit, or monetize your data."
+<Layout
+  title="Privacy Policy — AduraTools"
+  description="AduraTools Privacy Policy. Zero server uploads, zero tracking, zero accounts. All processing is 100% in-browser. Full legal policy explained in plain language."
 >
-  <div class="max-w-[1000px] mx-auto py-14 px-4 sm:px-6 lg:px-8 space-y-12">
+  <div class="max-w-[860px] mx-auto py-14 px-4 sm:px-6 lg:px-8 space-y-10">
+
     <!-- Header -->
-    <div class="space-y-4">
-      <div class="inline-flex items-center gap-2 font-mono text-xs uppercase px-3 py-1 rounded-full bg-[var(--color-block-lime)] dark:text-[var(--color-block-text-lime)] text-black font-semibold border border-black/10">
+    <div class="space-y-4 pb-6 border-b border-[var(--color-hairline)]">
+      <div class="inline-flex items-center gap-2 font-mono text-xs uppercase px-3 py-1 rounded-full bg-[var(--color-block-lime)] text-black font-semibold border border-black/10">
         <Icon name="lock" class="w-3.5 h-3.5" />
         <span>Zero Server Uploads</span>
         <span>•</span>
         <span>100% In-Browser</span>
       </div>
-      <h1 class="font-display-lg text-4xl sm:text-5xl text-[var(--color-ink)]">
-        Our Privacy Manifesto
+      <h1 class="font-sans font-bold text-4xl sm:text-5xl tracking-tight text-[var(--color-ink)]">
+        Privacy Policy
       </h1>
-      <p class="font-body-lg text-[var(--color-ink-muted)] leading-relaxed">
-        AduraTools was engineered around a simple premise: everyday digital utilities shouldn't require surrendering your personal data, private files, or intellectual property to remote servers.
+      <p class="font-sans text-[var(--color-ink-muted)] text-base leading-relaxed max-w-2xl">
+        AduraTools was engineered around a single premise: everyday digital utilities should not require surrendering your personal data, private files, or intellectual property to remote servers. This policy explains exactly how we uphold that promise — legally and technically.
       </p>
+      <p class="font-mono text-xs text-[var(--color-ink-muted)]">Last updated: {lastUpdated}</p>
     </div>
 
-    <!-- Core 4 Pillars -->
+    <!-- 4 Pillars -->
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
       <div class="p-6 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-2.5">
-        <div class="w-10 h-10 rounded-lg bg-[var(--color-surface-card)] border border-[var(--color-hairline)] flex items-center justify-center text-[var(--color-ink)]">
+        <div class="w-10 h-10 rounded-lg bg-[var(--color-surface-card)] border border-[var(--color-hairline)] flex items-center justify-center">
           <Icon name="zap" class="w-5 h-5 text-amber-500" />
         </div>
-        <h2 class="font-card-title text-lg text-[var(--color-ink)]">1. 100% Client-Side Runtime</h2>
-        <p class="font-body-sm text-sm text-[var(--color-ink-muted)] leading-relaxed">
+        <h2 class="font-sans font-bold text-base text-[var(--color-ink)]">100% Client-Side Runtime</h2>
+        <p class="font-sans text-xs text-[var(--color-ink-muted)] leading-relaxed">
           Every tool — from JSON validation and password generation to image compression — executes entirely within your browser's local memory sandbox using HTML5 Canvas, Web Crypto, and modern JavaScript APIs.
         </p>
       </div>
-
       <div class="p-6 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-2.5">
-        <div class="w-10 h-10 rounded-lg bg-[var(--color-surface-card)] border border-[var(--color-hairline)] flex items-center justify-center text-[var(--color-ink)]">
+        <div class="w-10 h-10 rounded-lg bg-[var(--color-surface-card)] border border-[var(--color-hairline)] flex items-center justify-center">
           <Icon name="shield-check" class="w-5 h-5 text-green-500" />
         </div>
-        <h2 class="font-card-title text-lg text-[var(--color-ink)]">2. Zero Server Transmission</h2>
-        <p class="font-body-sm text-sm text-[var(--color-ink-muted)] leading-relaxed">
+        <h2 class="font-sans font-bold text-base text-[var(--color-ink)]">Zero Server Transmission</h2>
+        <p class="font-sans text-xs text-[var(--color-ink-muted)] leading-relaxed">
           Your pasted text, JWT credentials, source code snippets, and uploaded images are never sent over the network to any backend server or API.
         </p>
       </div>
-
       <div class="p-6 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-2.5">
-        <div class="w-10 h-10 rounded-lg bg-[var(--color-surface-card)] border border-[var(--color-hairline)] flex items-center justify-center text-[var(--color-ink)]">
+        <div class="w-10 h-10 rounded-lg bg-[var(--color-surface-card)] border border-[var(--color-hairline)] flex items-center justify-center">
           <Icon name="key" class="w-5 h-5 text-purple-500" />
         </div>
-        <h2 class="font-card-title text-lg text-[var(--color-ink)]">3. Native Cryptography</h2>
-        <p class="font-body-sm text-sm text-[var(--color-ink-muted)] leading-relaxed">
-          Hashes, UUIDs, and random passwords use native browser cryptographic entropy (`window.crypto.getRandomValues`), guaranteeing high-entropy security without third-party seed dependencies.
+        <h2 class="font-sans font-bold text-base text-[var(--color-ink)]">Native Cryptography</h2>
+        <p class="font-sans text-xs text-[var(--color-ink-muted)] leading-relaxed">
+          Hashes, UUIDs, and passwords use native browser cryptographic entropy (<code class="font-mono bg-[var(--color-surface-card)] px-1 rounded text-xs">window.crypto.getRandomValues</code>), with no third-party seed dependencies.
         </p>
       </div>
-
       <div class="p-6 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-2.5">
-        <div class="w-10 h-10 rounded-lg bg-[var(--color-surface-card)] border border-[var(--color-hairline)] flex items-center justify-center text-[var(--color-ink)]">
+        <div class="w-10 h-10 rounded-lg bg-[var(--color-surface-card)] border border-[var(--color-hairline)] flex items-center justify-center">
           <Icon name="sparkles" class="w-5 h-5 text-blue-500" />
         </div>
-        <h2 class="font-card-title text-lg text-[var(--color-ink)]">4. No Accounts, No Tracking</h2>
-        <p class="font-body-sm text-sm text-[var(--color-ink-muted)] leading-relaxed">
-          We do not require user accounts, email captures, passwords, or intrusive cross-site tracking cookies. You arrive, use your tool, and leave without leaving a footprint.
+        <h2 class="font-sans font-bold text-base text-[var(--color-ink)]">No Accounts, No Tracking</h2>
+        <p class="font-sans text-xs text-[var(--color-ink-muted)] leading-relaxed">
+          We require no user accounts, email captures, or passwords. There are no intrusive cross-site tracking cookies. You arrive, use your tool, and leave without a footprint.
         </p>
       </div>
     </div>
 
-    <!-- Lime Color Block Guarantee -->
+    <!-- Verification Block -->
     <ColorBlockSection variant="lime">
       <div class="space-y-4">
-        <div class="font-mono text-xs font-bold uppercase opacity-80">Technical Architecture Transparency</div>
-        <h2 class="font-sans font-bold text-2xl sm:text-3xl">
-          How to verify our privacy in Chrome DevTools:
-        </h2>
+        <div class="font-mono text-xs font-bold uppercase opacity-80">Verify It Yourself</div>
+        <h2 class="font-sans font-bold text-xl sm:text-2xl">How to confirm in Chrome DevTools:</h2>
         <ol class="space-y-2 text-sm font-sans list-decimal list-inside leading-relaxed opacity-90">
-          <li>Open Chrome DevTools or Firefox Web Inspector (<kbd class="font-mono bg-white/50 dark:bg-black/50 px-1.5 py-0.5 rounded text-xs border border-current">F12</kbd> or <kbd class="font-mono bg-white/50 dark:bg-black/50 px-1.5 py-0.5 rounded text-xs border border-current">Cmd+Option+I</kbd>).</li>
-          <li>Navigate to the <strong>Network</strong> tab and click on the "Fetch/XHR" filter.</li>
+          <li>Open DevTools (<kbd class="font-mono bg-white/50 px-1.5 py-0.5 rounded text-xs border border-current">F12</kbd> or <kbd class="font-mono bg-white/50 px-1.5 py-0.5 rounded text-xs border border-current">Cmd+Option+I</kbd>).</li>
+          <li>Navigate to the <strong>Network</strong> tab and select the "Fetch/XHR" filter.</li>
           <li>Paste any private JSON data, generate a password, or compress an image.</li>
-          <li>Notice that exactly <strong>0 network requests</strong> are dispatched during computation.</li>
+          <li>Notice that exactly <strong>0 network requests</strong> are made during computation.</li>
         </ol>
       </div>
     </ColorBlockSection>
+
+    <!-- Full Legal Sections -->
+    <div class="space-y-10 text-[var(--color-ink)]">
+
+      <section class="space-y-3">
+        <h2 class="font-sans font-bold text-xl flex items-center gap-2">
+          <span class="font-mono text-sm text-[var(--color-ink-muted)] font-normal">01.</span>
+          Information We Collect
+        </h2>
+        <p class="font-sans text-[var(--color-ink-muted)] text-sm leading-relaxed">
+          <strong class="text-[var(--color-ink)]">We collect no personally identifiable information (PII).</strong> Specifically:
+        </p>
+        <ul class="space-y-2 ml-4 text-sm font-sans text-[var(--color-ink-muted)] leading-relaxed list-disc">
+          <li><strong class="text-[var(--color-ink)]">Tool input data</strong> — text, files, or values you enter — is processed locally in memory and never transmitted.</li>
+          <li><strong class="text-[var(--color-ink)]">Theme preference</strong> — light/dark mode is saved to <code class="font-mono bg-[var(--color-surface-card)] px-1 rounded text-xs">localStorage</code> under the key <code class="font-mono bg-[var(--color-surface-card)] px-1 rounded text-xs">aduratools-theme</code>. This key contains only the string "light" or "dark" — nothing else.</li>
+          <li><strong class="text-[var(--color-ink)]">Server logs</strong> — our hosting provider (standard static hosting) may log anonymised IP addresses and page requests as part of normal server operation. These logs are not correlated with any user identity.</li>
+        </ul>
+      </section>
+
+      <div class="border-t border-[var(--color-hairline)]"></div>
+
+      <section class="space-y-3">
+        <h2 class="font-sans font-bold text-xl flex items-center gap-2">
+          <span class="font-mono text-sm text-[var(--color-ink-muted)] font-normal">02.</span>
+          Cookies & Local Storage
+        </h2>
+        <p class="font-sans text-[var(--color-ink-muted)] text-sm leading-relaxed">
+          AduraTools uses <strong class="text-[var(--color-ink)]">no tracking cookies</strong> and no third-party analytics cookies. The only browser storage we use is:
+        </p>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs font-mono border-collapse">
+            <thead>
+              <tr class="border-b border-[var(--color-hairline)]">
+                <th class="text-left py-2 pr-4 font-bold text-[var(--color-ink)]">Key</th>
+                <th class="text-left py-2 pr-4 font-bold text-[var(--color-ink)]">Type</th>
+                <th class="text-left py-2 font-bold text-[var(--color-ink)]">Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-[var(--color-hairline)]">
+                <td class="py-2 pr-4 text-[var(--color-ink)]">aduratools-theme</td>
+                <td class="py-2 pr-4 text-[var(--color-ink-muted)]">localStorage</td>
+                <td class="py-2 text-[var(--color-ink-muted)]">Stores "light" or "dark" to persist your colour theme choice</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="font-sans text-[var(--color-ink-muted)] text-sm leading-relaxed">
+          You can clear this at any time via your browser's DevTools → Application → Local Storage.
+        </p>
+      </section>
+
+      <div class="border-t border-[var(--color-hairline)]"></div>
+
+      <section class="space-y-3">
+        <h2 class="font-sans font-bold text-xl flex items-center gap-2">
+          <span class="font-mono text-sm text-[var(--color-ink-muted)] font-normal">03.</span>
+          Third-Party Services
+        </h2>
+        <p class="font-sans text-[var(--color-ink-muted)] text-sm leading-relaxed">
+          AduraTools loads the following third-party resources:
+        </p>
+        <ul class="space-y-2 ml-4 text-sm font-sans text-[var(--color-ink-muted)] leading-relaxed list-disc">
+          <li><strong class="text-[var(--color-ink)]">Google Fonts</strong> — the Inter and JetBrains Mono typefaces are loaded from <code class="font-mono bg-[var(--color-surface-card)] px-1 rounded text-xs">fonts.googleapis.com</code> and <code class="font-mono bg-[var(--color-surface-card)] px-1 rounded text-xs">fonts.gstatic.com</code>. This means your browser makes a request to Google's CDN for font files. Google's <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" class="text-[var(--color-ink)] underline underline-offset-2">Privacy Policy</a> applies to this request.</li>
+          <li><strong class="text-[var(--color-ink)]">No analytics platform</strong> — we do not use Google Analytics, Plausible, Mixpanel, Hotjar, or any equivalent service.</li>
+          <li><strong class="text-[var(--color-ink)]">No advertising networks</strong> — we serve no advertisements and run no ad-tech scripts.</li>
+          <li><strong class="text-[var(--color-ink)]">No CDN-loaded JavaScript libraries</strong> — all JavaScript is bundled and served from our own domain.</li>
+        </ul>
+      </section>
+
+      <div class="border-t border-[var(--color-hairline)]"></div>
+
+      <section class="space-y-3">
+        <h2 class="font-sans font-bold text-xl flex items-center gap-2">
+          <span class="font-mono text-sm text-[var(--color-ink-muted)] font-normal">04.</span>
+          Children's Privacy
+        </h2>
+        <p class="font-sans text-[var(--color-ink-muted)] text-sm leading-relaxed">
+          AduraTools does not knowingly collect any information from children under 13 years of age. As we collect no personal data from any user, the platform poses no special risk to minors. If you believe a child has shared personal data with us via contact email, please email us and we will delete it promptly.
+        </p>
+      </section>
+
+      <div class="border-t border-[var(--color-hairline)]"></div>
+
+      <section class="space-y-3">
+        <h2 class="font-sans font-bold text-xl flex items-center gap-2">
+          <span class="font-mono text-sm text-[var(--color-ink-muted)] font-normal">05.</span>
+          Data Security
+        </h2>
+        <p class="font-sans text-[var(--color-ink-muted)] text-sm leading-relaxed">
+          Because we do not receive or store your data, there is no user database to breach. The security of your information is inherently guaranteed by the client-side architecture. AduraTools is served over HTTPS to protect the page delivery itself.
+        </p>
+      </section>
+
+      <div class="border-t border-[var(--color-hairline)]"></div>
+
+      <section class="space-y-3">
+        <h2 class="font-sans font-bold text-xl flex items-center gap-2">
+          <span class="font-mono text-sm text-[var(--color-ink-muted)] font-normal">06.</span>
+          Changes to This Policy
+        </h2>
+        <p class="font-sans text-[var(--color-ink-muted)] text-sm leading-relaxed">
+          We may update this Privacy Policy from time to time. Changes will be reflected by the "Last updated" date at the top of this page. Continued use of AduraTools after changes constitutes your acceptance of the revised policy.
+        </p>
+      </section>
+
+      <div class="border-t border-[var(--color-hairline)]"></div>
+
+      <section class="space-y-3">
+        <h2 class="font-sans font-bold text-xl flex items-center gap-2">
+          <span class="font-mono text-sm text-[var(--color-ink-muted)] font-normal">07.</span>
+          Contact
+        </h2>
+        <p class="font-sans text-[var(--color-ink-muted)] text-sm leading-relaxed">
+          If you have questions or concerns about this Privacy Policy, please contact us at <a href="mailto:contact@aduratools.site" class="text-[var(--color-ink)] font-semibold underline underline-offset-2 hover:no-underline">contact@aduratools.site</a>. We aim to respond within 3–5 business days.
+        </p>
+      </section>
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="pt-8 border-t border-[var(--color-hairline)] flex flex-wrap items-center justify-between gap-4">
+      <p class="font-sans text-sm text-[var(--color-ink-muted)]">
+        Also see: <a href="/terms" class="text-[var(--color-ink)] font-semibold hover:underline">Terms & Conditions</a> · <a href="/contact" class="text-[var(--color-ink)] font-semibold hover:underline">Contact Us</a>
+      </p>
+      <a href="/all-tools" class="btn-primary text-sm py-2 px-6">
+        Browse Tools →
+      </a>
+    </div>
   </div>
 </Layout>
