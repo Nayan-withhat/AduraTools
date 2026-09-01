@@ -1,0 +1,203 @@
+---
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  faqs: FaqItem[];
+  title?: string;
+  toolName?: string;
+  class?: string;
+}
+
+const {
+  faqs = [],
+  title = "FAQ",
+  toolName = "",
+  class: className = "",
+} = Astro.props;
+
+if (!faqs || faqs.length === 0) {
+  return null;
+}
+---
+
+<section
+  class:list={[
+    "faq-accordion-section border-t border-[var(--color-hairline)] pt-14 pb-8 scroll-mt-24",
+    className,
+  ]}
+  aria-labelledby="faq-section-heading"
+>
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+    <!-- Left Column: FAQ Heading -->
+    <div class="lg:col-span-3">
+      <div class="sticky top-24 pt-1 space-y-2">
+        <h2
+          id="faq-section-heading"
+          class="font-display-lg text-3xl sm:text-4xl text-[var(--color-ink)] font-normal tracking-tight leading-none"
+        >
+          {title}
+        </h2>
+        {
+          toolName && (
+            <p class="font-eyebrow text-xs text-neutral-400 dark:text-neutral-500 tracking-wider">
+              {toolName} Guide
+            </p>
+          )
+        }
+      </div>
+    </div>
+
+    <!-- Right Column: Accordion with vertical divider on desktop -->
+    <div
+      class="lg:col-span-9 lg:border-l lg:border-[var(--color-hairline)] lg:pl-10 space-y-3"
+      id="faq-accordion-container"
+    >
+      {
+        faqs.map((faq, index) => {
+          const isOpen = index === 0;
+          const qId = `faq-q-${index}`;
+          const aId = `faq-a-${index}`;
+
+          return (
+            <div
+              class="faq-item flex flex-col items-start transition-all"
+              data-index={index}
+            >
+              <!-- Question Trigger Pill -->
+              <button
+                type="button"
+                id={qId}
+                class="faq-trigger group inline-flex items-center text-left px-5 py-3 rounded-xl bg-[var(--color-surface-card)] border border-[var(--color-hairline)] text-[var(--color-ink)] font-sans text-sm sm:text-[15px] font-normal leading-snug hover:border-[var(--color-ink)]/40 hover:bg-[var(--color-surface-soft)] transition-all duration-150 cursor-pointer shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] max-w-full"
+                aria-expanded={isOpen ? "true" : "false"}
+                aria-controls={aId}
+              >
+                <span class="faq-question-text">{faq.question}</span>
+              </button>
+
+              <!-- Expandable Answer Bubble -->
+              <div
+                id={aId}
+                role="region"
+                aria-labelledby={qId}
+                class="faq-panel w-full overflow-hidden transition-[grid-template-rows,opacity] duration-250 ease-out grid"
+                style={
+                  isOpen
+                    ? "grid-template-rows: 1fr; opacity: 1;"
+                    : "grid-template-rows: 0fr; opacity: 0;"
+                }
+              >
+                <div class="min-h-0">
+                  <div class="flex items-end justify-end gap-2.5 pt-2.5 pb-2 pl-4 sm:pl-16">
+                    <!-- Answer Card -->
+                    <div class="p-4 sm:p-5 rounded-2xl bg-[var(--color-surface-soft)] dark:bg-[#151820] border border-[var(--color-hairline)] text-neutral-700 dark:text-neutral-300 font-body text-sm sm:text-[15px] leading-relaxed max-w-2xl shadow-xs">
+                      <p class="m-0 leading-relaxed">{faq.answer}</p>
+                    </div>
+
+                    <!-- Lilac Spark Badge -->
+                    <div
+                      class="w-6 h-6 sm:w-7 sm:h-7 rounded-md bg-[var(--color-block-lilac)] dark:bg-[#3c2460] text-black dark:text-[#d8c8fa] flex items-center justify-center font-bold text-xs shrink-0 select-none shadow-xs mb-1"
+                      aria-hidden="true"
+                    >
+                      <svg
+                        class="w-3.5 h-3.5"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                      >
+                        <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  function initFaqAccordions() {
+    const containers = document.querySelectorAll("#faq-accordion-container");
+
+    containers.forEach((container) => {
+      const items = container.querySelectorAll(".faq-item");
+      const triggers = container.querySelectorAll(".faq-trigger");
+
+      triggers.forEach((trigger, idx) => {
+        trigger.addEventListener("click", () => {
+          const isCurrentlyOpen = trigger.getAttribute("aria-expanded") === "true";
+          const targetId = trigger.getAttribute("aria-controls");
+          const panel = targetId ? document.getElementById(targetId) : null;
+
+          if (isCurrentlyOpen) {
+            // Collapse current
+            trigger.setAttribute("aria-expanded", "false");
+            if (panel) {
+              panel.style.gridTemplateRows = "0fr";
+              panel.style.opacity = "0";
+            }
+          } else {
+            // Optional: Close other panels in the same accordion
+            triggers.forEach((otherTrigger) => {
+              if (otherTrigger !== trigger) {
+                otherTrigger.setAttribute("aria-expanded", "false");
+                const otherTargetId = otherTrigger.getAttribute("aria-controls");
+                const otherPanel = otherTargetId
+                  ? document.getElementById(otherTargetId)
+                  : null;
+                if (otherPanel) {
+                  otherPanel.style.gridTemplateRows = "0fr";
+                  otherPanel.style.opacity = "0";
+                }
+              }
+            });
+
+            // Expand clicked panel
+            trigger.setAttribute("aria-expanded", "true");
+            if (panel) {
+              panel.style.gridTemplateRows = "1fr";
+              panel.style.opacity = "1";
+            }
+          }
+        });
+
+        // Keyboard navigation across triggers
+        trigger.addEventListener("keydown", (e: Event) => {
+          const keyEvent = e as KeyboardEvent;
+          const triggerList = Array.from(triggers) as HTMLButtonElement[];
+          let targetIndex = idx;
+
+          if (keyEvent.key === "ArrowDown") {
+            keyEvent.preventDefault();
+            targetIndex = (idx + 1) % triggerList.length;
+            triggerList[targetIndex]?.focus();
+          } else if (keyEvent.key === "ArrowUp") {
+            keyEvent.preventDefault();
+            targetIndex = (idx - 1 + triggerList.length) % triggerList.length;
+            triggerList[targetIndex]?.focus();
+          } else if (keyEvent.key === "Home") {
+            keyEvent.preventDefault();
+            triggerList[0]?.focus();
+          } else if (keyEvent.key === "End") {
+            keyEvent.preventDefault();
+            triggerList[triggerList.length - 1]?.focus();
+          }
+        });
+      });
+    });
+  }
+
+  // Initialize on page load and on Astro page transitions
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initFaqAccordions);
+  } else {
+    initFaqAccordions();
+  }
+
+  document.addEventListener("astro:page-load", initFaqAccordions);
+</script>

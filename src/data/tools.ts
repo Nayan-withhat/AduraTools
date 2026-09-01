@@ -44,8 +44,46 @@ export const TOOLS: ToolItem[] = [
       { title: 'Inspect or copy output', desc: 'View live key and size stats, check error badges if invalid, and click "Copy" to save.' }
     ],
     faqs: [
-      { question: 'Is my JSON data stored on your server?', answer: 'No. All parsing and formatting happens directly in your browser using JavaScript V8 JSON parser. No network requests are dispatched.' },
-      { question: 'What is the maximum JSON file size supported?', answer: 'Because it runs entirely in your browser memory, it easily handles multi-megabyte JSON payloads up to 50MB without lag.' }
+      {
+        question: 'What is a JSON formatter?',
+        answer: 'A JSON formatter is a developer utility that parses unformatted, minified, or raw JSON (JavaScript Object Notation) and adds proper indentation, line breaks, and whitespace structure to make the data human-readable and easier to inspect or debug.'
+      },
+      {
+        question: 'How do I format JSON online?',
+        answer: 'Paste your raw or minified JSON into the input box and click "Format (2 Spaces)" or "Format (4 Spaces)". The tool parses the JSON structure in real time and renders the beautified, indented output in the output panel.'
+      },
+      {
+        question: 'What is the difference between JSON formatting and beautifying?',
+        answer: 'JSON formatting and JSON beautifying refer to the exact same process: taking dense or single-line JSON text and applying consistent indentation, spacing, and line breaks so its hierarchical object and array structure is visually clear.'
+      },
+      {
+        question: 'How do I validate JSON?',
+        answer: 'Enter or paste your text into the JSON tool. The built-in validator automatically checks the syntax against standard JSON specifications (RFC 8259) in real time, displaying a "Valid JSON" status or pinpointing syntax errors.'
+      },
+      {
+        question: 'How can I find errors in invalid JSON?',
+        answer: 'When invalid JSON is supplied, the validator detects the parsing error and displays a clear notification indicating the exact error description, line number, and character position to help you quickly correct the syntax.'
+      },
+      {
+        question: 'Can a formatter format minified JSON?',
+        answer: 'Yes. Minified or compressed JSON containing no extra whitespace is parsed and fully expanded into multi-line, indented JSON with your chosen 2-space, 4-space, or tab formatting.'
+      },
+      {
+        question: 'What is JSON minification?',
+        answer: 'JSON minification is the process of stripping all unnecessary whitespace, tabs, and newline characters from a JSON string. This produces a compact single line of text that minimizes byte size for faster network transfer and lower payload overhead.'
+      },
+      {
+        question: 'Can formatted JSON be minified again?',
+        answer: 'Yes. You can switch between indented and minified representations at any time by clicking the "Minify" button to instantly compress your formatted JSON back into a compact single-line string.'
+      },
+      {
+        question: 'Why is my JSON invalid?',
+        answer: 'Common causes of invalid JSON include using single quotes instead of double quotes around keys and strings, trailing commas after the final element in an array or object, unquoted object keys, unescaped special characters, or mismatched brackets and braces.'
+      },
+      {
+        question: 'Is it safe to paste sensitive JSON into a formatter?',
+        answer: 'Yes. This tool runs 100% client-side inside your browser engine. Your JSON data is never uploaded to any server, transmitted over the internet, or logged, making it secure for private API responses, configuration tokens, and data payloads.'
+      }
     ],
     relatedSlugs: ['jwt-decoder', 'base64-encoder', 'css-js-minifier', 'text-diff'],
     seoContent: `<h2>What is a JSON Formatter and Why Do You Need One?</h2>
@@ -126,7 +164,46 @@ export const TOOLS: ToolItem[] = [
       { title: 'Copy converted output', desc: 'Click the "Copy" button to instantly copy the result to your clipboard.' }
     ],
     faqs: [
-      { question: 'Does this handle multi-byte Unicode and emojis?', answer: 'Yes! Unlike standard atob/btoa functions which fail on Unicode characters, AduraTools uses a UTF-8 TextEncoder/TextDecoder pipeline.' }
+      {
+        question: 'What is Base64 encoding?',
+        answer: 'Base64 is a binary-to-text encoding scheme that translates arbitrary binary or textual data into a sequence of 64 printable ASCII characters (A-Z, a-z, 0-9, +, and /), making it safe for transmission across text-based network protocols.'
+      },
+      {
+        question: 'How do I encode text to Base64?',
+        answer: 'Select the "Encode" tab, type or paste your plain text into the input area, and the tool will immediately generate the corresponding Base64 string in the output panel.'
+      },
+      {
+        question: 'How do I decode Base64 to text?',
+        answer: 'Select the "Decode" tab, paste a valid Base64 string into the input box, and the tool will instantly decode it back into original human-readable text.'
+      },
+      {
+        question: 'Is Base64 encryption?',
+        answer: 'No. Base64 is an encoding format, not encryption. It provides zero confidentiality or cryptographic protection because anyone can decode a Base64 string without a password or key.'
+      },
+      {
+        question: 'What is the difference between encoding and encryption?',
+        answer: 'Encoding changes the data representation format to ensure compatibility across different systems and transports, whereas encryption transforms plaintext into unreadable ciphertext specifically to protect data privacy and require a secret decryption key.'
+      },
+      {
+        question: 'Can Base64 encode binary data?',
+        answer: 'Yes. Base64 was designed specifically to represent arbitrary binary streams (such as compiled binaries, certificates, and audio files) within text-only transports like HTTP headers, JSON bodies, and email attachments.'
+      },
+      {
+        question: 'Can Base64 encode images?',
+        answer: 'Yes. Images can be converted to Base64 strings to create Data URLs (e.g. data:image/png;base64,...), allowing images to be embedded directly into HTML or CSS files without separate HTTP requests.'
+      },
+      {
+        question: 'What is URL-safe Base64?',
+        answer: 'Standard Base64 uses "+" and "/" which have special meaning in URLs. URL-safe Base64 replaces "+" with "-" and "/" with "_", allowing Base64 data to safely appear in query parameters and URL paths.'
+      },
+      {
+        question: 'Why does Base64 output sometimes end with =?',
+        answer: 'The "=" character is padding. Base64 processes data in 3-byte (24-bit) chunks. If the input data byte length is not a multiple of 3, one or two "=" characters are added to complete the final 4-character output group.'
+      },
+      {
+        question: 'Can Base64 data be decoded back to the original content?',
+        answer: 'Yes. Base64 is completely lossless and deterministic. Any properly encoded Base64 string can be decoded back to the exact original sequence of bytes or characters.'
+      }
     ],
     relatedSlugs: ['url-encoder', 'jwt-decoder', 'html-entity-encoder', 'hash-generator'],
     seoContent: `<h2>What is Base64 Encoding and Why Is It Important?</h2>
@@ -767,7 +844,46 @@ export const TOOLS: ToolItem[] = [
       { title: 'Check keyword density', desc: 'View frequent terms to optimize article readability and SEO.' }
     ],
     faqs: [
-      { question: 'How is reading time calculated?', answer: 'Reading time is calculated using the standard cognitive average of 200 words per minute for adult reading speed.' }
+      {
+        question: 'How does a word counter count words?',
+        answer: 'A word counter splits your text by whitespace and punctuation boundaries, filtering out empty segments to count each distinct word accurately in real time as you type or paste.'
+      },
+      {
+        question: 'What is the difference between word count and character count?',
+        answer: 'Word count tracks the total number of distinct words, while character count tallies each individual letter, number, punctuation symbol, and space within the entire text.'
+      },
+      {
+        question: 'Do spaces count as characters?',
+        answer: 'The tool provides two separate character counts: "Characters (with spaces)" which includes every whitespace character, and "Characters (no spaces)" which counts only visible text characters.'
+      },
+      {
+        question: 'Are punctuation marks counted as characters?',
+        answer: 'Yes. All punctuation symbols such as periods, commas, question marks, and exclamation points are counted in the total character count.'
+      },
+      {
+        question: 'How are sentences counted?',
+        answer: 'Sentences are counted by identifying terminating punctuation marks (. ! ?) followed by whitespace or line breaks, while accounting for standard abbreviations.'
+      },
+      {
+        question: 'How are paragraphs counted?',
+        answer: 'Paragraphs are counted by identifying blocks of text separated by one or more newline line breaks, ignoring purely empty lines.'
+      },
+      {
+        question: 'How is reading time calculated?',
+        answer: 'Estimated reading time is calculated using the cognitive benchmark of 200 words per minute (WPM), representing the average silent reading speed for adults.'
+      },
+      {
+        question: 'Why can two word counters show different results?',
+        answer: 'Different counters may handle hyphenated words, punctuation boundaries, numbers, and multiple consecutive spaces differently in their regex tokenization algorithms.'
+      },
+      {
+        question: 'Can a word counter be used for essays and assignments?',
+        answer: 'Yes. It is ideal for monitoring word and character limits for school essays, university assignments, academic submissions, blog articles, and social media posts.'
+      },
+      {
+        question: 'Does a word counter work on mobile devices?',
+        answer: 'Yes. The tool is fully responsive and functions smoothly on smartphones, tablets, laptops, and desktop computers directly in your web browser with offline support.'
+      }
     ],
     relatedSlugs: ['case-converter', 'text-diff', 'whitespace-remover'],
     seoContent: `<h2>Why Use a Word Counter for Content Creation and Analysis?</h2>

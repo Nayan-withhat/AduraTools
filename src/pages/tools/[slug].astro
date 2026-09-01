@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import ToolCard from "../../components/ToolCard.astro";
 import ColorBlockSection from "../../components/ColorBlockSection.astro";
+import FaqAccordion from "../../components/FaqAccordion.astro";
 import Icon from "../../components/Icon.astro";
 import { TOOLS, getToolBySlug, type ToolItem } from "../../data/tools";
 import { getCategoryById } from "../../data/categories";
@@ -259,24 +260,10 @@ const faqSchema = tool.faqs?.length
       </div>
     </div>
 
-    <!-- FREQUENTLY ASKED QUESTIONS -->
+    <!-- FREQUENTLY ASKED QUESTIONS ACCORDION -->
     {
       tool.faqs?.length > 0 && (
-        <div class="p-8 rounded-[var(--radius-lg)] bg-[var(--color-block-cream)] text-[var(--color-block-text-cream)] space-y-6 border border-[var(--color-block-cream-border)] shadow-sm transition-colors">
-          <h2 class="font-card-title text-2xl">Frequently Asked Questions</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {tool.faqs.map((faq) => (
-              <div class="p-4 bg-white/95 dark:bg-[#12141a]/90 rounded-[var(--radius-md)] border border-black/10 dark:border-white/10 space-y-1.5 text-[var(--color-ink)] shadow-xs">
-                <h3 class="font-sans font-bold text-sm text-[var(--color-ink)]">
-                  {faq.question}
-                </h3>
-                <p class="font-body-sm text-xs text-[var(--color-ink-muted)] leading-relaxed">
-                  {faq.answer}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
+        <FaqAccordion faqs={tool.faqs} toolName={tool.name} />
       )
     }
 
