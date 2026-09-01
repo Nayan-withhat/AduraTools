@@ -1,33 +1,33 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import ToolCard from '../../components/ToolCard.astro';
-import ColorBlockSection from '../../components/ColorBlockSection.astro';
-import Icon from '../../components/Icon.astro';
-import { TOOLS, getToolBySlug, type ToolItem } from '../../data/tools';
-import { getCategoryById } from '../../data/categories';
+import Layout from "../../layouts/Layout.astro";
+import ToolCard from "../../components/ToolCard.astro";
+import ColorBlockSection from "../../components/ColorBlockSection.astro";
+import Icon from "../../components/Icon.astro";
+import { TOOLS, getToolBySlug, type ToolItem } from "../../data/tools";
+import { getCategoryById } from "../../data/categories";
 
 // Specialized Interactive Tool Components
-import JsonFormatter from '../../components/tools/JsonFormatter.astro';
-import WordCounter from '../../components/tools/WordCounter.astro';
-import CaseConverter from '../../components/tools/CaseConverter.astro';
-import Base64Tool from '../../components/tools/Base64Tool.astro';
-import PasswordGenerator from '../../components/tools/PasswordGenerator.astro';
-import QrGenerator from '../../components/tools/QrGenerator.astro';
-import PercentageCalculator from '../../components/tools/PercentageCalculator.astro';
-import ColorConverter from '../../components/tools/ColorConverter.astro';
-import UnitConverter from '../../components/tools/UnitConverter.astro';
-import TextDiff from '../../components/tools/TextDiff.astro';
-import RegexTester from '../../components/tools/RegexTester.astro';
-import MetaTagGenerator from '../../components/tools/MetaTagGenerator.astro';
-import ImageCompressor from '../../components/tools/ImageCompressor.astro';
-import BmiCalculator from '../../components/tools/BmiCalculator.astro';
-import CompoundInterest from '../../components/tools/CompoundInterest.astro';
-import GenericToolRunner from '../../components/tools/GenericToolRunner.astro';
+import JsonFormatter from "../../components/tools/JsonFormatter.astro";
+import WordCounter from "../../components/tools/WordCounter.astro";
+import CaseConverter from "../../components/tools/CaseConverter.astro";
+import Base64Tool from "../../components/tools/Base64Tool.astro";
+import PasswordGenerator from "../../components/tools/PasswordGenerator.astro";
+import QrGenerator from "../../components/tools/QrGenerator.astro";
+import PercentageCalculator from "../../components/tools/PercentageCalculator.astro";
+import ColorConverter from "../../components/tools/ColorConverter.astro";
+import UnitConverter from "../../components/tools/UnitConverter.astro";
+import TextDiff from "../../components/tools/TextDiff.astro";
+import RegexTester from "../../components/tools/RegexTester.astro";
+import MetaTagGenerator from "../../components/tools/MetaTagGenerator.astro";
+import ImageCompressor from "../../components/tools/ImageCompressor.astro";
+import BmiCalculator from "../../components/tools/BmiCalculator.astro";
+import CompoundInterest from "../../components/tools/CompoundInterest.astro";
+import GenericToolRunner from "../../components/tools/GenericToolRunner.astro";
 
 export function getStaticPaths() {
-  return TOOLS.map(tool => ({
+  return TOOLS.map((tool) => ({
     params: { slug: tool.slug },
-    props: { tool }
+    props: { tool },
   }));
 }
 
@@ -38,55 +38,69 @@ interface Props {
 const { tool } = Astro.props;
 const category = getCategoryById(tool.category);
 const relatedTools = (tool.relatedSlugs || [])
-  .map(slug => getToolBySlug(slug))
+  .map((slug) => getToolBySlug(slug))
   .filter(Boolean) as ToolItem[];
 
 // Structured Data Schemas
 const toolSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'WebApplication',
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
   name: tool.name,
   url: `https://aduratools.site/tools/${tool.slug}`,
   description: tool.longDescription,
-  applicationCategory: category?.name || 'UtilitiesApplication',
-  operatingSystem: 'All',
+  applicationCategory: category?.name || "UtilitiesApplication",
+  operatingSystem: "All",
   offers: {
-    '@type': 'Offer',
-    price: '0',
-    priceCurrency: 'USD'
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
   },
-  featureList: tool.features.join(', ')
+  featureList: tool.features.join(", "),
 };
 
-const faqSchema = tool.faqs?.length ? {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: tool.faqs.map(faq => ({
-    '@type': 'Question',
-    name: faq.question,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: faq.answer
+const faqSchema = tool.faqs?.length
+  ? {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: tool.faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
     }
-  }))
-} : null;
+  : null;
 ---
 
-<Layout 
+<Layout
   title={`${tool.name} — Free Online Tool | AduraTools`}
   description={tool.shortDescription}
   schema={faqSchema ? [toolSchema, faqSchema] : toolSchema}
 >
   <div class="max-w-[1280px] mx-auto py-10 px-4 sm:px-6 lg:px-8 space-y-10">
     <!-- Breadcrumbs Navigation -->
-    <nav class="flex items-center gap-2 font-mono text-xs text-neutral-400" aria-label="Breadcrumb">
-      <a href="/" class="hover:text-[var(--color-ink)] text-decoration-none transition-colors">Home</a>
+    <nav
+      class="flex items-center gap-2 font-mono text-xs text-neutral-400"
+      aria-label="Breadcrumb"
+    >
+      <a
+        href="/"
+        class="hover:text-[var(--color-ink)] text-decoration-none transition-colors"
+        >Home</a
+      >
       <span>/</span>
-      {category && (
-        <a href={`/categories/${category.slug}`} class="hover:text-[var(--color-ink)] text-decoration-none transition-colors">
-          {category.name}
-        </a>
-      )}
+      {
+        category && (
+          <a
+            href={`/categories/${category.slug}`}
+            class="hover:text-[var(--color-ink)] text-decoration-none transition-colors"
+          >
+            {category.name}
+          </a>
+        )
+      }
       <span>/</span>
       <span class="text-[var(--color-ink)] font-semibold">{tool.name}</span>
     </nav>
@@ -94,32 +108,47 @@ const faqSchema = tool.faqs?.length ? {
     <!-- Header Section -->
     <div class="space-y-4">
       <div class="flex flex-wrap items-center gap-3">
-        <span class="w-12 h-12 rounded-xl bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] flex items-center justify-center text-[var(--color-ink)]">
+        <span
+          class="w-12 h-12 rounded-xl bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] flex items-center justify-center text-[var(--color-ink)]"
+        >
           <Icon name={tool.icon} class="w-6 h-6" />
         </span>
         <div>
           <div class="flex items-center gap-2">
-            <span class="font-eyebrow text-neutral-400 text-xs">{category?.name}</span>
-            {tool.badge && (
-              <span class="font-mono text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-[var(--color-block-lime)] text-black border border-black/10">
-                {tool.badge}
-              </span>
-            )}
+            <span class="font-eyebrow text-neutral-400 text-xs"
+              >{category?.name}</span
+            >
+            {
+              tool.badge && (
+                <span class="font-mono text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-[var(--color-block-lime)] dark:text-[var(--color-block-text-lime)] text-black border border-black/10">
+                  {tool.badge}
+                </span>
+              )
+            }
           </div>
-          <h1 class="font-display-lg text-3xl sm:text-4xl lg:text-5xl text-[var(--color-ink)]">
+          <h1
+            class="font-display-lg text-3xl sm:text-4xl lg:text-5xl text-[var(--color-ink)]"
+          >
             {tool.name}
           </h1>
         </div>
       </div>
 
-      <p class="font-body text-neutral-500 text-base sm:text-lg max-w-3xl leading-relaxed">
+      <p
+        class="font-body text-neutral-500 text-base sm:text-lg max-w-3xl leading-relaxed"
+      >
         {tool.longDescription}
       </p>
 
       <!-- Trust Badges -->
-      <div class="flex flex-wrap items-center gap-4 pt-1 text-xs font-mono text-neutral-400">
-        <span class="flex items-center gap-1.5 text-[var(--color-ink)] font-semibold">
-          <span class="w-2 h-2 rounded-full bg-[var(--color-semantic-success)]"></span>
+      <div
+        class="flex flex-wrap items-center gap-4 pt-1 text-xs font-mono text-neutral-400"
+      >
+        <span
+          class="flex items-center gap-1.5 text-[var(--color-ink)] font-semibold"
+        >
+          <span class="w-2 h-2 rounded-full bg-[var(--color-semantic-success)]"
+          ></span>
           100% In-Browser Execution
         </span>
         <span>•</span>
@@ -130,41 +159,54 @@ const faqSchema = tool.faqs?.length ? {
     </div>
 
     <!-- MAIN INTERACTIVE TOOL APPLICATION CONTAINER -->
-    <div class="p-6 sm:p-8 bg-[var(--color-surface-card)] rounded-[var(--radius-xl)] border-2 border-[var(--color-hairline)] shadow-xl shadow-black/5">
-      {tool.slug === 'json-formatter' ? (
-        <JsonFormatter tool={tool} />
-      ) : tool.slug === 'word-counter' ? (
-        <WordCounter tool={tool} />
-      ) : tool.slug === 'case-converter' ? (
-        <CaseConverter tool={tool} />
-      ) : tool.slug === 'base64-encoder' ? (
-        <Base64Tool tool={tool} />
-      ) : tool.slug === 'password-generator' ? (
-        <PasswordGenerator tool={tool} />
-      ) : tool.slug === 'qr-code-generator' ? (
-        <QrGenerator tool={tool} />
-      ) : tool.slug === 'percentage-calculator' ? (
-        <PercentageCalculator tool={tool} />
-      ) : tool.slug === 'color-converter' ? (
-        <ColorConverter tool={tool} />
-      ) : tool.slug === 'unit-converter' ? (
-        <UnitConverter tool={tool} />
-      ) : tool.slug === 'text-diff' ? (
-        <TextDiff tool={tool} />
-      ) : tool.slug === 'regex-tester' ? (
-        <RegexTester tool={tool} />
-      ) : tool.slug === 'meta-tag-generator' ? (
-        <MetaTagGenerator tool={tool} />
-      ) : tool.slug === 'image-compressor' ? (
-        <ImageCompressor tool={tool} />
-      ) : tool.slug === 'bmi-calculator' ? (
-        <BmiCalculator tool={tool} />
-      ) : tool.slug === 'compound-interest-calculator' ? (
-        <CompoundInterest tool={tool} />
-      ) : (
-        <GenericToolRunner tool={tool} />
-      )}
+    <div
+      class="p-6 sm:p-8 bg-[var(--color-surface-card)] rounded-[var(--radius-xl)] border-2 border-[var(--color-hairline)] shadow-xl shadow-black/5"
+    >
+      {
+        tool.slug === "json-formatter" ? (
+          <JsonFormatter tool={tool} />
+        ) : tool.slug === "word-counter" ? (
+          <WordCounter tool={tool} />
+        ) : tool.slug === "case-converter" ? (
+          <CaseConverter tool={tool} />
+        ) : tool.slug === "base64-encoder" ? (
+          <Base64Tool tool={tool} />
+        ) : tool.slug === "password-generator" ? (
+          <PasswordGenerator tool={tool} />
+        ) : tool.slug === "qr-code-generator" ? (
+          <QrGenerator tool={tool} />
+        ) : tool.slug === "percentage-calculator" ? (
+          <PercentageCalculator tool={tool} />
+        ) : tool.slug === "color-converter" ? (
+          <ColorConverter tool={tool} />
+        ) : tool.slug === "unit-converter" ? (
+          <UnitConverter tool={tool} />
+        ) : tool.slug === "text-diff" ? (
+          <TextDiff tool={tool} />
+        ) : tool.slug === "regex-tester" ? (
+          <RegexTester tool={tool} />
+        ) : tool.slug === "meta-tag-generator" ? (
+          <MetaTagGenerator tool={tool} />
+        ) : tool.slug === "image-compressor" ? (
+          <ImageCompressor tool={tool} />
+        ) : tool.slug === "bmi-calculator" ? (
+          <BmiCalculator tool={tool} />
+        ) : tool.slug === "compound-interest-calculator" ? (
+          <CompoundInterest tool={tool} />
+        ) : (
+          <GenericToolRunner tool={tool} />
+        )
+      }
     </div>
+
+    <!-- SEO CONTENT SECTION -->
+    {
+      tool.seoContent && (
+        <div class="max-w-none p-6 sm:p-8 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-4 [&_h2]:font-card-title [&_h2]:text-xl [&_h2]:text-[var(--color-ink)] [&_h2]:mt-6 [&_h2]:mb-3 [&_h3]:font-sans [&_h3]:font-bold [&_h3]:text-base [&_h3]:text-[var(--color-ink)] [&_h3]:mt-4 [&_h3]:mb-2 [&_p]:font-body [&_p]:text-neutral-600 [&_p]:dark:text-neutral-300 [&_p]:mb-3 [&_p]:leading-relaxed [&_ul]:space-y-2 [&_ul]:ml-4 [&_li]:font-body [&_li]:text-neutral-600 [&_li]:dark:text-neutral-300 [&_li]:list-disc [&_strong]:font-bold [&_strong]:text-[var(--color-ink)] [&_code]:bg-[var(--color-surface-card)] [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-xs [&_code]:font-mono">
+          <div set:html={tool.seoContent} />
+        </div>
+      )
+    }
 
     <!-- HOW TO USE & FEATURES SECTION -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-6">
@@ -174,70 +216,92 @@ const faqSchema = tool.faqs?.length ? {
           How to Use {tool.name}
         </h2>
         <div class="space-y-4">
-          {tool.howToSteps.map((step, idx) => (
-            <div class="flex items-start gap-4 p-4 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)]">
-              <span class="w-8 h-8 rounded-full bg-[var(--color-primary)] text-[var(--color-on-primary)] flex items-center justify-center font-mono font-bold text-sm shrink-0">
-                {idx + 1}
-              </span>
-              <div class="space-y-1">
-                <h3 class="font-sans font-bold text-base text-[var(--color-ink)]">{step.title}</h3>
-                <p class="font-body-sm text-sm text-neutral-500 leading-relaxed">{step.desc}</p>
+          {
+            tool.howToSteps.map((step, idx) => (
+              <div class="flex items-start gap-4 p-4 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)]">
+                <span class="w-8 h-8 rounded-full bg-[var(--color-primary)] text-[var(--color-on-primary)] flex items-center justify-center font-mono font-bold text-sm shrink-0">
+                  {idx + 1}
+                </span>
+                <div class="space-y-1">
+                  <h3 class="font-sans font-bold text-base text-[var(--color-ink)]">
+                    {step.title}
+                  </h3>
+                  <p class="font-body-sm text-sm text-neutral-500 leading-relaxed">
+                    {step.desc}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          }
         </div>
       </div>
 
       <!-- Feature Highlights (5 Cols) -->
-      <div class="lg:col-span-5 p-6 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-4 self-start">
+      <div
+        class="lg:col-span-5 p-6 rounded-[var(--radius-lg)] bg-[var(--color-surface-soft)] border border-[var(--color-hairline)] space-y-4 self-start"
+      >
         <h2 class="font-card-title text-xl text-[var(--color-ink)]">
           Key Features
         </h2>
         <ul class="space-y-2.5 text-sm">
-          {tool.features.map(feat => (
-            <li class="flex items-center gap-2 text-neutral-600 dark:text-neutral-300">
-              <Icon name="check" class="w-4 h-4 text-green-600 dark:text-green-400 shrink-0" />
-              <span>{feat}</span>
-            </li>
-          ))}
+          {
+            tool.features.map((feat) => (
+              <li class="flex items-center gap-2 text-neutral-600 dark:text-neutral-300">
+                <Icon
+                  name="check"
+                  class="w-4 h-4 text-green-600 dark:text-green-400 shrink-0"
+                />
+                <span>{feat}</span>
+              </li>
+            ))
+          }
         </ul>
       </div>
     </div>
 
     <!-- FREQUENTLY ASKED QUESTIONS -->
-    {tool.faqs?.length > 0 && (
-      <div class="p-8 rounded-[var(--radius-lg)] bg-[var(--color-block-cream)] text-[var(--color-block-text-cream)] space-y-6 border border-[var(--color-block-cream-border)] shadow-sm transition-colors">
-        <h2 class="font-card-title text-2xl">
-          Frequently Asked Questions
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {tool.faqs.map(faq => (
-            <div class="p-4 bg-white/95 dark:bg-[#12141a]/90 rounded-[var(--radius-md)] border border-black/10 dark:border-white/10 space-y-1.5 text-[var(--color-ink)] shadow-xs">
-              <h3 class="font-sans font-bold text-sm text-[var(--color-ink)]">{faq.question}</h3>
-              <p class="font-body-sm text-xs text-[var(--color-ink-muted)] leading-relaxed">{faq.answer}</p>
-            </div>
-          ))}
+    {
+      tool.faqs?.length > 0 && (
+        <div class="p-8 rounded-[var(--radius-lg)] bg-[var(--color-block-cream)] text-[var(--color-block-text-cream)] space-y-6 border border-[var(--color-block-cream-border)] shadow-sm transition-colors">
+          <h2 class="font-card-title text-2xl">Frequently Asked Questions</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {tool.faqs.map((faq) => (
+              <div class="p-4 bg-white/95 dark:bg-[#12141a]/90 rounded-[var(--radius-md)] border border-black/10 dark:border-white/10 space-y-1.5 text-[var(--color-ink)] shadow-xs">
+                <h3 class="font-sans font-bold text-sm text-[var(--color-ink)]">
+                  {faq.question}
+                </h3>
+                <p class="font-body-sm text-xs text-[var(--color-ink-muted)] leading-relaxed">
+                  {faq.answer}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    )}
+      )
+    }
 
     <!-- RELATED TOOLS / SMART WORKFLOW CHAINING -->
-    {relatedTools.length > 0 && (
-      <div class="space-y-6 pt-6">
-        <div class="flex items-center justify-between">
-          <h2 class="font-card-title text-2xl text-[var(--color-ink)]">
-            Related & Chained Tools
-          </h2>
-          <a href="/all-tools" class="font-sans text-sm font-medium text-[var(--color-ink)] hover:underline">
-            View all tools →
-          </a>
+    {
+      relatedTools.length > 0 && (
+        <div class="space-y-6 pt-6">
+          <div class="flex items-center justify-between">
+            <h2 class="font-card-title text-2xl text-[var(--color-ink)]">
+              Related & Chained Tools
+            </h2>
+            <a
+              href="/all-tools"
+              class="font-sans text-sm font-medium text-[var(--color-ink)] hover:underline"
+            >
+              View all tools →
+            </a>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {relatedTools.map((rel) => (
+              <ToolCard tool={rel} />
+            ))}
+          </div>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {relatedTools.map(rel => (
-            <ToolCard tool={rel} />
-          ))}
-        </div>
-      </div>
-    )}
+      )
+    }
   </div>
 </Layout>

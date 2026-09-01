@@ -93,7 +93,7 @@
   --color-hairline: #262933;
   --color-hairline-soft: #1d2028;
   --color-surface-soft: #181b22;
-
+  /* text-[#C7FF4D] */
   --color-block-lime: #142211;
   --color-block-lime-border: #284420;
   --color-block-lilac: #1e1430;
@@ -110,6 +110,8 @@
   --color-block-navy-border: #232050;
 
   --color-block-text-lime: #dceeb1;
+  --color-block-text-lime-70: #dceeb1b3;
+  --color-block-text-lime-60: #dceeb199;
   --color-block-text-lilac: #d8c8fa;
   --color-block-text-cream: #f4ecd6;
   --color-block-text-pink: #f4d4db;
