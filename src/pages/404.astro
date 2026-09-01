@@ -1,28 +1,138 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout 
+<Layout
   title="Page Not Found (404) — AduraTools"
   description="The tool or page you requested could not be found."
 >
-  <div class="max-w-[800px] mx-auto py-24 px-4 sm:px-6 lg:px-8 text-center space-y-6">
-    <div class="font-mono text-xs uppercase px-3 py-1 rounded-full bg-[var(--color-block-pink)] text-black font-bold inline-block">
-      Error 404
+  <div class="relative overflow-hidden">
+    <div
+      class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(220,238,177,0.28),_transparent_35%),radial-gradient(circle_at_bottom_right,_rgba(197,176,244,0.22),_transparent_30%)]"
+    >
     </div>
-    <h1 class="font-display-xl text-5xl sm:text-6xl text-[var(--color-ink)]">
-      Tool Not Found
-    </h1>
-    <p class="font-body-lg text-neutral-600 max-w-md mx-auto">
-      The tool or page you're looking for might have been moved, renamed, or is currently under maintenance.
-    </p>
-    <div class="flex items-center justify-center gap-3 pt-4">
-      <a href="/" class="btn-primary text-sm py-2 px-6">
-        Return to Home
-      </a>
-      <a href="/all-tools" class="btn-secondary text-sm py-2 px-6">
-        Browse All Tools
-      </a>
+
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+      <div
+        class="relative rounded-[32px] border border-[var(--color-hairline)] bg-[var(--color-surface-card)] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.06)] sm:p-8 lg:p-12"
+      >
+        <div class="absolute inset-x-10 top-6 h-px bg-[var(--color-hairline)]">
+        </div>
+
+        <div class="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+          <div class="space-y-6">
+            <div
+              class="inline-flex items-center gap-2 rounded-full border border-[var(--color-hairline)] bg-[var(--color-surface-soft)] px-3 py-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--color-ink)]"
+            >
+              Error 404
+            </div>
+
+            <div class="space-y-4">
+              <div
+                class="text-[clamp(80px,18vw,190px)] font-black leading-none tracking-[-0.08em] text-[var(--color-ink)]/10"
+              >
+                404
+              </div>
+              <h1 class="font-display-lg text-[var(--color-ink)]">
+                This page took a detour.
+              </h1>
+            </div>
+
+            <p class="max-w-lg font-body-lg text-[var(--color-ink-muted)]">
+              The link you opened seems to be missing, outdated, or moved to a
+              different tool. Let’s get you back on track.
+            </p>
+
+            <div class="flex flex-wrap items-center gap-3 pt-2">
+              <a href="/" class="btn-primary text-sm py-2.5 px-6"> Go Home </a>
+              <a href="/all-tools" class="btn-secondary text-sm py-2.5 px-6">
+                Explore Tools
+              </a>
+            </div>
+          </div>
+
+          <div class="relative">
+            <div
+              class="rounded-[28px] border border-[var(--color-hairline)] bg-[var(--color-surface-soft)] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] sm:p-8"
+            >
+              <div class="mb-6 flex items-center justify-between">
+                <span
+                  class="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-ink-muted)]"
+                >
+                  Quick paths
+                </span>
+                <span
+                  class="rounded-full border border-[var(--color-hairline)] bg-[var(--color-block-lime)] px-2 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-[var(--color-ink)]"
+                >
+                  safe
+                </span>
+              </div>
+
+              <div class="space-y-3">
+                <a
+                  href="/"
+                  class="group flex items-center justify-between rounded-2xl border border-[var(--color-hairline)] bg-[var(--color-surface-card)] p-4 transition hover:-translate-y-0.5 hover:border-[var(--color-ink)]"
+                >
+                  <div>
+                    <p
+                      class="font-headline text-[20px] text-[var(--color-ink)]"
+                    >
+                      Homepage
+                    </p>
+                    <p class="font-body-sm text-[var(--color-ink-muted)]">
+                      Jump back to AduraTools
+                    </p>
+                  </div>
+                  <span
+                    class="text-xl text-[var(--color-ink)] transition group-hover:translate-x-1"
+                    >→</span
+                  >
+                </a>
+
+                <a
+                  href="/all-tools"
+                  class="group flex items-center justify-between rounded-2xl border border-[var(--color-hairline)] bg-[var(--color-surface-card)] p-4 transition hover:-translate-y-0.5 hover:border-[var(--color-ink)]"
+                >
+                  <div>
+                    <p
+                      class="font-headline text-[20px] text-[var(--color-ink)]"
+                    >
+                      All tools
+                    </p>
+                    <p class="font-body-sm text-[var(--color-ink-muted)]">
+                      Browse everything in one place
+                    </p>
+                  </div>
+                  <span
+                    class="text-xl text-[var(--color-ink)] transition group-hover:translate-x-1"
+                    >→</span
+                  >
+                </a>
+
+                <a
+                  href="/contact"
+                  class="group flex items-center justify-between rounded-2xl border border-[var(--color-hairline)] bg-[var(--color-surface-card)] p-4 transition hover:-translate-y-0.5 hover:border-[var(--color-ink)]"
+                >
+                  <div>
+                    <p
+                      class="font-headline text-[20px] text-[var(--color-ink)]"
+                    >
+                      Contact
+                    </p>
+                    <p class="font-body-sm text-[var(--color-ink-muted)]">
+                      Tell us what you were looking for
+                    </p>
+                  </div>
+                  <span
+                    class="text-xl text-[var(--color-ink)] transition group-hover:translate-x-1"
+                    >→</span
+                  >
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </Layout>
